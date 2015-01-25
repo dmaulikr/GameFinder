@@ -14,6 +14,9 @@
 		279E2ACA1A71A77F0080542E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AC91A71A77F0080542E /* Images.xcassets */; };
 		279E2ACD1A71A77F0080542E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E2ACB1A71A77F0080542E /* LaunchScreen.xib */; };
 		279E2AD91A71A7800080542E /* GameFinderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AD81A71A7800080542E /* GameFinderTests.m */; };
+		279E2AE31A71AD310080542E /* globe.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AE21A71AD310080542E /* globe.png */; };
+		279E2AE61A71B35E0080542E /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AE51A71B35E0080542E /* clock.png */; };
+		279E2AE81A71CAF60080542E /* basketball.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AE71A71CAF60080542E /* basketball.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,9 @@
 		279E2AD21A71A7800080542E /* GameFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2AD71A71A7800080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2AD81A71A7800080542E /* GameFinderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameFinderTests.m; sourceTree = "<group>"; };
+		279E2AE21A71AD310080542E /* globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe.png; sourceTree = "<group>"; };
+		279E2AE51A71B35E0080542E /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
+		279E2AE71A71CAF60080542E /* basketball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = basketball.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,7 @@
 		279E2ABC1A71A77F0080542E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				279E2AE41A71AD380080542E /* images */,
 				279E2ABD1A71A77F0080542E /* Info.plist */,
 				279E2ABE1A71A77F0080542E /* main.m */,
 			);
@@ -117,6 +124,16 @@
 				279E2AD71A71A7800080542E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		279E2AE41A71AD380080542E /* images */ = {
+			isa = PBXGroup;
+			children = (
+				279E2AE51A71B35E0080542E /* clock.png */,
+				279E2AE71A71CAF60080542E /* basketball.png */,
+				279E2AE21A71AD310080542E /* globe.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,7 +217,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				279E2AC81A71A77F0080542E /* Main.storyboard in Resources */,
+				279E2AE61A71B35E0080542E /* clock.png in Resources */,
+				279E2AE31A71AD310080542E /* globe.png in Resources */,
 				279E2ACD1A71A77F0080542E /* LaunchScreen.xib in Resources */,
+				279E2AE81A71CAF60080542E /* basketball.png in Resources */,
 				279E2ACA1A71A77F0080542E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +432,7 @@
 				279E2ADE1A71A7800080542E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		279E2ADF1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameFinderTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +441,7 @@
 				279E2AE11A71A7800080542E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
