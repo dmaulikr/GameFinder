@@ -11,6 +11,8 @@
 		270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B201A746F150004A632 /* CoreLocation.framework */; };
 		270C5B241A746F930004A632 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 270C5B231A746F930004A632 /* LocationManager.m */; };
 		270C5B271A746FB60004A632 /* FindGamesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270C5B261A746FB60004A632 /* FindGamesViewController.m */; };
+		274713461A75CACF001EF18A /* MapViewAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 274713451A75CACF001EF18A /* MapViewAnnotation.m */; };
+		274713491A75CE34001EF18A /* HTTPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 274713481A75CE34001EF18A /* HTTPManager.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
 		279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC11A71A77F0080542E /* AppDelegate.m */; };
 		279E2AC51A71A77F0080542E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC41A71A77F0080542E /* ViewController.m */; };
@@ -40,6 +42,10 @@
 		270C5B231A746F930004A632 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = ../LocationManager.m; sourceTree = "<group>"; };
 		270C5B251A746FB60004A632 /* FindGamesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindGamesViewController.h; path = ../FindGamesViewController.h; sourceTree = "<group>"; };
 		270C5B261A746FB60004A632 /* FindGamesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindGamesViewController.m; path = ../FindGamesViewController.m; sourceTree = "<group>"; };
+		274713441A75CACF001EF18A /* MapViewAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewAnnotation.h; path = ../MapViewAnnotation.h; sourceTree = "<group>"; };
+		274713451A75CACF001EF18A /* MapViewAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewAnnotation.m; path = ../MapViewAnnotation.m; sourceTree = "<group>"; };
+		274713471A75CE34001EF18A /* HTTPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTTPManager.h; path = ../HTTPManager.h; sourceTree = "<group>"; };
+		274713481A75CE34001EF18A /* HTTPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTTPManager.m; path = ../HTTPManager.m; sourceTree = "<group>"; };
 		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2ABD1A71A77F0080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2ABE1A71A77F0080542E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -116,10 +122,14 @@
 		279E2ABC1A71A77F0080542E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				274713471A75CE34001EF18A /* HTTPManager.h */,
+				274713481A75CE34001EF18A /* HTTPManager.m */,
 				270C5B251A746FB60004A632 /* FindGamesViewController.h */,
 				270C5B261A746FB60004A632 /* FindGamesViewController.m */,
 				270C5B221A746F930004A632 /* LocationManager.h */,
 				270C5B231A746F930004A632 /* LocationManager.m */,
+				274713441A75CACF001EF18A /* MapViewAnnotation.h */,
+				274713451A75CACF001EF18A /* MapViewAnnotation.m */,
 				279E2AE41A71AD380080542E /* images */,
 				279E2ABD1A71A77F0080542E /* Info.plist */,
 				279E2ABE1A71A77F0080542E /* main.m */,
@@ -257,9 +267,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				274713461A75CACF001EF18A /* MapViewAnnotation.m in Sources */,
 				270C5B241A746F930004A632 /* LocationManager.m in Sources */,
 				270C5B271A746FB60004A632 /* FindGamesViewController.m in Sources */,
 				279E2AC51A71A77F0080542E /* ViewController.m in Sources */,
+				274713491A75CE34001EF18A /* HTTPManager.m in Sources */,
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,
 			);

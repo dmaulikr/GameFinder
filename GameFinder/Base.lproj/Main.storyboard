@@ -89,6 +89,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="locationBarButton" destination="fm3-1Y-415" id="Qat-ra-xlL"/>
+                        <outlet property="mapView" destination="zMu-RB-Md7" id="3US-eT-Kwy"/>
+                        <outlet property="skillBarButton" destination="bBd-HD-A0B" id="9T8-ie-BYN"/>
+                        <outlet property="timeBarButton" destination="ogL-yX-MfA" id="FYQ-CW-76e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KnY-1l-qg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface LocationManager : NSObject
+@interface LocationManager : NSObject <CLLocationManagerDelegate>
+
+@property CLLocationManager *locationManager;
+
+@property CLLocation *currentLocation;
+
+@property CLLocation *startingLocation;
 
 @end

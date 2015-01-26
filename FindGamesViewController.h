@@ -8,7 +8,14 @@
 
 #import "ViewController.h"
 #import <MapKit/MapKit.h>
+#import "MapViewAnnotation.h"
 
-@interface FindGamesViewController : ViewController
+@interface FindGamesViewController : ViewController <MKMapViewDelegate>
+
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
+@property (weak, nonatomic) IBOutlet UITabBarItem *timeBarButton;
+@property (weak, nonatomic) IBOutlet UITabBarItem *skillBarButton;
+@property (weak, nonatomic) IBOutlet UITabBarItem *locationBarButton;
 
 @end
