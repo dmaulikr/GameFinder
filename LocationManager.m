@@ -8,34 +8,38 @@
 
 #import "LocationManager.h"
 
+
 @implementation LocationManager
 
 -(id) init {
     self = [super init];
     if (self) {
         
-        self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager = [[CLLocationManager alloc]init];
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         self.locationManager.delegate = self;
-        self.locationManager.distanceFilter = 5;
-        
+        self.locationManager.distanceFilter = 10;
         [self.locationManager requestWhenInUseAuthorization];
+        
+        
     }
     
     return self;
 }
 
-
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
     
-    if(status == kCLAuthorizationStatusAuthorizedWhenInUse) {
+    if (status == kCLAuthorizationStatusAuthorizedWhenInUse) {
         [self.locationManager startUpdatingLocation];
     }
+    
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
     
 }
+
+
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     
@@ -45,7 +49,11 @@
         
         self.startingLocation = self.currentLocation;
         
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedLocation" object:self.currentLocation];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedLocation"
+                        object:self.currentLocation];
+        
     }
+    
 }
+
 @end

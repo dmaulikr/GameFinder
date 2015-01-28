@@ -7,10 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import "MapViewAnnotation.h"
 
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <MKMapViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *signIn;
 
+@property (weak, nonatomic) IBOutlet UIButton *signUp;
+
+@property (weak, nonatomic) IBOutlet UITextField *email;
+
+@property (weak, nonatomic) IBOutlet UITextField *password;
 @end
 

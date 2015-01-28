@@ -7,10 +7,10 @@
 //
 
 #import "ViewController.h"
-#import <MapKit/MapKit.h>
-#import "MapViewAnnotation.h"
 
-@interface FindGamesViewController : ViewController <MKMapViewDelegate>
+
+
+@interface FindGamesViewController : UIViewController 
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
