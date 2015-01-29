@@ -7,10 +7,11 @@
 //
 
 #import "ViewController.h"
+#import <MapKit/MapKit.h>
 
 
 
-@interface FindGamesViewController : UIViewController 
+@interface FindGamesViewController : UIViewController <UITabBarControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 

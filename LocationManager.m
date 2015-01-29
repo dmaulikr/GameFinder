@@ -50,10 +50,12 @@
         self.startingLocation = self.currentLocation;
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedLocation"
-                        object:self.currentLocation];
+                                                           object:self.currentLocation];
         
     }
     
 }
+
+
 
 @end

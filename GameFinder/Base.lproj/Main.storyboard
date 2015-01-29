@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C94b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C94b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ciM-C8-Nwj">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -41,9 +41,6 @@
                                 <state key="normal" title="GameFinder">
                                     <color key="titleColor" red="0.023811469209999998" green="1" blue="0.86063124660000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="ciM-C8-Nwj" kind="show" identifier="showGames" id="Roe-bb-MsF"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lx0-57-WZH">
                                 <rect key="frame" x="16" y="307" width="288" height="30"/>
@@ -90,6 +87,9 @@
                                     <tabBarItem title="Time" image="clock.png" id="ogL-yX-MfA"/>
                                     <tabBarItem title="Skill" image="basketball.png" id="bBd-HD-A0B"/>
                                 </items>
+                                <connections>
+                                    <outlet property="delegate" destination="bBd-HD-A0B" id="UOg-sP-Qyr"/>
+                                </connections>
                             </tabBar>
                             <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Find a game" translatesAutoresizingMaskIntoConstraints="NO" id="u5e-dF-c2S">
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
@@ -108,7 +108,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KnY-1l-qg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="747" y="255"/>
+            <point key="canvasLocation" x="747" y="308"/>
         </scene>
     </scenes>
     <resources>
