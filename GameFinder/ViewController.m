@@ -9,6 +9,8 @@
 #import "ViewController.h"
 
 
+
+
 @interface ViewController ()
 
 @end
@@ -17,13 +19,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
 }
 
--(void)showGames:(NSDictionary *)result {
+- (IBAction)signInButton:(id)sender {
+   
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
     
-    [self performSegueWithIdentifier:@"showGames" sender:result];
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+   
 }
+
+
 
 
 - (void)didReceiveMemoryWarning {
