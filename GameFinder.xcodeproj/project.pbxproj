@@ -14,6 +14,8 @@
 		274713461A75CACF001EF18A /* MapViewAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 274713451A75CACF001EF18A /* MapViewAnnotation.m */; };
 		274A66FC1A7ABEDB00B712FF /* FindGamesByTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274A66FB1A7ABEDB00B712FF /* FindGamesByTimeTableViewController.m */; };
 		274A66FF1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274A66FE1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m */; };
+		276A2DFE1A7BFF5200BD7600 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2DFD1A7BFF5200BD7600 /* RegisterViewController.m */; };
+		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
 		279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC11A71A77F0080542E /* AppDelegate.m */; };
 		279E2AC51A71A77F0080542E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC41A71A77F0080542E /* ViewController.m */; };
@@ -61,6 +63,10 @@
 		274A66FB1A7ABEDB00B712FF /* FindGamesByTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindGamesByTimeTableViewController.m; path = ../FindGamesByTimeTableViewController.m; sourceTree = "<group>"; };
 		274A66FD1A7ABEF000B712FF /* FindGamesBySkillTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindGamesBySkillTableViewController.h; path = ../FindGamesBySkillTableViewController.h; sourceTree = "<group>"; };
 		274A66FE1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindGamesBySkillTableViewController.m; path = ../FindGamesBySkillTableViewController.m; sourceTree = "<group>"; };
+		276A2DFC1A7BFF5100BD7600 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		276A2DFD1A7BFF5200BD7600 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2ABD1A71A77F0080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2ABE1A71A77F0080542E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -221,6 +227,10 @@
 		27FC60741A7B40C6005AE24C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */,
+				276A2E001A7BFF6300BD7600 /* LoginViewController.m */,
+				276A2DFC1A7BFF5100BD7600 /* RegisterViewController.h */,
+				276A2DFD1A7BFF5200BD7600 /* RegisterViewController.m */,
 				279E2AC31A71A77F0080542E /* ViewController.h */,
 				279E2AC41A71A77F0080542E /* ViewController.m */,
 				270C5B251A746FB60004A632 /* FindGamesByLocationViewController.h */,
@@ -340,6 +350,8 @@
 				274A66FC1A7ABEDB00B712FF /* FindGamesByTimeTableViewController.m in Sources */,
 				270C5B241A746F930004A632 /* LocationManager.m in Sources */,
 				270C5B271A746FB60004A632 /* FindGamesByLocationViewController.m in Sources */,
+				276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */,
+				276A2DFE1A7BFF5200BD7600 /* RegisterViewController.m in Sources */,
 				279E2AC51A71A77F0080542E /* ViewController.m in Sources */,
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,

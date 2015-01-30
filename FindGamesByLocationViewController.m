@@ -26,19 +26,19 @@
     
 }
 
--(void)viewDidAppear:(BOOL)animated {
-   
-    BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults ] boolForKey:@"isLoggedIn"];
-    if (!isLoggedIn) {
-        UIViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
-    
-    [self presentViewController:viewController animated:YES completion:^{
-        
-    }];
-
-    }
-    
-}
+//-(void)viewDidAppear:(BOOL)animated {
+//   
+//    BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults ] boolForKey:@"isLoggedIn"];
+//    if (!isLoggedIn) {
+//        UIViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
+//    
+//    [self presentViewController:viewController animated:YES completion:^{
+//        
+//    }];
+//
+//    }
+//    
+//}
 
 -(void)updateRegion:(CLLocationCoordinate2D) location{
     
