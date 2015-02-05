@@ -18,39 +18,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+   // && self.emailTextField.text.length > 0
     
 }
-- (IBAction)signUpButtonPressed:(id)sender {
-    
-    //1
-    PFUser *user = [PFUser user];
-    //2
-    user.username = self.userRegisterTextField.text;
-    user.password = self.passwordRegisterTextField.text;
-    //3
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            //The registration was successful, go to the wall
-            [self performSegueWithIdentifier:@"SignupSuccesful" sender:self];
-            
-        } else {
-            //Something bad has occurred
-            NSString *errorString = [[error userInfo] objectForKey:@"error"];
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorString delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [errorAlertView show];
-        }
-    }];
-    
-    
 
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
+-(void)validateEmail{
     
-    [self.userRegisterTextField resignFirstResponder];
-    [self.passwordRegisterTextField resignFirstResponder];
-
-    return NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,13 +32,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
