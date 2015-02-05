@@ -23,21 +23,36 @@
 }
 - (IBAction)logInPressed:(id)sender {
     
+    
+
     [PFUser logInWithUsernameInBackground:self.userTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
+        
+       
+        
         if (user) {
             //Open the wall
             [self performSegueWithIdentifier:@"LoginSuccesful" sender:self];
         } else {
+            
+            
             //Something bad has ocurred
-            NSString *errorString = [[error userInfo] objectForKey:@"error"];
-            UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorString delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [errorAlertView show];
+            if ([[[UIDevice currentDevice] systemVersion] floatValue] < 7.0) {
+                NSString *errorString = [[error userInfo] objectForKey:@"error"];
+                UIAlertView *errorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:errorString delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [errorAlertView show];
+            } else {
+                NSLog(@"Figure this shit out");
+                UIViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
+                [self presentViewController:viewController animated:NO completion:^{
+                    
+                }];
+            }
+            
         }
-    }];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
         
     }];
+    
+    
 
 }
 

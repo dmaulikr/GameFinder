@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
  
-    self.locationManager = [[LocationManager alloc]init];
+    //self.locationManager = [[LocationManager alloc]init];
     
     [Parse enableLocalDatastore];
     

@@ -10,7 +10,7 @@
 #import "RegisterViewController.h"
 #import <MapKit/MapKit.h>
 
-@interface LoginViewController : UIViewController <MKMapViewDelegate, UITextFieldDelegate>
+@interface LoginViewController : UIViewController <MKMapViewDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *userTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;

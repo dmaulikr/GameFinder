@@ -18,8 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self.userRegisterTextField resignFirstResponder];
-    [self.passwordRegisterTextField resignFirstResponder];
     
 }
 - (IBAction)signUpButtonPressed:(id)sender {
@@ -43,11 +41,16 @@
         }
     }];
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    
 
+}
 
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [self.userRegisterTextField resignFirstResponder];
+    [self.passwordRegisterTextField resignFirstResponder];
+
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {

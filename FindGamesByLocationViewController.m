@@ -21,53 +21,59 @@
     [super viewDidLoad];
     
     
+
+    
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error) {
+            NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
+            self.mapView.showsUserLocation = YES;
+            [self.mapView setDelegate:self];
+            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
+            [[PFUser currentUser] saveInBackground];
+            
+
+        }
+    }];
         
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocationRange:) name:@"updatedLocation" object:nil];
+    //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocationRange:) name:@"updatedLocation" object:nil];
     
 }
 
-//-(void)viewDidAppear:(BOOL)animated {
-//   
-//    BOOL isLoggedIn = [[NSUserDefaults standardUserDefaults ] boolForKey:@"isLoggedIn"];
-//    if (!isLoggedIn) {
-//        UIViewController *viewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
+
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)geoPoint{
+    
+    [self.mapView setRegion:MKCoordinateRegionMake(geoPoint.coordinate, MKCoordinateSpanMake(0.02, 0.02)) animated:YES];
+    
+}
+
+//-(void)updateRegion:(CLLocationCoordinate2D) location{
 //    
-//    [self presentViewController:viewController animated:YES completion:^{
-//        
-//    }];
-//
-//    }
+//    self.mapView.showsUserLocation = YES;
+//    
+//    CLLocationCoordinate2D initialLocationFocus = location;
+//    
+//    MKCoordinateSpan span = MKCoordinateSpanMake(.01, .01);
+//    
+//    MKCoordinateRegion region = MKCoordinateRegionMake(initialLocationFocus, span);
+//    
+//    [self.mapView setRegion:region animated:YES];
+//    
+//    
 //    
 //}
-
--(void)updateRegion:(CLLocationCoordinate2D) location{
-    
-    self.mapView.showsUserLocation = YES;
-    
-    CLLocationCoordinate2D initialLocationFocus = location;
-    
-    MKCoordinateSpan span = MKCoordinateSpanMake(.01, .01);
-    
-    MKCoordinateRegion region = MKCoordinateRegionMake(initialLocationFocus, span);
-    
-    [self.mapView setRegion:region animated:YES];
-    
-    
-    
-}
-
-
--(void)updateLocationRange:(NSNotification *)notif {
-    
-    CLLocation *newLocation = notif.object;
-    
-    [self updateRegion:newLocation.coordinate];
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+//
+//
+//-(void)updateLocationRange:(NSNotification *)notif {
+//    
+//    CLLocation *newLocation = notif.object;
+//    
+//    [self updateRegion:newLocation.coordinate];
+//}
+//
+//
+//- (void)didReceiveMemoryWarning {
+//    [super didReceiveMemoryWarning];
+//    // Dispose of any resources that can be recreated.
+//}
 
 @end

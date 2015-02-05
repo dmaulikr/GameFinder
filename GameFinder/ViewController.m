@@ -22,15 +22,6 @@
     
 }
 
-- (IBAction)signInButton:(id)sender {
-   
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isLoggedIn"];
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
-   
-}
 
 
 
