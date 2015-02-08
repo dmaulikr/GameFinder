@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
+#import "TimeCellTableViewCell.h"
 
-@interface FindGamesByTimeTableViewController : UITableViewController
+@interface FindGamesByTimeTableViewController : UIViewController <UITableViewDelegate>
+
+@property NSArray *gameTimesArray;
+
+@property (weak, nonatomic) IBOutlet UITableView *gameTime;
+
 
 @end

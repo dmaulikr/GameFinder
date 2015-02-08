@@ -17,11 +17,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self performSelector:@selector(retrieveFromParse)];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+-(void) retrieveFromParse {
+    
+    PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
+    
+    [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        NSLog(@"%@", objects);
+    }];
+    
+    [self.gameTime reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,28 +51,22 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //how many rows are in each of the above sections (Total number of cells needing to be displayed).
-    return 20;
+    return self.gameTimesArray.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //This sets the size of the cell at any given index.
-    return 66;
-}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //The actual code to return each cell, configured with the data you want to display.
     
     static NSString *CellIdentifier = @"TimeCell";
     
-    UITableViewCell *cell = [tableView
+    TimeCellTableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]
-                initWithStyle:UITableViewCellStyleSubtitle
-                reuseIdentifier:CellIdentifier];
-    }
     
-    // Configure the cell.
+    PFObject *tempObject = [self.gameTimesArray objectAtIndex:indexPath.row];
+    
+    cell.cellTitle.text = [tempObject objectForKey:@"cellTitle"];
     
     return cell;
     
@@ -70,12 +77,9 @@
 #pragma TableView delegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //This delegate method gets call when a user taps a TableView cell. This method sends the index of the tapped cell in the indexpath argument.
-    
-    //Show an animated deselection of the selected cell.
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    NSLog(@"cell tapped");
 }
+
 
 
 
