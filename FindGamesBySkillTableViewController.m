@@ -71,7 +71,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //This delegate method gets call when a user taps a TableView cell. This method sends the index of the tapped cell in the indexpath argument.
-    
+    NSLog(@"Cell tapped");
     //Show an animated deselection of the selected cell.
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

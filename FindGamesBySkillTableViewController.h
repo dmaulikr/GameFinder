@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FindGamesBySkillTableViewController : UITableViewController
+@interface FindGamesBySkillTableViewController : UIViewController
 
 @end

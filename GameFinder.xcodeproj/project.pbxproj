@@ -14,7 +14,6 @@
 		274713461A75CACF001EF18A /* MapViewAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 274713451A75CACF001EF18A /* MapViewAnnotation.m */; };
 		274A66FC1A7ABEDB00B712FF /* FindGamesByTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274A66FB1A7ABEDB00B712FF /* FindGamesByTimeTableViewController.m */; };
 		274A66FF1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274A66FE1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m */; };
-		2759226A1A87D8DA00B6E6A2 /* TimeCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 275922691A87D8DA00B6E6A2 /* TimeCellTableViewCell.m */; };
 		276A2DFE1A7BFF5200BD7600 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2DFD1A7BFF5200BD7600 /* RegisterViewController.m */; };
 		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
@@ -64,8 +63,6 @@
 		274A66FB1A7ABEDB00B712FF /* FindGamesByTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindGamesByTimeTableViewController.m; path = ../FindGamesByTimeTableViewController.m; sourceTree = "<group>"; };
 		274A66FD1A7ABEF000B712FF /* FindGamesBySkillTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindGamesBySkillTableViewController.h; path = ../FindGamesBySkillTableViewController.h; sourceTree = "<group>"; };
 		274A66FE1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindGamesBySkillTableViewController.m; path = ../FindGamesBySkillTableViewController.m; sourceTree = "<group>"; };
-		275922681A87D8DA00B6E6A2 /* TimeCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeCellTableViewCell.h; path = ../TimeCellTableViewCell.h; sourceTree = "<group>"; };
-		275922691A87D8DA00B6E6A2 /* TimeCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeCellTableViewCell.m; path = ../TimeCellTableViewCell.m; sourceTree = "<group>"; };
 		276A2DFC1A7BFF5100BD7600 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		276A2DFD1A7BFF5200BD7600 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -169,8 +166,6 @@
 		279E2ABC1A71A77F0080542E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				275922681A87D8DA00B6E6A2 /* TimeCellTableViewCell.h */,
-				275922691A87D8DA00B6E6A2 /* TimeCellTableViewCell.m */,
 				270C5B221A746F930004A632 /* LocationManager.h */,
 				270C5B231A746F930004A632 /* LocationManager.m */,
 				274713441A75CACF001EF18A /* MapViewAnnotation.h */,
@@ -353,7 +348,6 @@
 			files = (
 				274713461A75CACF001EF18A /* MapViewAnnotation.m in Sources */,
 				274A66FC1A7ABEDB00B712FF /* FindGamesByTimeTableViewController.m in Sources */,
-				2759226A1A87D8DA00B6E6A2 /* TimeCellTableViewCell.m in Sources */,
 				270C5B241A746F930004A632 /* LocationManager.m in Sources */,
 				270C5B271A746FB60004A632 /* FindGamesByLocationViewController.m in Sources */,
 				276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */,

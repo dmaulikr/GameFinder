@@ -12,19 +12,24 @@
 
 @interface LoginViewController : UIViewController < UITextFieldDelegate, UIAlertViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *userTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+
+#pragma mark buttons
+
 @property (weak, nonatomic) IBOutlet UIButton *signUpButtonArrow;
 @property (weak, nonatomic) IBOutlet UIButton *logInButtonArrow;
-
 @property (weak, nonatomic) IBOutlet UIButton *signUp;
-@property (weak, nonatomic) IBOutlet UIButton *logIn;
+@property (weak, nonatomic) IBOutlet UIButton *logInInsteadButton;
 
-@property (weak, nonatomic) IBOutlet UIView *gameFinderView;
-
-
+#pragma mark textfields
+@property (weak, nonatomic) IBOutlet UITextField *userTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *userRegisterTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordRegisterTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+
+#pragma mark views
+@property (weak, nonatomic) IBOutlet UIView *gameFinderView;
+
+
 
 @end

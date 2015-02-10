@@ -29,18 +29,17 @@
 -(void) retrieveFromParse {
     
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
-    
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        NSLog(@"%@", objects);
+        if (!error) {
+            NSLog(@"%@", objects);
+            self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
+        }
+        [self.gameTime reloadData];
     }];
-    
-    [self.gameTime reloadData];
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 #pragma -mark
 #pragma TableView datasource methods
 
@@ -54,19 +53,29 @@
     return self.gameTimesArray.count;
 }
 
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 66;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //The actual code to return each cell, configured with the data you want to display.
     
     static NSString *CellIdentifier = @"TimeCell";
     
-    TimeCellTableViewCell *cell = [tableView
+    UITableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:CellIdentifier];
     
     PFObject *tempObject = [self.gameTimesArray objectAtIndex:indexPath.row];
     
-    cell.cellTitle.text = [tempObject objectForKey:@"cellTitle"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]
+                initWithStyle:UITableViewCellStyleSubtitle
+                reuseIdentifier:CellIdentifier];
+    }
+
+    
+    cell.textLabel.text = [tempObject objectForKey:@"name"];
+    
     
     return cell;
     
@@ -78,11 +87,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"cell tapped");
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-
-
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 
 @end

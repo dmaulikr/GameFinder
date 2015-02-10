@@ -18,11 +18,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self.userTextField resignFirstResponder];
-    [self.passwordTextField resignFirstResponder];
-}
+    
+    self.logInInsteadButton.hidden = YES;
+    
+//    [self.userTextField resignFirstResponder];
+//    [self.passwordTextField resignFirstResponder];
+    
+    }
 
 -(void)viewDidAppear:(BOOL)animated{
+    
+    
+
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MainScreen"];
     
     PFUser *currentUser = [PFUser currentUser];
@@ -36,22 +43,36 @@
     
 }
 
+
+
 #pragma mark Animation between login and sign up
 - (IBAction)signUp:(id)sender {
+    NSLog(@"signUp pressed");
+    [UIView animateWithDuration:.5 animations:^{
+        self.view.backgroundColor = [UIColor grayColor];
+        self.gameFinderView.alpha = 0;
+        self.userTextField.hidden = YES;
+        self.passwordTextField.hidden = YES;
+        self.logInButtonArrow.hidden = YES;
+        self.logInInsteadButton.hidden = NO;
+    }];
     
-    [UIView animateWithDuration:1 animations:^{
-        [self.gameFinderView setCenter:CGPointMake(self.view.center.x, self.view.center.y*1.5)];
+   
+}
+
+- (IBAction)logInButtonInstead:(id)sender {
+    
+    [UIView animateWithDuration:.5 animations:^{
+        self.view.backgroundColor = [UIColor whiteColor];
+        self.logInInsteadButton.hidden = YES;
+        self.gameFinderView.alpha = 1;
+        self.userTextField.hidden = NO;
+        self.passwordTextField.hidden = NO;
+        self.logInButtonArrow.hidden = NO;
     }];
 }
 
-- (IBAction)logIn:(id)sender {
-   
-    
-    [UIView animateWithDuration:1 animations:^{
-        [self.gameFinderView setCenter:CGPointMake(self.view.center.x, self.view.center.y/2)];
-    }];
-    
-}
+
 
 #pragma mark Login User
 - (IBAction)logInPressed:(id)sender {
@@ -67,7 +88,13 @@
             NSLog(@"%@", error);
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Account not found. Please sign up." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                [self performSegueWithIdentifier:@"SignUp" sender:self];
+                [UIView animateWithDuration:.5 animations:^{
+                    self.gameFinderView.alpha = 0;
+                    self.userTextField.hidden = YES;
+                    self.passwordTextField.hidden = YES;
+                    self.logInButtonArrow.hidden = YES;
+                    self.logInInsteadButton.hidden = NO;
+                }];
             }];
             
             [alert addAction:action];
@@ -86,31 +113,38 @@
         PFUser *user = [PFUser user];
         user.username = self.userRegisterTextField.text;
         user.password = self.passwordRegisterTextField.text;
-        //user.email = self.emailTextField.text;
+        user.email = self.emailTextField.text;
+        
         [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
-                [self performSegueWithIdentifier:@"SignupSuccesful" sender:self];
+                [self performSegueWithIdentifier:@"LoginSuccessful" sender:self];
             }
         }];
         
     }else{
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Please fill in all fields." preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            
+        }];
+        
         [alert addAction:action];
-        [self presentViewController:alert animated:YES completion:nil];
+        [self presentViewController:alert animated:YES completion:^{
+            [UIView animateWithDuration:.5 animations:^{
+                self.view.backgroundColor = [UIColor grayColor];
+                self.gameFinderView.alpha = 0;
+                self.userTextField.hidden = YES;
+                self.passwordTextField.hidden = YES;
+                self.logInButtonArrow.hidden = YES;
+                self.logInInsteadButton.hidden = NO;
+            }];
+        }];
+         
     }
-    
+         
 }
 
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
-    [self.userTextField resignFirstResponder];
-    [self.passwordTextField resignFirstResponder];
-    
-    return NO;
-    
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

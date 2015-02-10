@@ -124,7 +124,7 @@
             </objects>
             <point key="canvasLocation" x="-130" y="-152"/>
         </scene>
-        <!--Time-->
+        <!--Title-->
         <scene sceneID="KoO-V1-K8e">
             <objects>
                 <viewController id="zcC-Yn-247" customClass="FindGamesByTimeTableViewController" sceneMemberID="viewController">
@@ -136,49 +136,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="b1r-bT-dbX">
-                                <rect key="frame" x="0.0" y="62" width="320" height="457"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="TimeCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimeCell" id="9aI-is-eGP" customClass="TimeCellTableViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9aI-is-eGP" id="OVy-Kk-i53">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wNk-f1-TaS">
-                                                    <rect key="frame" x="98" y="11" width="124" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="cellTitle" destination="wNk-f1-TaS" id="ccm-Xf-GZj"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="zcC-Yn-247" id="Ka4-8u-v3k"/>
-                                    <outlet property="delegate" destination="zcC-Yn-247" id="6xS-fv-pNt"/>
-                                </connections>
-                            </tableView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9vX-AD-b1e">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="18" width="320" height="44"/>
                                 <items>
                                     <navigationItem title="Time" id="Kfg-at-QkN">
                                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Nev-sn-8Km"/>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="b1r-bT-dbX">
+                                <rect key="frame" x="0.0" y="62" width="320" height="457"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="zcC-Yn-247" id="Ka4-8u-v3k"/>
+                                    <outlet property="delegate" destination="zcC-Yn-247" id="6xS-fv-pNt"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Time" image="clock.png" id="Ikn-Bm-ZLG"/>
+                    <navigationItem key="navigationItem" title="Title" id="pN6-bD-WCG"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="gameTime" destination="b1r-bT-dbX" id="ao6-pq-aKb"/>
+                        <outlet property="gameTime" destination="b1r-bT-dbX" id="Avk-NX-Ryv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Onf-L5-mRt" userLabel="First Responder" sceneMemberID="firstResponder"/>

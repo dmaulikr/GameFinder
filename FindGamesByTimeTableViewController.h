@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-#import "TimeCellTableViewCell.h"
+//#import "TimeCellTableViewCell.h"
 
-@interface FindGamesByTimeTableViewController : UIViewController <UITableViewDelegate>
+@interface FindGamesByTimeTableViewController : UIViewController <UITableViewDataSource ,UITableViewDelegate>
 
 @property NSArray *gameTimesArray;
 
