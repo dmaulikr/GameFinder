@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RegisterViewController.h"
+
 #import <MapKit/MapKit.h>
 
 @interface LoginViewController : UIViewController < UITextFieldDelegate, UIAlertViewDelegate>
