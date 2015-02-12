@@ -18,25 +18,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
-   
+    self.mapView.layer.cornerRadius = 5.0;
+    [self.mapView setDelegate:self];
     
     
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
             NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
             
-            MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
-            annotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
-            annotation.title = @"WTF?!";
+//            MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
+//            annotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+//            annotation.title = @"WTF?!";
+//            
+//            [self.mapView addAnnotation:annotation];
             
-            [self.mapView addAnnotation:annotation];
+            
             
             self.mapView.showsUserLocation = YES;
-            self.mapView.layer.cornerRadius = 5.0;
-            [self.mapView setDelegate:self];
             [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
             [[PFUser currentUser] saveInBackground];
-            
             [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.01, 0.01))];
             
             
@@ -62,6 +62,14 @@
     
 }
 
+- (IBAction)logOut:(id)sender {
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
+    
+    [PFUser logOut];
+    [self presentViewController:vc animated:YES completion:^{
+        
+    }];
+}
 
 #pragma -mark TableView datasource methods
 
@@ -100,7 +108,7 @@
     cell.textLabel.text = [tempObject objectForKey:@"name"];
     cell.detailTextLabel.text = [tempObject objectForKey:@"address"];
     cell.accessoryType = UITableViewCellAccessoryDetailButton;
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor colorWithRed:226 green:239 blue:237 alpha:.8];
     
     
     cell.layoutMargins = UIEdgeInsetsZero;
@@ -121,10 +129,134 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
+
+
+-(void)getPlacesFromGoogle{
     
-    return NO;
+    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=51.503186,-0.126446&radius=5000&types=pub&sensor&key=IzaSyCJR91xOyftoSVE6Tj2EwrARyLKh0KlDso"];
+    
+    NSURL *url = [NSURL URLWithString:urlStr];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSError *jsonError;
+        
+                NSMutableDictionary *allData = [NSJSONSerialization
+                                                JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+        
+                NSArray *results = [allData objectForKey:@"results"];
+        
+                NSMutableArray *placesFound = [NSMutableArray array];
+        
+        if (results.count >= 1){
+                NSLog(@"%@", results);
+                NSLog(@"%@", placesFound);
+        }
+    }] resume];
 }
+
+//
+//-(void)getPlacesFromGoogle{
+//    
+//    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/radarsearch/json?location=%f,%f&radius=300&types=gym|fitness=&key=AIzaSyCJR91xOyftoSVE6Tj2EwrARyLKh0KlDso",self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude];
+//    
+//    NSURL  *url = [NSURL URLWithString:urlStr];
+//    
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    
+//    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//    
+//    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//        
+//        NSError *jsonError;
+//        
+//        NSMutableDictionary *allData = [NSJSONSerialization
+//                                        JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+//        
+//        NSArray *results = [allData objectForKey:@"results"];
+//        
+//        NSMutableArray *placesFound = [NSMutableArray array];
+//        
+//        NSLog(@"%@", placesFound);
+//        
+//        if (results.count >= 1){
+//            
+//            for (id object in results) {
+//                
+//                NSDictionary *places = object;
+//                
+//                NSString *name = [places objectForKey:@"name"];
+//                
+//                NSString *googlePlacesID = [places objectForKey:@"place_id"];
+//                
+//                NSDictionary *geometry = [places objectForKey:@"geometry"];
+//                
+//                NSDictionary *location = [geometry objectForKey:@"location"];
+//                
+//                NSNumber *lat = [location objectForKey:@"lat"];
+//                
+//                NSNumber *lng = [location objectForKey:@"lng"];
+//                
+//                CLLocationCoordinate2D latlng = CLLocationCoordinate2DMake(lat.doubleValue, lng.doubleValue);
+//                
+//                MapViewAnnotation *annotation = [[MapViewAnnotation alloc]initWithTitle:name andCoordinate:latlng andGooglePlacesID:googlePlacesID];
+//                
+//                
+//                
+//                [placesFound addObject:annotation];
+//                
+//            }
+//            
+//            [self performSelectorOnMainThread:@selector(displayNewAnnotations:) withObject:placesFound waitUntilDone:NO];
+//            
+//        }
+//        
+//        
+//        
+//    }] resume];
+//    
+//    
+//}
+//
+//-(void)displayNewAnnotations:(NSMutableArray *)places {
+//    
+//    [self.mapView removeAnnotations:self.mapView.annotations];
+//    
+//    [self.mapView addAnnotations:places];
+//    
+//}
+//
+//
+//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+//    static NSString *identifier = @"MyLocation";
+//    
+//    
+//    if ([annotation isKindOfClass:[MapViewAnnotation class]]) {
+//        
+//        MKAnnotationView *aView = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+//        
+//        
+//        
+//        if (aView == nil) {
+//            aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+//            
+//            aView.image = [UIImage imageNamed:@"pin.png"];
+//            aView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeInfoDark];
+//            aView.canShowCallout = YES;
+//            aView.annotation = annotation;
+//        } else {
+//            aView.annotation = annotation;
+//        }
+//        
+//        return aView;
+//        
+//    } else {
+//        return nil;
+//    }
+//}
 
 
 

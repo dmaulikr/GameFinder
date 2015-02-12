@@ -13,13 +13,6 @@
 @interface LoginViewController : UIViewController < UITextFieldDelegate, UIAlertViewDelegate>
 
 
-#pragma mark buttons
-
-@property (weak, nonatomic) IBOutlet UIButton *signUpButtonArrow;
-@property (weak, nonatomic) IBOutlet UIButton *logInButtonArrow;
-@property (weak, nonatomic) IBOutlet UIButton *signUp;
-@property (weak, nonatomic) IBOutlet UIButton *logInInsteadButton;
-
 #pragma mark textfields
 @property (weak, nonatomic) IBOutlet UITextField *userTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
-//#import "MapViewAnnotation.h"
+#import "MapViewAnnotation.h"
 
 
 @interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
@@ -22,7 +22,9 @@
 
 @property NSArray *gameTimesArray;
 
+@property CLLocation *currentLocation;
 
+@property CLLocation *startingLocation;
 
 
 @end
