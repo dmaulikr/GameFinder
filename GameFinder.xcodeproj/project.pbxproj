@@ -9,12 +9,12 @@
 /* Begin PBXBuildFile section */
 		270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B1E1A746F0A0004A632 /* MapKit.framework */; };
 		270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B201A746F150004A632 /* CoreLocation.framework */; };
-		274A66FF1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274A66FE1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m */; };
 		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
-		27752CA61A8B15BC00C51DD5 /* MapViewAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27752CA51A8B15BC00C51DD5 /* MapViewAnnotation.m */; };
+		277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */; };
+		277A3EB01A8CC883000C17ED /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EAF1A8CC883000C17ED /* LocationManager.m */; };
+		277A3EB31A8CC930000C17ED /* MapViewAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EB21A8CC930000C17ED /* MapViewAnnotation.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
 		279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC11A71A77F0080542E /* AppDelegate.m */; };
-		279E2AC51A71A77F0080542E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC41A71A77F0080542E /* ViewController.m */; };
 		279E2AC81A71A77F0080542E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AC61A71A77F0080542E /* Main.storyboard */; };
 		279E2ACA1A71A77F0080542E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AC91A71A77F0080542E /* Images.xcassets */; };
 		279E2ACD1A71A77F0080542E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E2ACB1A71A77F0080542E /* LaunchScreen.xib */; };
@@ -50,19 +50,19 @@
 /* Begin PBXFileReference section */
 		270C5B1E1A746F0A0004A632 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		274A66FD1A7ABEF000B712FF /* FindGamesBySkillTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FindGamesBySkillTableViewController.h; path = ../FindGamesBySkillTableViewController.h; sourceTree = "<group>"; };
-		274A66FE1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindGamesBySkillTableViewController.m; path = ../FindGamesBySkillTableViewController.m; sourceTree = "<group>"; };
-		276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		27752CA41A8B15BC00C51DD5 /* MapViewAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewAnnotation.h; sourceTree = "<group>"; };
-		27752CA51A8B15BC00C51DD5 /* MapViewAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewAnnotation.m; sourceTree = "<group>"; };
+		276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = GameFinder/LoginViewController.h; sourceTree = "<group>"; };
+		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = GameFinder/LoginViewController.m; sourceTree = "<group>"; };
+		277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailViewController.h; sourceTree = "<group>"; };
+		277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailViewController.m; sourceTree = "<group>"; };
+		277A3EAE1A8CC883000C17ED /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		277A3EAF1A8CC883000C17ED /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		277A3EB11A8CC930000C17ED /* MapViewAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewAnnotation.h; sourceTree = "<group>"; };
+		277A3EB21A8CC930000C17ED /* MapViewAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewAnnotation.m; sourceTree = "<group>"; };
 		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2ABD1A71A77F0080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2ABE1A71A77F0080542E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		279E2AC01A71A77F0080542E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		279E2AC11A71A77F0080542E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		279E2AC31A71A77F0080542E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		279E2AC41A71A77F0080542E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		279E2AC71A71A77F0080542E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		279E2AC91A71A77F0080542E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		279E2ACC1A71A77F0080542E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -123,10 +123,16 @@
 		279E2AB01A71A77E0080542E = {
 			isa = PBXGroup;
 			children = (
-				27752CA41A8B15BC00C51DD5 /* MapViewAnnotation.h */,
-				27752CA51A8B15BC00C51DD5 /* MapViewAnnotation.m */,
+				277A3EB11A8CC930000C17ED /* MapViewAnnotation.h */,
+				277A3EB21A8CC930000C17ED /* MapViewAnnotation.m */,
+				277A3EAE1A8CC883000C17ED /* LocationManager.h */,
+				277A3EAF1A8CC883000C17ED /* LocationManager.m */,
+				277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */,
+				277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */,
 				27C1602D1A89DC5100746FC9 /* MainViewController.h */,
 				27C1602E1A89DC5100746FC9 /* MainViewController.m */,
+				276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */,
+				276A2E001A7BFF6300BD7600 /* LoginViewController.m */,
 				27FC60731A7B40AE005AE24C /* Frameworks */,
 				279E2ABB1A71A77F0080542E /* GameFinder */,
 				279E2AD51A71A7800080542E /* GameFinderTests */,
@@ -218,12 +224,6 @@
 		27FC60741A7B40C6005AE24C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */,
-				276A2E001A7BFF6300BD7600 /* LoginViewController.m */,
-				279E2AC31A71A77F0080542E /* ViewController.h */,
-				279E2AC41A71A77F0080542E /* ViewController.m */,
-				274A66FD1A7ABEF000B712FF /* FindGamesBySkillTableViewController.h */,
-				274A66FE1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -332,12 +332,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				27C1602F1A89DC5100746FC9 /* MainViewController.m in Sources */,
+				277A3EB01A8CC883000C17ED /* LocationManager.m in Sources */,
 				276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */,
-				279E2AC51A71A77F0080542E /* ViewController.m in Sources */,
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
+				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,
+				277A3EB31A8CC930000C17ED /* MapViewAnnotation.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,
-				27752CA61A8B15BC00C51DD5 /* MapViewAnnotation.m in Sources */,
-				274A66FF1A7ABEF000B712FF /* FindGamesBySkillTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

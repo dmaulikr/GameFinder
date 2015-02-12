@@ -12,19 +12,17 @@
 #import "MapViewAnnotation.h"
 
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UITableView *gamesTableView;
 
-@property (strong, nonatomic) PFGeoPoint *userLocation;
 
 @property NSArray *gameTimesArray;
 
-@property CLLocation *currentLocation;
 
-@property CLLocation *startingLocation;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 
 @end

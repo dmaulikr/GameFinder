@@ -57,8 +57,13 @@
     return YES;
 }
 
+
+
+
 -(void)textFieldDidEndEditing:(UITextField *)textField{
-    [self hideKeyboard];
+    self.view.center = CGPointMake(self.view.center.x, self.view.center.y);
+    
+    
 }
 
 -(void)hideKeyboard {
