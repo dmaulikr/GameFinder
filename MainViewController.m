@@ -23,6 +23,7 @@
     
     self.mapView.layer.cornerRadius = 5.0;
     [self.mapView setDelegate:self];
+    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
     
     self.searchBar.layer.cornerRadius = 5.0;
     
@@ -112,9 +113,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(void)getPlacesFromGoogle{
+-(void)getPlacesFromGoogleatLocation:(CLLocationCoordinate2D) currentLocation{
     
-    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=300&sensor=false&keyword=%@&key=AIzaSyDfFhd0Uh5fvOw1daGh9zbVPbAVirn2qDU",self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude,self.searchBar.text];
+    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/radarsearch/json?location=%f,%f&radius=5000&types=bar&key=AIzaSyA0UHt_IADIiohNKBl2FujWlUkKNprZZFY", currentLocation.latitude, currentLocation.longitude];
     
     NSURL  *url = [NSURL URLWithString:urlStr];
     
@@ -130,6 +131,7 @@
                                         JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
         
         NSArray *results = [allData objectForKey:@"results"];
+        NSLog(@"Results are: %@", results);
         
         NSMutableArray *placesFound = [NSMutableArray array];
         
@@ -278,7 +280,7 @@
     
     [searchBar resignFirstResponder];
     
-    [self getPlacesFromGoogle];
+   
 }
 
 -(void)updateRegion:(CLLocationCoordinate2D) location{
@@ -296,12 +298,20 @@
     
     
 }
+- (IBAction)zoomButton:(id)sender {
+    [UIView animateWithDuration:.5 animations:^{
+        self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);    }];
+    
+}
 
 -(void)updateLocationRange:(NSNotification *)notif {
     
     CLLocation *newLocation = notif.object;
     
+    [self getPlacesFromGoogleatLocation:newLocation.coordinate];
+    
     [self updateRegion:newLocation.coordinate];
+    
 }
 
 

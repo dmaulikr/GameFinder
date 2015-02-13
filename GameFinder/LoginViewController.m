@@ -60,11 +60,11 @@
 
 
 
--(void)textFieldDidEndEditing:(UITextField *)textField{
-    self.view.center = CGPointMake(self.view.center.x, self.view.center.y);
+//-(void)textFieldDidEndEditing:(UITextField *)textField{
+    //self.view.center = CGPointMake(self.view.center.x, self.view.center.y);
     
     
-}
+//}
 
 -(void)hideKeyboard {
     [self.userTextField resignFirstResponder];
