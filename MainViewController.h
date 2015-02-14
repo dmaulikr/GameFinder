@@ -10,19 +10,19 @@
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
 #import "MapViewAnnotation.h"
+#import "CustomTableViewCell.h"
 
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
 @property (weak, nonatomic) IBOutlet UITableView *gamesTableView;
 
 
+
 @property NSArray *gameTimesArray;
 
-
-@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 
 @end

@@ -19,32 +19,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocationRange:) name:@"updatedLocation" object:nil];
     
     self.mapView.layer.cornerRadius = 5.0;
     [self.mapView setDelegate:self];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
     
-    self.searchBar.layer.cornerRadius = 5.0;
     
-    [self performSelector:@selector(retrieveFromParse)];
     
+ 
 }
 
 
-#pragma -mark parse queries
--(void) retrieveFromParse {
-    
-    PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
-    [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            
-            self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
-        }
-        [self.gamesTableView reloadData];
-    }];
-    
-}
+
 
 - (IBAction)logOut:(id)sender {
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
@@ -64,7 +53,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //how many rows are in each of the above sections (Total number of cells needing to be displayed).
-    return self.gameTimesArray.count;
+    return 5;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -78,9 +67,12 @@
     static NSString *CellIdentifier = @"TimeCell";
     
     UITableViewCell *cell = [tableView
-                             dequeueReusableCellWithIdentifier:CellIdentifier];
+                             dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    PFObject *tempObject = [self.gameTimesArray objectAtIndex:indexPath.row];
+    
+    
+    
+    
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc]
@@ -89,13 +81,10 @@
     }
     
     
-    cell.textLabel.text = [tempObject objectForKey:@"name"];
-    cell.detailTextLabel.text = [tempObject objectForKey:@"address"];
-    cell.accessoryType = UITableViewCellAccessoryDetailButton;
-    cell.backgroundColor = [UIColor colorWithRed:226 green:239 blue:237 alpha:.8];
+   
     
-    
-    cell.layoutMargins = UIEdgeInsetsZero;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+   
     cell.textLabel.font = [UIFont fontWithName:@"optima" size:15.0];
     cell.detailTextLabel.font = [UIFont fontWithName:@"american typewriter" size:13.0];
     
@@ -113,6 +102,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma -mark google places api
 -(void)getPlacesFromGoogleatLocation:(CLLocationCoordinate2D) currentLocation{
     
     NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=5000&types=gym|school|park&key=AIzaSyA0UHt_IADIiohNKBl2FujWlUkKNprZZFY", currentLocation.latitude, currentLocation.longitude];
@@ -132,7 +122,9 @@
                                         JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
         
         NSArray *results = [allData objectForKey:@"results"];
-        NSLog(@"Results are: %@", results);
+        
+        
+        //NSLog(@"Results are: %@", results);
         
         NSMutableArray *placesFound = [NSMutableArray array];
         
@@ -146,9 +138,14 @@
                 
                 NSString *googlePlacesID = [places objectForKey:@"place_id"];
                 
+                NSString *address = [places objectForKey:@"vicinity"];
+                
+                //NSLog(@"address is: %@", address);
+                
                 NSDictionary *geometry = [places objectForKey:@"geometry"];
                 
                 NSDictionary *location = [geometry objectForKey:@"location"];
+                
                 
                 NSNumber *lat = [location objectForKey:@"lat"];
                 
@@ -158,7 +155,7 @@
                 
                 
                     
-                    MapViewAnnotation *annotation = [[MapViewAnnotation alloc]initWithTitle:name andCoordinate:latlng andGooglePlacesID:googlePlacesID];
+                MapViewAnnotation *annotation = [[MapViewAnnotation alloc]initWithTitle:name andCoordinate:latlng andGooglePlacesID:googlePlacesID andGoogleAddress:address];
                 
                     [placesFound addObject:annotation];
      
@@ -176,7 +173,7 @@
     
     
 }
-
+#pragma -mark map annotation view
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
     static NSString *identifier = @"MyLocation";
     
@@ -188,9 +185,11 @@
         
         
         if (aView == nil) {
-            aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
             
-            aView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeInfoDark];
+           
+            aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+            aView.image = [UIImage imageNamed:@"basketball"];
+            aView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeInfoLight];
             aView.canShowCallout = YES;
             aView.annotation = annotation;
         } else {
@@ -273,17 +272,7 @@
 }
 
 
--(void)didTapOnScreen{
-    
-    [self.searchBar resignFirstResponder];
-}
 
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    
-    [searchBar resignFirstResponder];
-    
-   
-}
 
 -(void)updateRegion:(CLLocationCoordinate2D) location{
     
@@ -291,18 +280,13 @@
     
     CLLocationCoordinate2D initialLocationFocus = location;
     
-    MKCoordinateSpan span = MKCoordinateSpanMake(.01, .01);
+    MKCoordinateSpan span = MKCoordinateSpanMake(.05, .05);
     
     MKCoordinateRegion region = MKCoordinateRegionMake(initialLocationFocus, span);
     
     [self.mapView setRegion:region animated:YES];
     
     
-    
-}
-- (IBAction)zoomButton:(id)sender {
-    [UIView animateWithDuration:.5 animations:^{
-        self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);    }];
     
 }
 
@@ -313,6 +297,12 @@
     [self getPlacesFromGoogleatLocation:newLocation.coordinate];
     
     [self updateRegion:newLocation.coordinate];
+    
+}
+
+- (IBAction)zoomButton:(id)sender {
+    [UIView animateWithDuration:.5 animations:^{
+        self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);    }];
     
 }
 

@@ -167,7 +167,7 @@
                         <outlet property="passwordTextField" destination="vL1-zH-8xk" id="0eQ-qB-Hqw"/>
                         <outlet property="userRegisterTextField" destination="EBi-ky-L5a" id="59n-xV-zks"/>
                         <outlet property="userTextField" destination="GiK-vt-Gr7" id="IA1-pr-1To"/>
-                        <segue destination="7zf-AK-dEa" kind="show" identifier="LoginSuccessful" id="5rn-Mx-sT8"/>
+                        <segue destination="Brx-ND-KaD" kind="show" identifier="LoginSuccessful" id="5rn-Mx-sT8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -198,6 +198,15 @@
                                 <inset key="scrollIndicatorInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <color key="separatorColor" red="1" green="0.93873355263157898" blue="0.92961040296052633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexColor" red="0.76078431372549016" green="0.76470588235294112" blue="0.80000000000000004" alpha="0.83999999999999997" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimeCell" id="Knh-LQ-YaG">
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Knh-LQ-YaG" id="xeB-Pd-Seh">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="7zf-AK-dEa" id="vkt-b8-7px"/>
                                     <outlet property="delegate" destination="7zf-AK-dEa" id="rqE-JF-URC"/>
@@ -223,27 +232,20 @@
                                     <action selector="zoomButton:" destination="7zf-AK-dEa" eventType="touchUpInside" id="6Lk-9w-oNH"/>
                                 </connections>
                             </button>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aFO-R8-Aft">
-                                <rect key="frame" x="33" y="81" width="255" height="44"/>
-                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="7zf-AK-dEa" id="mrc-5d-Dh0"/>
-                                </connections>
-                            </searchBar>
                         </subviews>
-                        <color key="backgroundColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.023811469209999998" green="1" blue="0.86063124660000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="huh-f4-qwh"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="gamesTableView" destination="bGj-ku-4G0" id="PQM-sA-WF6"/>
                         <outlet property="mapView" destination="MKU-Gn-bkm" id="MX2-tl-PYf"/>
-                        <outlet property="searchBar" destination="aFO-R8-Aft" id="M7H-B3-fWN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UCE-8b-Sbw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="330" y="-269"/>
+            <point key="canvasLocation" x="862" y="-269"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Mo9-RV-Kkb">
@@ -286,6 +288,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7VM-u9-BPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="718" y="518"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wSF-k4-QIc">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Brx-ND-KaD" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8Qe-CT-FuB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="7zf-AK-dEa" kind="relationship" relationship="rootViewController" id="mjc-tH-0lu"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NDO-w2-lI3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="330" y="-269"/>
         </scene>
     </scenes>
     <resources>
