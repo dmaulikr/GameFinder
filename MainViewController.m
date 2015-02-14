@@ -115,9 +115,10 @@
 
 -(void)getPlacesFromGoogleatLocation:(CLLocationCoordinate2D) currentLocation{
     
-    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/radarsearch/json?location=%f,%f&radius=5000&types=bar&key=AIzaSyA0UHt_IADIiohNKBl2FujWlUkKNprZZFY", currentLocation.latitude, currentLocation.longitude];
+    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=5000&types=gym|school|park&key=AIzaSyA0UHt_IADIiohNKBl2FujWlUkKNprZZFY", currentLocation.latitude, currentLocation.longitude];
     
-    NSURL  *url = [NSURL URLWithString:urlStr];
+    
+    NSURL  *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -155,11 +156,12 @@
                 
                 CLLocationCoordinate2D latlng = CLLocationCoordinate2DMake(lat.doubleValue, lng.doubleValue);
                 
-                MapViewAnnotation *annotation = [[MapViewAnnotation alloc]initWithTitle:name andCoordinate:latlng andGooglePlacesID:googlePlacesID];
                 
+                    
+                    MapViewAnnotation *annotation = [[MapViewAnnotation alloc]initWithTitle:name andCoordinate:latlng andGooglePlacesID:googlePlacesID];
                 
-                
-                [placesFound addObject:annotation];
+                    [placesFound addObject:annotation];
+     
                 
             }
             
