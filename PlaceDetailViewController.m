@@ -18,9 +18,7 @@
     [super viewDidLoad];
     NSURL *url = [NSURL URLWithString:self.urlString];
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    [self.webView loadRequest:request];
+ 
 }
 
 - (void)didReceiveMemoryWarning {

@@ -18,7 +18,6 @@
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         self.locationManager.delegate = self;
         self.locationManager.distanceFilter = 10;
-        
         [self.locationManager startUpdatingLocation];
         [self.locationManager requestWhenInUseAuthorization];
         

@@ -25,10 +25,12 @@
     
     self.mapView.layer.cornerRadius = 5.0;
     [self.mapView setDelegate:self];
-    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
     
     
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self getPlacesFromGoogleatLocation:self.mapView.centerCoordinate];
+    });
+    //[self performSelector:@selector(getPlacesFromGoogleatLocation:)];
  
 }
 
@@ -53,11 +55,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //how many rows are in each of the above sections (Total number of cells needing to be displayed).
-    return 5;
+    return self.gameTimesArray.count;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 70;
 }
 
 
@@ -66,27 +68,27 @@
     
     static NSString *CellIdentifier = @"TimeCell";
     
-    UITableViewCell *cell = [tableView
+    CustomTableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    
-    
-    
-    
+    NSDictionary *tempObject = [self.gameTimesArray objectAtIndex:indexPath.row];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]
+        cell = [[CustomTableViewCell alloc]
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier:CellIdentifier];
     }
     
     
    
-    
+    cell.title.text = [tempObject objectForKey:@"name"];
+    cell.subTitle.text = [tempObject objectForKey:@"vicinity"];
+    cell.title.textAlignment = NSTextAlignmentCenter;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
    
-    cell.textLabel.font = [UIFont fontWithName:@"optima" size:15.0];
-    cell.detailTextLabel.font = [UIFont fontWithName:@"american typewriter" size:13.0];
+    cell.title.font = [UIFont fontWithName:@"optima-bold" size:17.0];
+    cell.title.textColor = [UIColor darkGrayColor];
+    cell.subTitle.textColor = [UIColor lightGrayColor];
+    cell.subTitle.font = [UIFont fontWithName:@"american typewriter" size:10.0];
     
     
     return cell;
@@ -105,7 +107,7 @@
 #pragma -mark google places api
 -(void)getPlacesFromGoogleatLocation:(CLLocationCoordinate2D) currentLocation{
     
-    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=5000&types=gym|school|park&key=AIzaSyA0UHt_IADIiohNKBl2FujWlUkKNprZZFY", currentLocation.latitude, currentLocation.longitude];
+    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=25000&types=gym|school|park&key=AIzaSyA0UHt_IADIiohNKBl2FujWlUkKNprZZFY", currentLocation.latitude, currentLocation.longitude];
     
     
     NSURL  *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -138,10 +140,6 @@
                 
                 NSString *googlePlacesID = [places objectForKey:@"place_id"];
                 
-                NSString *address = [places objectForKey:@"vicinity"];
-                
-                //NSLog(@"address is: %@", address);
-                
                 NSDictionary *geometry = [places objectForKey:@"geometry"];
                 
                 NSDictionary *location = [geometry objectForKey:@"location"];
@@ -153,24 +151,24 @@
                 
                 CLLocationCoordinate2D latlng = CLLocationCoordinate2DMake(lat.doubleValue, lng.doubleValue);
                 
+                self.gameTimesArray = [[NSArray alloc]initWithArray:results];
                 
+                [self.gamesTableView reloadData];
                     
-                MapViewAnnotation *annotation = [[MapViewAnnotation alloc]initWithTitle:name andCoordinate:latlng andGooglePlacesID:googlePlacesID andGoogleAddress:address];
+                MapViewAnnotation *annotation = [[MapViewAnnotation alloc]initWithTitle:name andCoordinate:latlng andGooglePlacesID:googlePlacesID];
                 
                     [placesFound addObject:annotation];
-     
+            
                 
             }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self displayNewAnnotations:placesFound];
+            });
             
-            
-            
-            [self performSelectorOnMainThread:@selector(displayNewAnnotations:) withObject:placesFound waitUntilDone:NO];
+            //[self performSelectorOnMainThread:@selector(displayNewAnnotations:) withObject:placesFound waitUntilDone:NO];
         }
         
-        
-        
     }] resume];
-    
     
 }
 #pragma -mark map annotation view
@@ -207,15 +205,13 @@
     
     MapViewAnnotation *annotation = view.annotation;
     
-    
-    
     [self getPlaceDetailWithID:annotation.googlePlacesID];
     
 }
 
 -(void)getPlaceDetailWithID:(NSString *)placeID {
     
-    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?placeid=%@&key=AIzaSyDfFhd0Uh5fvOw1daGh9zbVPbAVirn2qDU", placeID];
+    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/nearbyplace/details/json?placeid=%@&key=AIzaSyDfFhd0Uh5fvOw1daGh9zbVPbAVirn2qDU", placeID];
     NSURL  *url = [NSURL URLWithString:urlStr];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -232,7 +228,7 @@
                                         error:&jsonError];
         
         NSDictionary *result = [allData objectForKey:@"result"];
-        
+        NSLog(@"detail result is %@", result);
         [self performSelectorOnMainThread:@selector(showPlaceDetail:) withObject:result waitUntilDone:NO];
         
         
@@ -243,21 +239,25 @@
 
 -(void)showPlaceDetail:(NSDictionary *)result {
     
-    [self performSegueWithIdentifier:@"showPlaceDetail" sender:result];
+    PlaceDetailViewController *dvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"detailPage"];
+    
+    NSString *name = [result objectForKey:@"name"];
+    
+    dvc.title = name;
+    
+    [self.navigationController pushViewController:dvc animated:YES];
+    //[self performSegueWithIdentifier:@"showPlaceDetail" sender:result];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"showPlaceDetail"]) {
+        
         NSDictionary *result = (NSDictionary *)sender;
-        
-        NSString *websiteLink = [result objectForKey:@"website"];
-        
+      
         NSString *name = [result objectForKey:@"name"];
         
         PlaceDetailViewController *pdc = segue.destinationViewController;
-        
-        pdc.urlString = websiteLink;
         
         pdc.title = name;
     }
@@ -278,9 +278,11 @@
     
     self.mapView.showsUserLocation = YES;
     
+    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
+    
     CLLocationCoordinate2D initialLocationFocus = location;
     
-    MKCoordinateSpan span = MKCoordinateSpanMake(.05, .05);
+    MKCoordinateSpan span = MKCoordinateSpanMake(.08,.08);
     
     MKCoordinateRegion region = MKCoordinateRegionMake(initialLocationFocus, span);
     
@@ -301,9 +303,12 @@
 }
 
 - (IBAction)zoomButton:(id)sender {
-    [UIView animateWithDuration:.5 animations:^{
-        self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);    }];
     
+    
+    [UIView animateWithDuration:.5 animations:^{
+        self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
+        
+    }];
 }
 
 

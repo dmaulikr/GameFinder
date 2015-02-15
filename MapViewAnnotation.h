@@ -23,7 +23,7 @@
 
 
 -(id) initWithTitle:(NSString *) annotationTitle andCoordinate:(CLLocationCoordinate2D)
-annotationCoordinate andGooglePlacesID: (NSString *) placesID andGoogleAddress: (NSString *) address;
+annotationCoordinate andGooglePlacesID: (NSString *) placesID;
 
 
 
