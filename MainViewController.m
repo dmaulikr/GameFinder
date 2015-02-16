@@ -19,7 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    //Look at SV progress hud
+    //Google Drive presentations/Lucid chart
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocationRange:) name:@"updatedLocation" object:nil];
     
@@ -101,6 +102,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"cell tapped");
     
+    [self performSegueWithIdentifier:@"showPlaceDetail" sender:nil];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -153,7 +155,7 @@
                 
                 self.gameTimesArray = [[NSArray alloc]initWithArray:results];
                 
-                [self.gamesTableView reloadData];
+                
                     
                 MapViewAnnotation *annotation = [[MapViewAnnotation alloc]initWithTitle:name andCoordinate:latlng andGooglePlacesID:googlePlacesID];
                 
@@ -163,6 +165,7 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self displayNewAnnotations:placesFound];
+                [self.gamesTableView reloadData];
             });
             
             //[self performSelectorOnMainThread:@selector(displayNewAnnotations:) withObject:placesFound waitUntilDone:NO];
@@ -211,7 +214,7 @@
 
 -(void)getPlaceDetailWithID:(NSString *)placeID {
     
-    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/nearbyplace/details/json?placeid=%@&key=AIzaSyDfFhd0Uh5fvOw1daGh9zbVPbAVirn2qDU", placeID];
+    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?placeid=%@&key=AIzaSyDfFhd0Uh5fvOw1daGh9zbVPbAVirn2qDU", placeID];
     NSURL  *url = [NSURL URLWithString:urlStr];
     
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -239,14 +242,7 @@
 
 -(void)showPlaceDetail:(NSDictionary *)result {
     
-    PlaceDetailViewController *dvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"detailPage"];
-    
-    NSString *name = [result objectForKey:@"name"];
-    
-    dvc.title = name;
-    
-    [self.navigationController pushViewController:dvc animated:YES];
-    //[self performSegueWithIdentifier:@"showPlaceDetail" sender:result];
+    [self performSegueWithIdentifier:@"showPlaceDetail" sender:result];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
