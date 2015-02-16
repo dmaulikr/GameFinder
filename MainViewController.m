@@ -10,6 +10,7 @@
 #import "PlaceDetailViewController.h"
 
 
+
 @interface MainViewController ()
 
 @end
@@ -21,31 +22,80 @@
     
     //Look at SV progress hud
     //Google Drive presentations/Lucid chart
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
+//    tap.numberOfTapsRequired = 1;
+//    [self.view addGestureRecognizer:tap];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocationRange:) name:@"updatedLocation" object:nil];
-    
-    self.mapView.layer.cornerRadius = 5.0;
-    [self.mapView setDelegate:self];
-    
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self getPlacesFromGoogleatLocation:self.mapView.centerCoordinate];
-    });
-    //[self performSelector:@selector(getPlacesFromGoogleatLocation:)];
- 
-}
-
-
-
-
-- (IBAction)logOut:(id)sender {
-    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
-    
-    [PFUser logOut];
-    [self presentViewController:vc animated:YES completion:^{
+    self.addLocationView.hidden = YES;
         
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error) {
+            NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
+            
+                        
+            self.mapView.layer.cornerRadius = 5.0;
+            [self.mapView setDelegate:self];
+            self.mapView.showsUserLocation = YES;
+            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
+            [[PFUser currentUser] saveInBackground];
+            [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.08, 0.08))];
+
+        }
     }];
+  
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self retrieveFromParse];
+    });
 }
+
+-(void)viewDidAppear:(BOOL)animated{
+    
+    
+    
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LogInScreen"];
+    
+    PFUser *currentUser = [PFUser currentUser];
+    if (!currentUser) {
+        // go straight to the app!
+        [self presentViewController:vc animated:YES completion:^{
+            
+        }];
+        
+    }
+    
+}
+
+#pragma -mark parse queries
+-(void) retrieveFromParse {
+    
+    PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
+    [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (id object in objects) {
+                
+                
+                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                annotation.title = [object objectForKey:@"name"];
+                annotation.subtitle = [object objectForKey:@"address"];
+                PFGeoPoint *geoPoint = [object objectForKey:@"location"];
+                annotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                
+                
+                
+                [self.mapView addAnnotation:annotation];
+                [SVProgressHUD show];
+            }
+            self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
+        }
+        [self.gamesTableView reloadData];
+        [SVProgressHUD dismiss];
+    }];
+    
+}
+
+
+
+
 
 #pragma -mark TableView datasource methods
 
@@ -67,7 +117,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //The actual code to return each cell, configured with the data you want to display.
     
-    static NSString *CellIdentifier = @"TimeCell";
+    static NSString *CellIdentifier = @"LocationCell";
     
     CustomTableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -82,7 +132,7 @@
     
    
     cell.title.text = [tempObject objectForKey:@"name"];
-    cell.subTitle.text = [tempObject objectForKey:@"vicinity"];
+    cell.subTitle.text = [tempObject objectForKey:@"address"];
     cell.title.textAlignment = NSTextAlignmentCenter;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
    
@@ -103,174 +153,60 @@
     NSLog(@"cell tapped");
     
     [self performSegueWithIdentifier:@"showPlaceDetail" sender:nil];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma -mark google places api
--(void)getPlacesFromGoogleatLocation:(CLLocationCoordinate2D) currentLocation{
-    
-    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=25000&types=gym|school|park&key=AIzaSyA0UHt_IADIiohNKBl2FujWlUkKNprZZFY", currentLocation.latitude, currentLocation.longitude];
-    
-    
-    NSURL  *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
-        NSError *jsonError;
-        
-        NSMutableDictionary *allData = [NSJSONSerialization
-                                        JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
-        
-        NSArray *results = [allData objectForKey:@"results"];
-        
-        
-        //NSLog(@"Results are: %@", results);
-        
-        NSMutableArray *placesFound = [NSMutableArray array];
-        
-        if (results.count >= 1){
-            
-            for (id object in results) {
-                
-                NSDictionary *places = object;
-                
-                NSString *name = [places objectForKey:@"name"];
-                
-                NSString *googlePlacesID = [places objectForKey:@"place_id"];
-                
-                NSDictionary *geometry = [places objectForKey:@"geometry"];
-                
-                NSDictionary *location = [geometry objectForKey:@"location"];
-                
-                
-                NSNumber *lat = [location objectForKey:@"lat"];
-                
-                NSNumber *lng = [location objectForKey:@"lng"];
-                
-                CLLocationCoordinate2D latlng = CLLocationCoordinate2DMake(lat.doubleValue, lng.doubleValue);
-                
-                self.gameTimesArray = [[NSArray alloc]initWithArray:results];
-                
-                
-                    
-                MapViewAnnotation *annotation = [[MapViewAnnotation alloc]initWithTitle:name andCoordinate:latlng andGooglePlacesID:googlePlacesID];
-                
-                    [placesFound addObject:annotation];
-            
-                
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self displayNewAnnotations:placesFound];
-                [self.gamesTableView reloadData];
-            });
-            
-            //[self performSelectorOnMainThread:@selector(displayNewAnnotations:) withObject:placesFound waitUntilDone:NO];
-        }
-        
-    }] resume];
-    
-}
 #pragma -mark map annotation view
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation {
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id )annotation{
     static NSString *identifier = @"MyLocation";
     
-    
-    if ([annotation isKindOfClass:[MapViewAnnotation class]]) {
-        
-        MKAnnotationView *aView = (MKAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
-        
-        
-        
-        if (aView == nil) {
-            
-           
-            aView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-            aView.image = [UIImage imageNamed:@"basketball"];
-            aView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeInfoLight];
-            aView.canShowCallout = YES;
-            aView.annotation = annotation;
-        } else {
-            aView.annotation = annotation;
-        }
-        
-        return aView;
-        
-    } else {
+    if ([annotation isKindOfClass:[MKUserLocation class]])
         return nil;
+    
+    // Handle any custom annotations.
+    if ([annotation isKindOfClass:[MKPointAnnotation class]])
+    {
+        // Try to dequeue an existing pin view first.
+        MKAnnotationView *pinView = (MKAnnotationView*)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        if (!pinView)
+        {
+            
+            // If an existing pin view was not available, create one.
+            pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+            //pinView.animatesDrop = YES;
+            pinView.canShowCallout = YES;
+            UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+            pinView.rightCalloutAccessoryView = rightButton;
+            pinView.image = [UIImage imageNamed:@"basketball"];
+            
+        } else {
+            pinView.annotation = annotation;
+        }
+        return pinView;
     }
+    return nil;
 }
-
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    
-    MapViewAnnotation *annotation = view.annotation;
-    
-    [self getPlaceDetailWithID:annotation.googlePlacesID];
-    
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"detailPage"];
+    [self presentViewController:vc animated:YES completion:^{
+        
+    }];
 }
 
--(void)getPlaceDetailWithID:(NSString *)placeID {
-    
-    NSString *urlStr = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/details/json?placeid=%@&key=AIzaSyDfFhd0Uh5fvOw1daGh9zbVPbAVirn2qDU", placeID];
-    NSURL  *url = [NSURL URLWithString:urlStr];
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
-        NSError *jsonError;
-        
-        NSMutableDictionary *allData = [NSJSONSerialization
-                                        JSONObjectWithData:data
-                                        options:NSJSONReadingMutableContainers
-                                        error:&jsonError];
-        
-        NSDictionary *result = [allData objectForKey:@"result"];
-        NSLog(@"detail result is %@", result);
-        [self performSelectorOnMainThread:@selector(showPlaceDetail:) withObject:result waitUntilDone:NO];
-        
-        
-        
-    }] resume];
-    
-}
 
--(void)showPlaceDetail:(NSDictionary *)result {
-    
-    [self performSegueWithIdentifier:@"showPlaceDetail" sender:result];
-}
 
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
+   
+}
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([segue.identifier isEqualToString:@"showPlaceDetail"]) {
-        
-        NSDictionary *result = (NSDictionary *)sender;
-      
-        NSString *name = [result objectForKey:@"name"];
-        
-        PlaceDetailViewController *pdc = segue.destinationViewController;
-        
-        pdc.title = name;
     }
-}
-
--(void)displayNewAnnotations:(NSMutableArray *)places {
-    
-    [self.mapView removeAnnotations:self.mapView.annotations];
-    
-    [self.mapView addAnnotations:places];
-    
-}
 
 
 
 
--(void)updateRegion:(CLLocationCoordinate2D) location{
+/*-(void)updateRegion:(CLLocationCoordinate2D) location{
     
     self.mapView.showsUserLocation = YES;
     
@@ -292,21 +228,73 @@
     
     CLLocation *newLocation = notif.object;
     
-    [self getPlacesFromGoogleatLocation:newLocation.coordinate];
+    //[self getPlacesFromGoogleatLocation:newLocation.coordinate];
     
     [self updateRegion:newLocation.coordinate];
     
 }
+*/
 
-- (IBAction)zoomButton:(id)sender {
+- (IBAction)logOut:(id)sender {
+    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
     
-    
-    [UIView animateWithDuration:.5 animations:^{
-        self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
+    [PFUser logOut];
+    [self presentViewController:vc animated:YES completion:^{
         
     }];
 }
 
+- (IBAction)zoomButton:(id)sender {
+    
+    [UIView animateWithDuration:.5 animations:^{
+        self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
+    }];
+}
+
+- (IBAction)addLocation:(id)sender {
+    self.addLocationView.hidden = NO;
+}
+- (IBAction)okayButton:(id)sender {
+    CLLocation *currentLocation = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
+    CLLocationCoordinate2D currentCoordinate = currentLocation.coordinate;
+    
+    PFGeoPoint *currentPoint =
+    [PFGeoPoint geoPointWithLatitude:currentCoordinate.latitude
+                           longitude:currentCoordinate.longitude];
+    
+    PFObject *postObject = [PFObject objectWithClassName:@"Games"];
+    postObject[@"name"] = self.locationTextField.text;
+    postObject[@"location"] = currentPoint;
+    
+    [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error) {  // Failed to save, show an alert view with the error message
+            
+            return;
+        }
+        if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
+            NSLog(@"Yeah!");
+            
+            self.addLocationView.hidden = YES;
+            [self.gamesTableView reloadData];
+            [self hideKeyboard];
+            
+        } else {
+            NSLog(@"Failed to save.");
+        }
+    
+  
+    }];
+}
+
+-(void)hideKeyboard{
+    [self.locationTextField resignFirstResponder];
+}
+
+
+
+- (IBAction)cancelButton:(id)sender {
+    [self hideKeyboard];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

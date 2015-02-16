@@ -15,15 +15,10 @@
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 
-@property (nonatomic, copy) NSString *googlePlacesID;
-
-@property (nonatomic, copy) NSString *googleAddress;
-
-@property(nonatomic) BOOL animatesDrop;
 
 
 -(id) initWithTitle:(NSString *) annotationTitle andCoordinate:(CLLocationCoordinate2D)
-annotationCoordinate andGooglePlacesID: (NSString *) placesID;
+annotationCoordinate;
 
 
 

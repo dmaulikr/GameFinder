@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */; };
+		27048D1B1A9223A6004E84B5 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D161A9223A6004E84B5 /* SVIndefiniteAnimatedView.m */; };
+		27048D1C1A9223A6004E84B5 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27048D181A9223A6004E84B5 /* SVProgressHUD.bundle */; };
+		27048D1D1A9223A6004E84B5 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */; };
 		270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B1E1A746F0A0004A632 /* MapKit.framework */; };
 		270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B201A746F150004A632 /* CoreLocation.framework */; };
 		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
 		277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */; };
-		277A3EB01A8CC883000C17ED /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EAF1A8CC883000C17ED /* LocationManager.m */; };
-		277A3EB31A8CC930000C17ED /* MapViewAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EB21A8CC930000C17ED /* MapViewAnnotation.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
 		279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC11A71A77F0080542E /* AppDelegate.m */; };
 		279E2AC81A71A77F0080542E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AC61A71A77F0080542E /* Main.storyboard */; };
@@ -51,16 +52,18 @@
 /* Begin PBXFileReference section */
 		27048D0E1A8F615D004E84B5 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
+		27048D151A9223A6004E84B5 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		27048D161A9223A6004E84B5 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
+		27048D171A9223A6004E84B5 /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		27048D181A9223A6004E84B5 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		27048D191A9223A6004E84B5 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		270C5B1E1A746F0A0004A632 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = ../PlaceDetailViewController.h; sourceTree = "<group>"; };
 		277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceDetailViewController.m; path = ../PlaceDetailViewController.m; sourceTree = "<group>"; };
-		277A3EAE1A8CC883000C17ED /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = ../LocationManager.h; sourceTree = "<group>"; };
-		277A3EAF1A8CC883000C17ED /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = ../LocationManager.m; sourceTree = "<group>"; };
-		277A3EB11A8CC930000C17ED /* MapViewAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewAnnotation.h; path = ../MapViewAnnotation.h; sourceTree = "<group>"; };
-		277A3EB21A8CC930000C17ED /* MapViewAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewAnnotation.m; path = ../MapViewAnnotation.m; sourceTree = "<group>"; };
 		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2ABD1A71A77F0080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2ABE1A71A77F0080542E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -123,6 +126,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27048D141A9223A6004E84B5 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				27048D151A9223A6004E84B5 /* SVIndefiniteAnimatedView.h */,
+				27048D161A9223A6004E84B5 /* SVIndefiniteAnimatedView.m */,
+				27048D171A9223A6004E84B5 /* SVProgressHUD-Prefix.pch */,
+				27048D181A9223A6004E84B5 /* SVProgressHUD.bundle */,
+				27048D191A9223A6004E84B5 /* SVProgressHUD.h */,
+				27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
 		279E2AB01A71A77E0080542E = {
 			isa = PBXGroup;
 			children = (
@@ -165,10 +181,6 @@
 			children = (
 				276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */,
 				276A2E001A7BFF6300BD7600 /* LoginViewController.m */,
-				277A3EB11A8CC930000C17ED /* MapViewAnnotation.h */,
-				277A3EB21A8CC930000C17ED /* MapViewAnnotation.m */,
-				277A3EAE1A8CC883000C17ED /* LocationManager.h */,
-				277A3EAF1A8CC883000C17ED /* LocationManager.m */,
 				277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */,
 				277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */,
 				279E2AE41A71AD380080542E /* images */,
@@ -208,6 +220,7 @@
 		27FC60731A7B40AE005AE24C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				27048D141A9223A6004E84B5 /* SVProgressHUD */,
 				27FC60871A7B41F3005AE24C /* libsqlite3.dylib */,
 				27FC60851A7B41E7005AE24C /* libz.dylib */,
 				27FC60831A7B41DB005AE24C /* SystemConfiguration.framework */,
@@ -313,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27048D1C1A9223A6004E84B5 /* SVProgressHUD.bundle in Resources */,
 				279E2AC81A71A77F0080542E /* Main.storyboard in Resources */,
 				279E2AE61A71B35E0080542E /* clock.png in Resources */,
 				279E2AE31A71AD310080542E /* globe.png in Resources */,
@@ -337,12 +351,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				27C1602F1A89DC5100746FC9 /* MainViewController.m in Sources */,
-				277A3EB01A8CC883000C17ED /* LocationManager.m in Sources */,
+				27048D1D1A9223A6004E84B5 /* SVProgressHUD.m in Sources */,
 				276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */,
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,
-				277A3EB31A8CC930000C17ED /* MapViewAnnotation.m in Sources */,
 				27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */,
+				27048D1B1A9223A6004E84B5 /* SVIndefiniteAnimatedView.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

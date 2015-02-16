@@ -18,9 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
  
-    self.locationManager = [[LocationManager alloc]init];
     
-    //[Parse enableLocalDatastore];
     
     // Initialize Parse.
     [Parse setApplicationId:@"LnUNaEGAGswpuwBrJopys7uC932p5pi6WnlI6SJL"

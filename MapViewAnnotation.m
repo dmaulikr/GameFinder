@@ -11,14 +11,14 @@
 
 @implementation MapViewAnnotation
 
--(id) initWithTitle:(NSString *) annotationTitle andCoordinate:(CLLocationCoordinate2D) annotationCoordinate andGooglePlacesID: (NSString *) placesID {
+-(id) initWithTitle:(NSString *) annotationTitle andCoordinate:(CLLocationCoordinate2D) annotationCoordinate {
     
     self = [super init];
     
     if (self) {
         _title = annotationTitle;
         _coordinate = annotationCoordinate;
-        _googlePlacesID = placesID;
+      
         
     }
     return self;

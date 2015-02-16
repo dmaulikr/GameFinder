@@ -27,22 +27,6 @@
     
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    
-    
-
-    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"MainScreen"];
-    
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser) {
-        // go straight to the app!
-        [self presentViewController:vc animated:YES completion:^{
-            
-        }];
-        
-    }
-    
-}
 
 #pragma -mark UITextfield delegate methods
 
