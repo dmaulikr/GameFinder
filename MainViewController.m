@@ -22,26 +22,19 @@
     [self.mapView setDelegate:self];
     
     
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        if (!error) {
-            NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
-            
-//            MKPointAnnotation *annotation = [[MKPointAnnotation alloc]init];
-//            annotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
-//            annotation.title = @"WTF?!";
+//    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+//        if (!error) {
+//            NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
 //            
-//            [self.mapView addAnnotation:annotation];
-            
-            
-            
-            self.mapView.showsUserLocation = YES;
-            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
-            [[PFUser currentUser] saveInBackground];
-            [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.01, 0.01))];
-            
-            
-        }
-    }];
+//
+//            self.mapView.showsUserLocation = YES;
+//            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
+//            [[PFUser currentUser] saveInBackground];
+//            [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.01, 0.01))];
+//            
+//            
+//        }
+//    }];
     
     [self performSelector:@selector(retrieveFromParse)];
     
@@ -54,7 +47,15 @@
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            
+            for (id object in objects) {
+                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                annotation.title = [object objectForKey:@"name"];
+                PFGeoPoint *geoPoint= [object objectForKey:@"location"];
+                annotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude,geoPoint.longitude);
+
+                
+                [self.mapView addAnnotation:annotation];
+            }
             self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
         }
         [self.gamesTableView reloadData];
