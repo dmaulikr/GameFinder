@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
+#import <Parse/Parse.h>
 
-@interface PlaceDetailViewController : UIViewController
+@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapDetailView;
 
+@property (weak, nonatomic) IBOutlet UILabel *locationNameLabel;
 
-@property NSString *urlString;
+
 
 @end

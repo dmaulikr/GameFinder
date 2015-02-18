@@ -20,42 +20,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //Look at SV progress hud
-    //Google Drive presentations/Lucid chart
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
-//    tap.numberOfTapsRequired = 1;
-//    [self.view addGestureRecognizer:tap];
     
-    self.addLocationView.hidden = YES;
-        
+    //Google Drive presentations/Lucid chart
+  
+
+    
+    
+
+    
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
             NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
             
-                        
-            self.mapView.layer.cornerRadius = 5.0;
+            
+            
             [self.mapView setDelegate:self];
             self.mapView.showsUserLocation = YES;
             [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
             [[PFUser currentUser] saveInBackground];
             [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.08, 0.08))];
-
+            
         }
     }];
-  
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self retrieveFromParse];
+        //[self getPlaceDetail];
+        
     });
 }
 
--(void)viewDidAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated{
     
     
     
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LogInScreen"];
     
     PFUser *currentUser = [PFUser currentUser];
-    if (!currentUser) {
+    if (!currentUser ) {
         // go straight to the app!
         [self presentViewController:vc animated:YES completion:^{
             
@@ -68,9 +70,12 @@
 #pragma -mark parse queries
 -(void) retrieveFromParse {
     
+    
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
+                if (!error) {
             for (id object in objects) {
                 
                 
@@ -82,22 +87,68 @@
                 
                 
                 
+                [SVProgressHUD showImage:[UIImage imageNamed:@"background-1"] status:@"loading"];
                 [self.mapView addAnnotation:annotation];
-                [SVProgressHUD show];
+                [SVProgressHUD dismiss];
+                
             }
             self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
         }
         [self.gamesTableView reloadData];
-        [SVProgressHUD dismiss];
+        
     }];
     
 }
 
+-(void)getPlaceDetail{
+    PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
+    [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            
+            for (id object in objects) {
+                
+                [object objectForKey:@"objectId"];
+                NSLog(@"%@", object);
+                
+            [self performSelectorOnMainThread:@selector(showPlaceDetail:) withObject:object waitUntilDone:YES];
+            }
+        }
+        
+        
+        
+    }];
+    
+}
 
+-(void)showPlaceDetail:(NSDictionary *)object {
+    
+    [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
+}
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([[segue identifier] isEqualToString:@"showPlaceDetail"]) {
+        NSDictionary *object = (NSDictionary *)sender;
+        
+        NSString *name = [object objectForKey:@"name"];
+        
+        
+        PlaceDetailViewController *pdc = [segue destinationViewController];
+        
+        pdc.title = name;
+        
+        
+        
+        //NSLog(@"%@", pdc.title);
+        
+        
+    }
+}
 
 
 #pragma -mark TableView datasource methods
+
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     //returns the number of sections you need.
@@ -120,7 +171,7 @@
     static NSString *CellIdentifier = @"LocationCell";
     
     CustomTableViewCell *cell = [tableView
-                             dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                                 dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSDictionary *tempObject = [self.gameTimesArray objectAtIndex:indexPath.row];
     
     if (cell == nil) {
@@ -130,12 +181,12 @@
     }
     
     
-   
+    
     cell.title.text = [tempObject objectForKey:@"name"];
     cell.subTitle.text = [tempObject objectForKey:@"address"];
     cell.title.textAlignment = NSTextAlignmentCenter;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-   
+    
     cell.title.font = [UIFont fontWithName:@"optima-bold" size:17.0];
     cell.title.textColor = [UIColor darkGrayColor];
     cell.subTitle.textColor = [UIColor lightGrayColor];
@@ -159,6 +210,7 @@
 
 #pragma -mark map annotation view
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id )annotation{
+    
     static NSString *identifier = @"MyLocation";
     
     if ([annotation isKindOfClass:[MKUserLocation class]])
@@ -188,52 +240,11 @@
     return nil;
 }
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"detailPage"];
-    [self presentViewController:vc animated:YES completion:^{
-        
-    }];
+    
+    [self performSegueWithIdentifier:@"showPlaceDetail" sender:nil];
 }
 
 
-
--(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
-   
-}
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    }
-
-
-
-
-/*-(void)updateRegion:(CLLocationCoordinate2D) location{
-    
-    self.mapView.showsUserLocation = YES;
-    
-    [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
-    
-    CLLocationCoordinate2D initialLocationFocus = location;
-    
-    MKCoordinateSpan span = MKCoordinateSpanMake(.08,.08);
-    
-    MKCoordinateRegion region = MKCoordinateRegionMake(initialLocationFocus, span);
-    
-    [self.mapView setRegion:region animated:YES];
-    
-    
-    
-}
-
--(void)updateLocationRange:(NSNotification *)notif {
-    
-    CLLocation *newLocation = notif.object;
-    
-    //[self getPlacesFromGoogleatLocation:newLocation.coordinate];
-    
-    [self updateRegion:newLocation.coordinate];
-    
-}
-*/
 
 - (IBAction)logOut:(id)sender {
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
@@ -252,49 +263,102 @@
 }
 
 - (IBAction)addLocation:(id)sender {
-    self.addLocationView.hidden = NO;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
+        
+        UIAlertView *uav = [[UIAlertView alloc] initWithTitle:@"Alert with iOS 7" message:@"" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+        
+        [uav show];
+        
+        
+    } else {
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to add this location?" message:@" " preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            NSLog(@"AlertView Cancelled");
+            
+        }];
+        
+        UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *yes) {
+            NSLog(@"Go Pushed");
+            [self okayButton];
+        }];
+        
+        
+        [alert addAction:cancel];
+        [alert addAction:yes];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    };
+    
+    
 }
-- (IBAction)okayButton:(id)sender {
+- (void)okayButton {
     CLLocation *currentLocation = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
     CLLocationCoordinate2D currentCoordinate = currentLocation.coordinate;
     
-    PFGeoPoint *currentPoint =
-    [PFGeoPoint geoPointWithLatitude:currentCoordinate.latitude
-                           longitude:currentCoordinate.longitude];
-    
-    PFObject *postObject = [PFObject objectWithClassName:@"Games"];
-    postObject[@"name"] = self.locationTextField.text;
-    postObject[@"location"] = currentPoint;
-    
-    [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (error) {  // Failed to save, show an alert view with the error message
+    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+    [geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+        CLPlacemark *place = [placemarks lastObject];
+        NSLog(@"%@", place.name);
+        
+        PFGeoPoint *currentPoint =
+        [PFGeoPoint geoPointWithLatitude:currentCoordinate.latitude
+                               longitude:currentCoordinate.longitude];
+        
+        PFObject *postObject = [PFObject objectWithClassName:@"Games"];
+        postObject[@"name"] = place.subLocality;
+        postObject[@"location"] = currentPoint;
+        postObject[@"address"] = place.name;
+        
+        [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (error) {  // Failed to save, show an alert view with the error message
+                
+                
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to save location" message:@"Must be connected to a network" preferredStyle:UIAlertControllerStyleAlert];
+                
+                
+                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    NSLog(@"AlertView Cancelled");
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }];
+                
+                
+                [alert addAction:cancel];
+                [self presentViewController:alert animated:YES completion:nil];
+                
+                return;
+            }
+            if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
+                [SVProgressHUD showSuccessWithStatus:@"Saved!"];
+                [self retrieveFromParse];
+                [self hideKeyboard];
+                
+            } else {
+                NSLog(@"Failed to save.");
+            }
             
-            return;
-        }
-        if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
-            NSLog(@"Yeah!");
             
-            self.addLocationView.hidden = YES;
-            [self.gamesTableView reloadData];
-            [self hideKeyboard];
-            
-        } else {
-            NSLog(@"Failed to save.");
-        }
-    
-  
+        }];
+        
     }];
+    
+    
 }
 
 -(void)hideKeyboard{
-    [self.locationTextField resignFirstResponder];
+    
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    //timer
+    //invalidate timer
+    //refresh after timer objects from parse
+    //map bounds
 }
 
 
-
-- (IBAction)cancelButton:(id)sender {
-    [self hideKeyboard];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

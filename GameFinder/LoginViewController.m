@@ -88,8 +88,9 @@
 -(void)logIn {
     
     
+        
     [PFUser logInWithUsernameInBackground:self.userTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
-        if (!error) {
+                if (!error) {
             [self performSegueWithIdentifier:@"LoginSuccessful" sender:self];
         } else {
             NSString *errorString = [error userInfo][@"error"];
@@ -103,6 +104,8 @@
             [self presentViewController:alert animated:YES completion:nil];
         }
     }];
+        
+    
 
 }
 #pragma mark Register New User

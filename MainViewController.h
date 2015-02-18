@@ -13,7 +13,7 @@
 #import "SVProgressHUD.h"
 
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
@@ -23,11 +23,11 @@
 
 @property (strong, nonatomic) CLLocation *currentLocation;
 
-@property (weak, nonatomic) IBOutlet UITextField *locationTextField;
-
-@property (weak, nonatomic) IBOutlet UIView *addLocationView;
+@property CLGeocoder *geoCoder;
 
 @property NSArray *gameTimesArray;
+
+
 
 
 
