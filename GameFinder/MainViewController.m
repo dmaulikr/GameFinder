@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "PlaceDetailViewController.h"
+#import "GamePointAnnotation.h"
 
 
 
@@ -74,26 +75,37 @@
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
     [self.mapView removeAnnotations:self.mapView.annotations];
     
+    //This was originally in your array loop, it would show, add the annotation, then dismiss. It would do this for every loop. I moved it here to the beginning of where the whole operation begins.
+    [SVProgressHUD showImage:[UIImage imageNamed:@"background-1"] status:@"loading"];
+
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-                if (!error) {
-            for (id object in objects) {
+            if (!error) {
                 
-                
-                MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-                annotation.title = [object objectForKey:@"name"];
-                annotation.subtitle = [object objectForKey:@"address"];
-                PFGeoPoint *geoPoint = [object objectForKey:@"location"];
-                annotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
-                
-                
-                
-                [SVProgressHUD showImage:[UIImage imageNamed:@"background-1"] status:@"loading"];
-                [self.mapView addAnnotation:annotation];
-                [SVProgressHUD dismiss];
-                
+                //Changed the way you interated thru your array
+                for (int x=0; x < objects.count; x++) {
+                    
+                    //Grab the object at index x
+                    NSDictionary *object = [objects objectAtIndex:x];
+                    
+                    //By subclassing MKAnnotationPoint I was able to add an index property
+                    GamePointAnnotation *annotation = [[GamePointAnnotation alloc] init];
+                    annotation.title = [object objectForKey:@"name"];
+                    annotation.subtitle = [object objectForKey:@"address"];
+                    PFGeoPoint *geoPoint = [object objectForKey:@"location"];
+                    annotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                    
+                    //Need to store the index of this object from the array so you can send this same object to your next screen
+                    annotation.index = x;
+
+                    [self.mapView addAnnotation:annotation];
+                    
+                    
+                }
+                self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
+            } else {
+                //Just added this to show an error popup if you got back an error
+                [SVProgressHUD showErrorWithStatus:@"Error!"];
             }
-            self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
-        }
         [self.gamesTableView reloadData];
         
     }];
@@ -130,17 +142,35 @@
     if ([[segue identifier] isEqualToString:@"showPlaceDetail"]) {
         NSDictionary *object = (NSDictionary *)sender;
         
+        NSLog(@"dict = %@", object);
+        
         NSString *name = [object objectForKey:@"name"];
         
+        NSString *address = [object objectForKey:@"address"];
+        
+        NSString *city = [object objectForKey:@"city"];
+        
+        NSString *state = [object objectForKey:@"state"];
+        
+        NSNumber *zip = [object objectForKey:@"zip"];
+        
+        //CLLocationCoordinate2D *location = [object objectForKey:@""];
         
         PlaceDetailViewController *pdc = [segue destinationViewController];
         
         pdc.title = name;
         
+        pdc.address = address;
         
+        pdc.locationStateString = state;
         
-        //NSLog(@"%@", pdc.title);
+        pdc.locationCityString = [city stringByAppendingString:@","];
         
+        pdc.locationNameString = name;
+        
+        pdc.locationZipString = zip;
+        
+        //pdc.locationCoordinate = location;
         
     }
 }
@@ -164,6 +194,9 @@
     return 70;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 70;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //The actual code to return each cell, configured with the data you want to display.
@@ -203,7 +236,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"cell tapped");
     
-    [self performSegueWithIdentifier:@"showPlaceDetail" sender:nil];
+    //Get the object at the same index in the array
+    NSDictionary *object = [self.gameTimesArray objectAtIndex:indexPath.row];
+    
+    //Send that object along to the segue
+    [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
+    
+    tableView.scrollsToTop = NO;
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -239,9 +278,17 @@
     }
     return nil;
 }
+
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+
+    //Grab a reference to the annotation making sure to use our subclass so we can get the index property
+    GamePointAnnotation *ann = view.annotation;
     
-    [self performSegueWithIdentifier:@"showPlaceDetail" sender:nil];
+    //Get the object from the array that matches the stored index
+    NSDictionary *object = [self.gameTimesArray objectAtIndex:ann.index];
+    
+    //Pass the object
+    [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
 }
 
 
@@ -311,6 +358,9 @@
         postObject[@"name"] = place.subLocality;
         postObject[@"location"] = currentPoint;
         postObject[@"address"] = place.name;
+        postObject[@"city"] = place.locality;
+        postObject[@"state"] = place.administrativeArea;
+        postObject[@"zip"] = place.postalCode;
         
         [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (error) {  // Failed to save, show an alert view with the error message

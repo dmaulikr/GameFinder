@@ -18,7 +18,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //self.locationNameLabel.text = self.address;
+    self.addressLabel.text = self.address;
+    
+    self.nameLabel.text = self.locationNameString;
+    
+    self.cityLabel.text = self.locationCityString;
+    
+    self.stateLabel.text = self.locationStateString;
+    
+    //Label.text = [NSString stringWithFormat:@"%f",[YourNSNumber doubleValue]];
+    self.zipLabel.text = [NSString stringWithFormat:@"%@", self.locationZipString];
+    
+        
+    
  
 }
 
