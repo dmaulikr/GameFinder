@@ -10,6 +10,7 @@
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
 
+//Cllocation distance
 
 
 @interface MainViewController ()
@@ -21,28 +22,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //[self zoomButton:self];
+        [self retrieveFromParse];
+        
+    });
     
+    [self.mapView setDelegate:self];
+    self.mapView.showsUserLocation = YES;
+    [self.mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
     //Google Drive presentations/Lucid chart
-
+    
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
             
             
-        
-            
-            [self.mapView setDelegate:self];
-            self.mapView.showsUserLocation = YES;
             [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
             [[PFUser currentUser] saveInBackground];
             [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.08, 0.08))];
             
         }
     }];
+
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self retrieveFromParse];
-    });
-}
+    }
+
 
 -(void)viewWillAppear:(BOOL)animated{
     
@@ -72,7 +76,7 @@
     [self.mapView removeAnnotations:self.mapView.annotations];
     
     
-    [SVProgressHUD showImage:[UIImage imageNamed:@"background-1"] status:@"loading"];
+    [SVProgressHUD showWithStatus:@"Loading"];
 
     
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -95,7 +99,7 @@
                     annotation.index = x;
 
                     [self.mapView addAnnotation:annotation];
-                    
+                    [SVProgressHUD dismiss];
                     
                 }
                 self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
@@ -153,7 +157,8 @@
         
         NSString *type = [object objectForKey:@"type"];
         
-        //CLLocationCoordinate2D *location = [object objectForKey:@""];
+        PFGeoPoint *location = [object objectForKey:@"location"];
+        
         
         PlaceDetailViewController *pdc = [segue destinationViewController];
         
@@ -171,7 +176,7 @@
         
         pdc.locationTypeString = type;
         
-        //pdc.locationCoordinate = location;
+        pdc.locationCoordinate = location;
         
     }
 }
@@ -231,6 +236,8 @@
     
     
 }
+
+
 
 #pragma -mark TableView delegate methods
 
@@ -354,9 +361,11 @@
         //NSLog(@"%@", place.name);
         
         
+        //[PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-            
+  
             PFObject *postObject = [PFObject objectWithClassName:@"Games"];
+            
             postObject[@"name"] = place.subLocality;
             postObject[@"location"] = geoPoint;
             postObject[@"address"] = place.name;
@@ -364,7 +373,7 @@
             postObject[@"state"] = place.administrativeArea;
             postObject[@"zip"] = place.postalCode;
             
-            NSLog(@"address dictionary is %@", place.addressDictionary);
+            //NSLog(@"address dictionary is %@", place.addressDictionary);
             
             [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (error) {  // Failed to save, show an alert view with the error message
@@ -394,7 +403,7 @@
                 }
                 
                 
-            }];
+           }];
             
 
         }];

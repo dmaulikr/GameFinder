@@ -10,8 +10,9 @@
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
 #import <CoreLocation/CoreLocation.h>
+#import <AddressBook/AddressBook.h>
 
-@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapDetailView;
 
@@ -24,7 +25,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
-@property CLLocationCoordinate2D *locationCoordinate;
+
+@property PFGeoPoint *locationCoordinate;
+
+@property CLLocation *locationLocation;
 
 @property NSString *address;
 

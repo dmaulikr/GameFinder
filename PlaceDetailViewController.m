@@ -28,12 +28,56 @@
     
     self.typeLabel.text = self.locationTypeString;
     
-    //Label.text = [NSString stringWithFormat:@"%f",[YourNSNumber doubleValue]];
     self.zipLabel.text = self.locationZipString;
     
+    [self.mapDetailView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.locationCoordinate.latitude, self.locationCoordinate.longitude), MKCoordinateSpanMake(0.0004, 0.0004))];
+    self.mapDetailView.userInteractionEnabled = NO;
+    self.mapDetailView.mapType = MKMapTypeSatellite;
     
     
- 
+    
+}
+
+- (IBAction)openMaps:(id)sender {
+    
+    if  ([[[UIDevice currentDevice] systemVersion] floatValue]< 8.0){
+        UIActionSheet *uas = [[UIActionSheet alloc] initWithTitle:@"Open in Maps?" delegate:self cancelButtonTitle:@"Cancel"
+            destructiveButtonTitle:nil
+            otherButtonTitles:nil];
+        
+        [uas showInView:self.view];
+        
+    } else {
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Open in Maps" message:@"You will be directed from Game Finder." preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *cancel) {
+            
+        }];
+
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            CLLocationCoordinate2D placeLocation = CLLocationCoordinate2DMake(self.locationCoordinate.latitude, self.locationCoordinate.longitude);
+            MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:placeLocation addressDictionary:nil];
+            MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:placemark];
+            item.name = self.locationNameString;
+            [item openInMapsWithLaunchOptions:nil];
+        }];
+    
+        [alert addAction:cancel];
+        [alert addAction:ok];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+}
+
+- (IBAction)shareLocation:(id)sender {
+    CLLocation *locale = [[CLLocation alloc]initWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
+    
+    NSString *urlStr = [NSString stringWithFormat:@"http://maps.apple.com/?q=||=%f%f",locale.coordinate.latitude, locale.coordinate.longitude];
+    
+    NSURL *myUrl = [NSURL URLWithString:urlStr];
+
 }
 
 - (void)didReceiveMemoryWarning {
