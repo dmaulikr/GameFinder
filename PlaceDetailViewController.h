@@ -22,6 +22,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *zipLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
+
 @property CLLocationCoordinate2D *locationCoordinate;
 
 @property NSString *address;
@@ -32,6 +34,8 @@
 
 @property NSString *locationStateString;
 
-@property NSNumber *locationZipString;
+@property NSString *locationZipString;
+
+@property NSString *locationTypeString;
 
 @end

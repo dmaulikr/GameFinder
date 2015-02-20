@@ -23,17 +23,12 @@
     
     
     //Google Drive presentations/Lucid chart
-  
 
-    
-    
-
-    
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
-            NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
             
             
+        
             
             [self.mapView setDelegate:self];
             self.mapView.showsUserLocation = YES;
@@ -46,8 +41,6 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self retrieveFromParse];
-        //[self getPlaceDetail];
-        
     });
 }
 
@@ -71,13 +64,17 @@
 #pragma -mark parse queries
 -(void) retrieveFromParse {
     
+    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude];
     
+
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
+    [retrieveGames whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:50];
     [self.mapView removeAnnotations:self.mapView.annotations];
     
-    //This was originally in your array loop, it would show, add the annotation, then dismiss. It would do this for every loop. I moved it here to the beginning of where the whole operation begins.
+    
     [SVProgressHUD showImage:[UIImage imageNamed:@"background-1"] status:@"loading"];
 
+    
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 
@@ -152,7 +149,9 @@
         
         NSString *state = [object objectForKey:@"state"];
         
-        NSNumber *zip = [object objectForKey:@"zip"];
+        NSString *zip = [object objectForKey:@"zip"];
+        
+        NSString *type = [object objectForKey:@"type"];
         
         //CLLocationCoordinate2D *location = [object objectForKey:@""];
         
@@ -169,6 +168,8 @@
         pdc.locationNameString = name;
         
         pdc.locationZipString = zip;
+        
+        pdc.locationTypeString = type;
         
         //pdc.locationCoordinate = location;
         
@@ -310,6 +311,8 @@
 }
 
 - (IBAction)addLocation:(id)sender {
+    
+    
     if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
         
         UIAlertView *uav = [[UIAlertView alloc] initWithTitle:@"Alert with iOS 7" message:@"" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
@@ -328,7 +331,7 @@
         }];
         
         UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *yes) {
-            NSLog(@"Go Pushed");
+            
             [self okayButton];
         }];
         
@@ -343,71 +346,70 @@
 }
 - (void)okayButton {
     CLLocation *currentLocation = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
-    CLLocationCoordinate2D currentCoordinate = currentLocation.coordinate;
+    
     
     CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
     [geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *place = [placemarks lastObject];
-        NSLog(@"%@", place.name);
+        //NSLog(@"%@", place.name);
         
-        PFGeoPoint *currentPoint =
-        [PFGeoPoint geoPointWithLatitude:currentCoordinate.latitude
-                               longitude:currentCoordinate.longitude];
         
-        PFObject *postObject = [PFObject objectWithClassName:@"Games"];
-        postObject[@"name"] = place.subLocality;
-        postObject[@"location"] = currentPoint;
-        postObject[@"address"] = place.name;
-        postObject[@"city"] = place.locality;
-        postObject[@"state"] = place.administrativeArea;
-        postObject[@"zip"] = place.postalCode;
-        
-        [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (error) {  // Failed to save, show an alert view with the error message
-                
-                
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to save location" message:@"Must be connected to a network" preferredStyle:UIAlertControllerStyleAlert];
-                
-                
-                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                    NSLog(@"AlertView Cancelled");
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }];
-                
-                
-                [alert addAction:cancel];
-                [self presentViewController:alert animated:YES completion:nil];
-                
-                return;
-            }
-            if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
-                [SVProgressHUD showSuccessWithStatus:@"Saved!"];
-                [self retrieveFromParse];
-                [self hideKeyboard];
-                
-            } else {
-                NSLog(@"Failed to save.");
-            }
+        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
             
+            PFObject *postObject = [PFObject objectWithClassName:@"Games"];
+            postObject[@"name"] = place.subLocality;
+            postObject[@"location"] = geoPoint;
+            postObject[@"address"] = place.name;
+            postObject[@"city"] = place.locality;
+            postObject[@"state"] = place.administrativeArea;
+            postObject[@"zip"] = place.postalCode;
             
+            NSLog(@"address dictionary is %@", place.addressDictionary);
+            
+            [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (error) {  // Failed to save, show an alert view with the error message
+                    
+                    
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to save location" message:@"Location already exists. Check in instead." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    
+                    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        NSLog(@"AlertView Cancelled");
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    }];
+                    
+                    
+                    [alert addAction:cancel];
+                    [self presentViewController:alert animated:YES completion:nil];
+                    
+                    return;
+                }
+                if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
+                    [SVProgressHUD showSuccessWithStatus:@"Saved!"];
+                    [self retrieveFromParse];
+                    
+                    
+                } else {
+                    NSLog(@"Failed to save.");
+                }
+                
+                
+            }];
+            
+
         }];
         
     }];
-    
-    
-}
 
--(void)hideKeyboard{
     
 }
 
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    //timer
-    //invalidate timer
-    //refresh after timer objects from parse
-    //map bounds
-}
 
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
+    
+    [self retrieveFromParse];
+    
+}
 
 
 - (void)didReceiveMemoryWarning {

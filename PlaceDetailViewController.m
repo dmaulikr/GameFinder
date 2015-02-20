@@ -26,10 +26,12 @@
     
     self.stateLabel.text = self.locationStateString;
     
-    //Label.text = [NSString stringWithFormat:@"%f",[YourNSNumber doubleValue]];
-    self.zipLabel.text = [NSString stringWithFormat:@"%@", self.locationZipString];
+    self.typeLabel.text = self.locationTypeString;
     
-        
+    //Label.text = [NSString stringWithFormat:@"%f",[YourNSNumber doubleValue]];
+    self.zipLabel.text = self.locationZipString;
+    
+    
     
  
 }
