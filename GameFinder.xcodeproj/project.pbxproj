@@ -208,6 +208,7 @@
 		27D188551A9468EA00410B32 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				27048D141A9223A6004E84B5 /* SVProgressHUD */,
 				27D188591A95C99900410B32 /* GamePointAnnotation.m */,
 				27D188581A95C98D00410B32 /* GamePointAnnotation.h */,
 				27048D0E1A8F615D004E84B5 /* CustomTableViewCell.h */,
@@ -222,7 +223,6 @@
 			children = (
 				275BAFD91A9736F800697533 /* AddressBookUI.framework */,
 				275BAFD71A9736F000697533 /* AddressBook.framework */,
-				27048D141A9223A6004E84B5 /* SVProgressHUD */,
 				27FC60871A7B41F3005AE24C /* libsqlite3.dylib */,
 				27FC60851A7B41E7005AE24C /* libz.dylib */,
 				27FC60831A7B41DB005AE24C /* SystemConfiguration.framework */,

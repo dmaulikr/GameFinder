@@ -10,6 +10,7 @@
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
 
+
 //Cllocation distance
 
 
@@ -37,11 +38,12 @@
             
         }
     }];
+  
     
-
-    [self performSelector:@selector(retrieveFromParse)];
-    [self performSelector:@selector(disableAddButton)];
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+    [self retrieveFromParse];
+    [self disableAddButton];
+    });
 }
 
 
@@ -69,8 +71,10 @@
     
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
     [retrieveGames whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:50];
-    [self.mapView removeAnnotations:self.mapView.annotations];
     
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading" maskType:SVProgressHUDMaskTypeGradient];
+        
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             
@@ -90,10 +94,10 @@
                 //Need to store the index of this object from the array so you can send this same object to your next screen
                 annotation.index = x;
                 
-                [SVProgressHUD showWithStatus:@"Loading"];
+                
                 
                 [self.mapView addAnnotation:annotation];
-                [SVProgressHUD showSuccessWithStatus:@"All good"];
+                
                 
             }
             self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
@@ -181,7 +185,7 @@
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         NSLog(@"geoPoint is %@", geoPoint);
         PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.5];
+        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.05];
         [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (objects.count >= 1) {
                 NSLog(@"%@",objects);
@@ -406,7 +410,7 @@
                 }
                 if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
                     [SVProgressHUD showSuccessWithStatus:@"Saved!"];
-                    [self retrieveFromParse];
+                    
                     
                     
                 } else {
@@ -420,7 +424,7 @@
         }];
         
     }];
-    
+    [self.view layoutIfNeeded];
     
 }
 
@@ -428,6 +432,7 @@
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     
     [self retrieveFromParse];
+    
     
 }
 
