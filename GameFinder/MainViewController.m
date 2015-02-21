@@ -22,35 +22,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //[self zoomButton:self];
-        [self retrieveFromParse];
-        
-    });
     
-    [self.mapView setDelegate:self];
-    self.mapView.showsUserLocation = YES;
-    [self.mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
     //Google Drive presentations/Lucid chart
     
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         if (!error) {
-            
-            
+
             [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
             [[PFUser currentUser] saveInBackground];
-            [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.08, 0.08))];
+            [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.09, 0.09))];
+            [self.mapView setDelegate:self];
+            self.mapView.showsUserLocation = YES;
+            [self.mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
             
         }
     }];
-
     
-    }
+
+    [self performSelector:@selector(retrieveFromParse)];
+    [self performSelector:@selector(disableAddButton)];
+    
+}
 
 
 -(void)viewWillAppear:(BOOL)animated{
-    
-    
     
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LogInScreen"];
     
@@ -63,50 +58,49 @@
         
     }
     
+    
 }
 
 #pragma -mark parse queries
 -(void) retrieveFromParse {
     
     PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude];
+    //NSLog(@"userGeoPoint is %@", userGeoPoint);
     
-
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
     [retrieveGames whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:50];
     [self.mapView removeAnnotations:self.mapView.annotations];
     
-    
-    [SVProgressHUD showWithStatus:@"Loading"];
-
-    
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (!error) {
+        if (!error) {
+            
+            //Changed the way you interated thru your array
+            for (int x=0; x < objects.count; x++) {
                 
-                //Changed the way you interated thru your array
-                for (int x=0; x < objects.count; x++) {
-                    
-                    //Grab the object at index x
-                    NSDictionary *object = [objects objectAtIndex:x];
-                    
-                    //By subclassing MKAnnotationPoint I was able to add an index property
-                    GamePointAnnotation *annotation = [[GamePointAnnotation alloc] init];
-                    annotation.title = [object objectForKey:@"name"];
-                    annotation.subtitle = [object objectForKey:@"address"];
-                    PFGeoPoint *geoPoint = [object objectForKey:@"location"];
-                    annotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
-                    
-                    //Need to store the index of this object from the array so you can send this same object to your next screen
-                    annotation.index = x;
-
-                    [self.mapView addAnnotation:annotation];
-                    [SVProgressHUD dismiss];
-                    
-                }
-                self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
-            } else {
-                //Just added this to show an error popup if you got back an error
-                [SVProgressHUD showErrorWithStatus:@"Error!"];
+                //Grab the object at index x
+                NSDictionary *object = [objects objectAtIndex:x];
+                
+                //By subclassing MKAnnotationPoint I was able to add an index property
+                GamePointAnnotation *annotation = [[GamePointAnnotation alloc] init];
+                annotation.title = [object objectForKey:@"name"];
+                annotation.subtitle = [object objectForKey:@"address"];
+                PFGeoPoint *geoPoint = [object objectForKey:@"location"];
+                annotation.coordinate = CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude);
+                
+                //Need to store the index of this object from the array so you can send this same object to your next screen
+                annotation.index = x;
+                
+                [SVProgressHUD showWithStatus:@"Loading"];
+                
+                [self.mapView addAnnotation:annotation];
+                [SVProgressHUD showSuccessWithStatus:@"All good"];
+                
             }
+            self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
+        } else {
+            //Just added this to show an error popup if you got back an error
+            [SVProgressHUD showErrorWithStatus:@"Error!"];
+        }
         [self.gamesTableView reloadData];
         
     }];
@@ -123,7 +117,7 @@
                 [object objectForKey:@"objectId"];
                 NSLog(@"%@", object);
                 
-            [self performSelectorOnMainThread:@selector(showPlaceDetail:) withObject:object waitUntilDone:YES];
+                [self performSelectorOnMainThread:@selector(showPlaceDetail:) withObject:object waitUntilDone:YES];
             }
         }
         
@@ -182,6 +176,24 @@
 }
 
 
+-(void)disableAddButton {
+    
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        NSLog(@"geoPoint is %@", geoPoint);
+        PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
+        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.5];
+        [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (objects.count >= 1) {
+                NSLog(@"%@",objects);
+                self.addGamesButton.enabled = NO;
+                
+            }
+            
+        }];
+
+    }];
+    
+}
 #pragma -mark TableView datasource methods
 
 
@@ -288,7 +300,7 @@
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-
+    
     //Grab a reference to the annotation making sure to use our subclass so we can get the index property
     GamePointAnnotation *ann = view.annotation;
     
@@ -315,6 +327,7 @@
     [UIView animateWithDuration:.5 animations:^{
         self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
     }];
+    
 }
 
 - (IBAction)addLocation:(id)sender {
@@ -353,17 +366,15 @@
 }
 - (void)okayButton {
     CLLocation *currentLocation = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
+    NSLog(@"currentLocation = %@", currentLocation);
     
     
     CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
     [geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
         CLPlacemark *place = [placemarks lastObject];
-        //NSLog(@"%@", place.name);
         
-        
-        //[PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-  
+            
             PFObject *postObject = [PFObject objectWithClassName:@"Games"];
             
             postObject[@"name"] = place.subLocality;
@@ -403,13 +414,13 @@
                 }
                 
                 
-           }];
+            }];
             
-
+            
         }];
         
     }];
-
+    
     
 }
 

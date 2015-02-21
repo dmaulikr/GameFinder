@@ -23,6 +23,8 @@
 
 @property (strong, nonatomic) CLLocation *currentLocation;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addGamesButton;
+
 @property CLGeocoder *geoCoder;
 
 @property NSArray *gameTimesArray;
