@@ -21,7 +21,7 @@
 
 @property (strong, nonatomic) PFGeoPoint *userLocation;
 
-@property (strong, nonatomic) CLLocation *currentLocation;
+//@property (strong, nonatomic) CLLocation *currentLocation;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGamesButton;
 
@@ -29,6 +29,7 @@
 
 @property NSArray *gameTimesArray;
 
+@property UIRefreshControl *refreshControl;
 
 
 

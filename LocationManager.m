@@ -2,11 +2,12 @@
 //  LocationManager.m
 //  GameFinder
 //
-//  Created by Nick Reeder on 2/12/15.
+//  Created by Nick Reeder on 2/22/15.
 //  Copyright (c) 2015 Nick Reeder. All rights reserved.
 //
 
 #import "LocationManager.h"
+
 
 @implementation LocationManager
 
@@ -18,7 +19,7 @@
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         self.locationManager.delegate = self;
         self.locationManager.distanceFilter = 10;
-        [self.locationManager startUpdatingLocation];
+       
         [self.locationManager requestWhenInUseAuthorization];
         
         
@@ -44,17 +45,19 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     
     self.currentLocation = [locations lastObject];
-    
+    NSLog(@"locations lastObject %@", [locations lastObject]);
     if (self.startingLocation == nil) {
         
         self.startingLocation = self.currentLocation;
         
+        
         [[NSNotificationCenter defaultCenter]postNotificationName:@"updatedLocation"
                                                            object:self.currentLocation];
         
-    }
+}
+    
+
     
 }
-
 
 @end

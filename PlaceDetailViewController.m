@@ -49,9 +49,9 @@
         
     } else {
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Open in Maps" message:@"You will be directed from Game Finder." preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Open in Maps" message:@"You will be directed from Game Finder." preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *cancel) {
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *cancel) {
             
         }];
 
@@ -72,12 +72,24 @@
 }
 
 - (IBAction)shareLocation:(id)sender {
-    CLLocation *locale = [[CLLocation alloc]initWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
+   
+    CLLocationCoordinate2D placeLocation = CLLocationCoordinate2DMake(self.locationCoordinate.latitude, self.locationCoordinate.longitude);
     
-    NSString *urlStr = [NSString stringWithFormat:@"http://maps.apple.com/?q=||=%f%f",locale.coordinate.latitude, locale.coordinate.longitude];
+    NSString *msg = @"Come play with me.";
+    // *make this my icon
+    //UIImage *img = [UIImage imageNamed:@"compass"];
     
-    NSURL *myUrl = [NSURL URLWithString:urlStr];
+    NSString *coordinates = [NSString stringWithFormat:@"http://maps.apple.com/?q=%f,%f", placeLocation.latitude, placeLocation.longitude];
+    NSURL *myUrl = [NSURL URLWithString:coordinates];
+    NSLog(@"myUrl = %@", myUrl);
+    
 
+    UIActivityViewController *uac = [[UIActivityViewController alloc]initWithActivityItems:@[msg,myUrl] applicationActivities:nil];
+    
+    
+    [self presentViewController:uac animated:YES completion:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

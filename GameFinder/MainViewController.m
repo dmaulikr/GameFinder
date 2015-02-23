@@ -16,6 +16,8 @@
 
 @interface MainViewController ()
 
+
+
 @end
 
 @implementation MainViewController
@@ -24,28 +26,32 @@
     [super viewDidLoad];
     
     
-    //Google Drive presentations/Lucid chart
     
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        if (!error) {
-
-            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
-            [[PFUser currentUser] saveInBackground];
-            [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.09, 0.09))];
-            [self.mapView setDelegate:self];
-            self.mapView.showsUserLocation = YES;
-            [self.mapView setUserTrackingMode:MKUserTrackingModeFollowWithHeading];
-            
-        }
-    }];
+    //Google Drive presentations/Lucid chart
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocationRange:) name:@"updatedLocation" object:nil];
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [self.gamesTableView addSubview:refreshControl];
+//    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+//        if (!error) {
+//
+//            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
+//            [[PFUser currentUser] saveInBackground];
+//            
+//
+//            [self.mapView setDelegate:self];
+//            self.mapView.showsUserLocation = YES;
+//            
+//        }
+//    }];
   
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-    [self retrieveFromParse];
-    [self disableAddButton];
-    });
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [self disableAddButton];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     
@@ -61,6 +67,10 @@
     }
     
     
+}
+
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    [refreshControl endRefreshing];
 }
 
 #pragma -mark parse queries
@@ -119,7 +129,6 @@
             for (id object in objects) {
                 
                 [object objectForKey:@"objectId"];
-                NSLog(@"%@", object);
                 
                 [self performSelectorOnMainThread:@selector(showPlaceDetail:) withObject:object waitUntilDone:YES];
             }
@@ -141,7 +150,7 @@
     if ([[segue identifier] isEqualToString:@"showPlaceDetail"]) {
         NSDictionary *object = (NSDictionary *)sender;
         
-        NSLog(@"dict = %@", object);
+        
         
         NSString *name = [object objectForKey:@"name"];
         
@@ -183,28 +192,53 @@
 -(void)disableAddButton {
     
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        NSLog(@"geoPoint is %@", geoPoint);
+       
         PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
         [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.05];
         [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (objects.count >= 1) {
-                NSLog(@"%@",objects);
+               
                 self.addGamesButton.enabled = NO;
                 
+            }if (objects.count < 1) {
+                self.addGamesButton.enabled = YES;
             }
             
         }];
 
+        
     }];
     
 }
+
+
 #pragma -mark TableView datasource methods
 
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     //returns the number of sections you need.
-    return 1;
+    if (self.gameTimesArray) {
+        
+        self.gamesTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        return 1;
+        
+    } else {
+        // Display a message when the table is empty
+        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+        
+        messageLabel.text = @"No data is currently available. Please pull down to refresh.";
+        messageLabel.textColor = [UIColor orangeColor];
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = NSTextAlignmentCenter;
+        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
+        [messageLabel sizeToFit];
+        
+        self.gamesTableView.backgroundView = messageLabel;
+        self.gamesTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+    }
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -253,12 +287,14 @@
     
 }
 
-
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section{
+    return 0;
+}
 
 #pragma -mark TableView delegate methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"cell tapped");
+    
     
     //Get the object at the same index in the array
     NSDictionary *object = [self.gameTimesArray objectAtIndex:indexPath.row];
@@ -328,7 +364,7 @@
 
 - (IBAction)zoomButton:(id)sender {
     
-    [UIView animateWithDuration:.5 animations:^{
+    [UIView animateWithDuration:.2 animations:^{
         self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
     }];
     
@@ -352,7 +388,9 @@
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             NSLog(@"AlertView Cancelled");
             
+            
         }];
+        
         
         UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *yes) {
             
@@ -397,7 +435,7 @@
                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to save location" message:@"Location already exists. Check in instead." preferredStyle:UIAlertControllerStyleAlert];
                     
                     
-                    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                         NSLog(@"AlertView Cancelled");
                         [self dismissViewControllerAnimated:YES completion:nil];
                     }];
@@ -424,7 +462,6 @@
         }];
         
     }];
-    [self.view layoutIfNeeded];
     
 }
 
@@ -433,7 +470,30 @@
     
     [self retrieveFromParse];
     
+}
+-(void)updateRegion:(CLLocationCoordinate2D) location{
     
+    self.mapView.showsUserLocation = YES;
+    
+    CLLocationCoordinate2D initialLocationFocus = location;
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(.06, .06);
+    
+    MKCoordinateRegion region = MKCoordinateRegionMake(initialLocationFocus, span);
+    
+    [self.mapView setRegion:region animated:YES];
+    
+    
+    
+}
+
+
+
+-(void)updateLocationRange:(NSNotification *)notif {
+    
+    CLLocation *newLocation = notif.object;
+    
+    [self updateRegion:newLocation.coordinate];
 }
 
 

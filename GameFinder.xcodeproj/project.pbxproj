@@ -13,6 +13,7 @@
 		27048D1D1A9223A6004E84B5 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */; };
 		270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B1E1A746F0A0004A632 /* MapKit.framework */; };
 		270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B201A746F150004A632 /* CoreLocation.framework */; };
+		272EE5A11A9B068400126078 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 272EE5A01A9B068400126078 /* LocationManager.m */; };
 		275BAFD81A9736F000697533 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD71A9736F000697533 /* AddressBook.framework */; };
 		275BAFDA1A9736F800697533 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD91A9736F800697533 /* AddressBookUI.framework */; };
 		27671A5D1A97D76A00DFD8B0 /* CreateGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27671A5C1A97D76A00DFD8B0 /* CreateGameViewController.m */; };
@@ -61,6 +62,8 @@
 		27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		270C5B1E1A746F0A0004A632 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		272EE59F1A9B068400126078 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		272EE5A01A9B068400126078 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		275BAFD71A9736F000697533 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		275BAFD91A9736F800697533 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		27671A5B1A97D76A00DFD8B0 /* CreateGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateGameViewController.h; path = ../CreateGameViewController.h; sourceTree = "<group>"; };
@@ -213,6 +216,8 @@
 				27D188581A95C98D00410B32 /* GamePointAnnotation.h */,
 				27048D0E1A8F615D004E84B5 /* CustomTableViewCell.h */,
 				27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */,
+				272EE59F1A9B068400126078 /* LocationManager.h */,
+				272EE5A01A9B068400126078 /* LocationManager.m */,
 			);
 			name = Classes;
 			path = ..;
@@ -362,6 +367,7 @@
 				27D1885A1A95C99900410B32 /* GamePointAnnotation.m in Sources */,
 				27048D1D1A9223A6004E84B5 /* SVProgressHUD.m in Sources */,
 				276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */,
+				272EE5A11A9B068400126078 /* LocationManager.m in Sources */,
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
 				27D188571A95C97300410B32 /* MainViewController.m in Sources */,
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,

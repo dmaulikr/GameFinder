@@ -16,7 +16,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    self.datePicker.datePickerMode = UIDatePickerModeTime;
+}
+
+- (IBAction)backButton:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

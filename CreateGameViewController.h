@@ -10,4 +10,10 @@
 
 @interface CreateGameViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+
+@property NSMutableArray *gameTimes;
+
+@property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
 @end
