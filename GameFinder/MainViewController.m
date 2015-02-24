@@ -27,9 +27,9 @@
     [super viewDidLoad];
     
     
-    self.pickerArray = @[@"1-5",@"6-10",@"11-15", @"More than 20"];
+    self.pickerArray = @[@"",@"1-5",@"6-10",@"11-15", @"More than 15"];
     
-    self.placeTypeArray = @[@"School", @"Fitness Center", @"Park"];
+    self.placeTypeArray = @[@"",@"School", @"Fitness Center", @"Park", @"Other"];
     
     self.locationNameView.hidden = YES;
     self.locationNameView.layer.cornerRadius = 5;
@@ -37,38 +37,26 @@
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.delegate = self;
-    self.locationManager.distanceFilter = 10;
+    self.locationManager.distanceFilter = 800;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
     [self.locationNameView addGestureRecognizer:tap];
+    [self.mapView setDelegate:self];
+    self.mapView.showsUserLocation = YES;
+    
+    [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
+    [self.locationManager startUpdatingLocation];
     
     
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        if (!error) {
-            NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
-            
-            
-            
-            [self.mapView setDelegate:self];
-            self.mapView.showsUserLocation = YES;
-            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
-            [[PFUser currentUser] saveInBackground];
-            [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.08, 0.08))];
-            [self retrieveFromParse];
-            
-            [self.locationManager startUpdatingLocation];
-        }
-    }];
-
     
-
+    
     
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [self disableAddLocationButton];
-
+    
     
 }
 
@@ -109,7 +97,7 @@
         return [self.placeTypeArray objectAtIndex:row];
     }else return 0;
     
-
+    
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     //query parse for game and then add nuber to players array
@@ -121,6 +109,8 @@
     
     
 }
+
+
 
 
 #pragma mark- parse queries
@@ -167,7 +157,7 @@
             [SVProgressHUD showErrorWithStatus:@"Error!"];
         }
         [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
-       
+        
     }];
     
     
@@ -221,7 +211,11 @@
         
         NSString *type = [object objectForKey:@"type"];
         
+        NSString *players = [object objectForKey:@"players"];
+        
         PFGeoPoint *location = [object objectForKey:@"location"];
+        
+        NSDate *createdAt = [object objectForKey:@"createdAt"];
         
         
         PlaceDetailViewController *pdc = [segue destinationViewController];
@@ -242,6 +236,10 @@
         
         pdc.locationCoordinate = location;
         
+        
+        
+        //pdc.playersCell.title.text = players;
+        
     }
 }
 
@@ -250,7 +248,7 @@
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     
     [self retrieveFromParse];
-  
+    
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
@@ -395,12 +393,12 @@
     
 }
 - (IBAction)xButton:(id)sender {
-
+    
     self.locationNameView.hidden = YES;
 }
 
 - (IBAction)addLocation:(id)sender {
- 
+    
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
         
@@ -424,9 +422,10 @@
         UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *yes) {
             
             self.locationNameView.hidden = NO;
+            self.locationNameView.backgroundColor = [UIColor colorWithWhite:1 alpha:.8];
             
         }];
-       
+        
         
         [alert addAction:cancel];
         [alert addAction:yes];
@@ -469,7 +468,7 @@
                     
                     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                         NSLog(@"AlertView Cancelled");
-                      
+                        
                     }];
                     
                     
@@ -480,11 +479,11 @@
                     return;
                 }
                 if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
-                   
+                    
                     [SVProgressHUD showSuccessWithStatus:@"Saved!"];
                     [self retrieveFromParse];
                     
-                
+                    
                     
                 } else {
                     NSLog(@"Failed to save.");
@@ -521,20 +520,20 @@
         
     }];
     
-
+    
     
 }
 - (IBAction)submitButton:(id)sender {
-    if (self.locationName.text.length >2) {
-    [self postToParse];
-    [self disableAddLocationButton];
-    self.locationNameView.hidden = YES;
+    if (self.locationName.text.length >2 && self.typeOfLocation.text.length >1 && self.numberOfPlayers.text.length >1) {
+        [self postToParse];
+        [self disableAddLocationButton];
+        self.locationNameView.hidden = YES;
     }else{
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please fill out a location name." message:@" " preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please fill out all fields." message:@"" preferredStyle:UIAlertControllerStyleAlert];
         
         
         UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *ok) {
-            }];
+        }];
         
         
         [alert addAction:ok];

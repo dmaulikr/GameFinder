@@ -10,11 +10,13 @@
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
 #import <CoreLocation/CoreLocation.h>
-#import <AddressBook/AddressBook.h>
+#import "CustomTableViewCell.h"
 
-@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
+@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapDetailView;
+
+
 
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
