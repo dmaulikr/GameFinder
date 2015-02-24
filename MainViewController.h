@@ -11,9 +11,10 @@
 #import <Parse/Parse.h>
 #import "CustomTableViewCell.h"
 #import "SVProgressHUD.h"
+#import <CoreLocation/CoreLocation.h>
 
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
@@ -21,7 +22,9 @@
 
 @property (strong, nonatomic) PFGeoPoint *userLocation;
 
-//@property (strong, nonatomic) CLLocation *currentLocation;
+@property (strong, nonatomic) CLLocation *currentLocation;
+
+@property (weak, nonatomic) IBOutlet UIButton *zoomButton;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGamesButton;
 
@@ -29,9 +32,21 @@
 
 @property NSArray *gameTimesArray;
 
-@property UIRefreshControl *refreshControl;
 
+@property (weak, nonatomic) IBOutlet UITextField *locationName;
 
+@property (weak, nonatomic) IBOutlet UIView *locationNameView;
 
+@property (nonatomic, retain) CLLocationManager *locationManager;
+
+@property (weak, nonatomic) IBOutlet UIPickerView *pickerControl;
+
+@property (weak, nonatomic) IBOutlet UIPickerView *typePicker;
+
+@property NSArray *pickerArray;
+
+@property NSArray *placeTypeArray;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfPlayers;
+@property (weak, nonatomic) IBOutlet UILabel *typeOfLocation;
 
 @end

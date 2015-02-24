@@ -13,7 +13,6 @@
 		27048D1D1A9223A6004E84B5 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */; };
 		270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B1E1A746F0A0004A632 /* MapKit.framework */; };
 		270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B201A746F150004A632 /* CoreLocation.framework */; };
-		272EE5A11A9B068400126078 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 272EE5A01A9B068400126078 /* LocationManager.m */; };
 		275BAFD81A9736F000697533 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD71A9736F000697533 /* AddressBook.framework */; };
 		275BAFDA1A9736F800697533 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD91A9736F800697533 /* AddressBookUI.framework */; };
 		27671A5D1A97D76A00DFD8B0 /* CreateGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27671A5C1A97D76A00DFD8B0 /* CreateGameViewController.m */; };
@@ -35,7 +34,6 @@
 		27FC607C1A7B41A9005AE24C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC607B1A7B41A9005AE24C /* MobileCoreServices.framework */; };
 		27FC607E1A7B41B1005AE24C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC607D1A7B41B1005AE24C /* QuartzCore.framework */; };
 		27FC60801A7B41BB005AE24C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC607F1A7B41BB005AE24C /* Security.framework */; };
-		27FC60821A7B41C5005AE24C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60811A7B41C5005AE24C /* StoreKit.framework */; };
 		27FC60841A7B41DB005AE24C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60831A7B41DB005AE24C /* SystemConfiguration.framework */; };
 		27FC60861A7B41E7005AE24C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60851A7B41E7005AE24C /* libz.dylib */; };
 		27FC60881A7B41F3005AE24C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60871A7B41F3005AE24C /* libsqlite3.dylib */; };
@@ -62,8 +60,6 @@
 		27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		270C5B1E1A746F0A0004A632 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		272EE59F1A9B068400126078 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
-		272EE5A01A9B068400126078 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		275BAFD71A9736F000697533 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		275BAFD91A9736F800697533 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		27671A5B1A97D76A00DFD8B0 /* CreateGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateGameViewController.h; path = ../CreateGameViewController.h; sourceTree = "<group>"; };
@@ -95,7 +91,6 @@
 		27FC607B1A7B41A9005AE24C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		27FC607D1A7B41B1005AE24C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		27FC607F1A7B41BB005AE24C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		27FC60811A7B41C5005AE24C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		27FC60831A7B41DB005AE24C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		27FC60851A7B41E7005AE24C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		27FC60871A7B41F3005AE24C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -111,7 +106,6 @@
 				27FC60881A7B41F3005AE24C /* libsqlite3.dylib in Frameworks */,
 				27FC60861A7B41E7005AE24C /* libz.dylib in Frameworks */,
 				27FC60841A7B41DB005AE24C /* SystemConfiguration.framework in Frameworks */,
-				27FC60821A7B41C5005AE24C /* StoreKit.framework in Frameworks */,
 				27FC60801A7B41BB005AE24C /* Security.framework in Frameworks */,
 				27FC607E1A7B41B1005AE24C /* QuartzCore.framework in Frameworks */,
 				27FC607C1A7B41A9005AE24C /* MobileCoreServices.framework in Frameworks */,
@@ -216,8 +210,6 @@
 				27D188581A95C98D00410B32 /* GamePointAnnotation.h */,
 				27048D0E1A8F615D004E84B5 /* CustomTableViewCell.h */,
 				27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */,
-				272EE59F1A9B068400126078 /* LocationManager.h */,
-				272EE5A01A9B068400126078 /* LocationManager.m */,
 			);
 			name = Classes;
 			path = ..;
@@ -231,7 +223,6 @@
 				27FC60871A7B41F3005AE24C /* libsqlite3.dylib */,
 				27FC60851A7B41E7005AE24C /* libz.dylib */,
 				27FC60831A7B41DB005AE24C /* SystemConfiguration.framework */,
-				27FC60811A7B41C5005AE24C /* StoreKit.framework */,
 				27FC607F1A7B41BB005AE24C /* Security.framework */,
 				27FC607D1A7B41B1005AE24C /* QuartzCore.framework */,
 				27FC607B1A7B41A9005AE24C /* MobileCoreServices.framework */,
@@ -312,6 +303,12 @@
 				TargetAttributes = {
 					279E2AB81A71A77F0080542E = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = C67UGMY2HN;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 					279E2AD11A71A7800080542E = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -367,7 +364,6 @@
 				27D1885A1A95C99900410B32 /* GamePointAnnotation.m in Sources */,
 				27048D1D1A9223A6004E84B5 /* SVProgressHUD.m in Sources */,
 				276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */,
-				272EE5A11A9B068400126078 /* LocationManager.m in Sources */,
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
 				27D188571A95C97300410B32 /* MainViewController.m in Sources */,
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,

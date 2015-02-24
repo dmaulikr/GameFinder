@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="mcl-Aq-ZYS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--LogInScreen-->
@@ -173,7 +172,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="342" y="-269"/>
+            <point key="canvasLocation" x="15" y="-776"/>
         </scene>
         <!--Game Finder-->
         <scene sceneID="41p-MG-wHA">
@@ -187,26 +186,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MKU-Gn-bkm">
-                                <rect key="frame" x="8" y="0.0" width="304" height="287"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MKU-Gn-bkm">
+                                <rect key="frame" x="8" y="0.0" width="304" height="256"/>
                                 <color key="tintColor" red="0.40000000000000002" green="0.99607843139999996" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="delegate" destination="7zf-AK-dEa" id="7gX-Kz-VLN"/>
                                 </connections>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZm-Cm-zfu">
-                                <rect key="frame" x="8" y="250" width="32" height="32"/>
-                                <state key="normal" image="bullseye">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="zoomButton:" destination="7zf-AK-dEa" eventType="touchUpInside" id="6Lk-9w-oNH"/>
-                                </connections>
-                            </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bGj-ku-4G0">
-                                <rect key="frame" x="8" y="285" width="304" height="239"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" indicatorStyle="white" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="bGj-ku-4G0">
+                                <rect key="frame" x="8" y="253" width="304" height="271"/>
                                 <inset key="scrollIndicatorInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <color key="separatorColor" red="1" green="0.93873355263157898" blue="0.92961040296052633" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="separatorColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <color key="sectionIndexColor" red="0.76078431372549016" green="0.76470588235294112" blue="0.80000000000000004" alpha="0.83999999999999997" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="LocationCell" textLabel="I8J-xa-UXf" detailTextLabel="c0v-hy-62F" style="IBUITableViewCellStyleSubtitle" id="Knh-LQ-YaG" customClass="CustomTableViewCell">
@@ -240,20 +231,92 @@
                                     <outlet property="delegate" destination="7zf-AK-dEa" id="rqE-JF-URC"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZm-Cm-zfu">
+                                <rect key="frame" x="8" y="213" width="32" height="32"/>
+                                <state key="normal" image="bullseye">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="zoomButton:" destination="7zf-AK-dEa" eventType="touchUpInside" id="6Lk-9w-oNH"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WWr-4i-qyz">
+                                <rect key="frame" x="5" y="2" width="310" height="514"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How many players are here?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rsZ-vl-Dvp">
+                                        <rect key="frame" x="30" y="129" width="257" height="32"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="19"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Location Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1ic-en-yG3">
+                                        <rect key="frame" x="30" y="100" width="257" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BFg-pH-7SX">
+                                        <rect key="frame" x="34" y="445" width="264" height="30"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Submit">
+                                            <color key="titleColor" red="0.40000000000000002" green="0.99607843139999996" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="submitButton:" destination="7zf-AK-dEa" eventType="touchUpInside" id="cZM-jQ-tJd"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add a name for this location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bs-BF-VsJ">
+                                        <rect key="frame" x="34" y="60" width="257" height="32"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="22"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="PlayersPicker" translatesAutoresizingMaskIntoConstraints="NO" id="IJO-d7-QJM">
+                                        <rect key="frame" x="0.0" y="133" width="320" height="100"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" red="0.10335888610000001" green="1" blue="0.27719567630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="7zf-AK-dEa" id="Gum-ay-gW9"/>
+                                            <outlet property="delegate" destination="7zf-AK-dEa" id="LaX-Oa-Dfb"/>
+                                        </connections>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="prp-zl-M60">
+                                        <rect key="frame" x="276" y="0.0" width="26" height="26"/>
+                                        <state key="normal" image="x">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="xButton:" destination="7zf-AK-dEa" eventType="touchUpInside" id="2xe-VM-35z"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5oR-EK-bPq">
+                                        <rect key="frame" x="129" y="241" width="59" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="type" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCm-7i-DxN">
+                                        <rect key="frame" x="145" y="360" width="34" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="TypePicker" translatesAutoresizingMaskIntoConstraints="NO" id="B7l-C0-Wk2">
+                                        <rect key="frame" x="-5" y="270" width="320" height="162"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" red="0.10335888610000001" green="1" blue="0.27719567630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="7zf-AK-dEa" id="5w5-09-fjG"/>
+                                            <outlet property="delegate" destination="7zf-AK-dEa" id="pfS-Nr-Jg9"/>
+                                        </connections>
+                                    </pickerView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.93725490196078431" blue="0.89411764705882357" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="MKU-Gn-bkm" firstAttribute="top" secondItem="x9h-xt-RWr" secondAttribute="top" id="4Da-8g-3o8"/>
-                            <constraint firstItem="MKU-Gn-bkm" firstAttribute="leading" secondItem="x9h-xt-RWr" secondAttribute="leadingMargin" constant="-8" id="8mK-Lm-TJD"/>
-                            <constraint firstItem="bGj-ku-4G0" firstAttribute="bottom" secondItem="AST-Gr-HZu" secondAttribute="top" id="E7E-2f-RXY"/>
-                            <constraint firstItem="bZm-Cm-zfu" firstAttribute="top" secondItem="YbP-YY-oLX" secondAttribute="bottom" constant="186" id="FiO-63-EZ9"/>
-                            <constraint firstItem="AST-Gr-HZu" firstAttribute="top" secondItem="MKU-Gn-bkm" secondAttribute="bottom" constant="237" id="W10-uK-Aea"/>
-                            <constraint firstItem="MKU-Gn-bkm" firstAttribute="trailing" secondItem="bGj-ku-4G0" secondAttribute="trailing" id="dm0-cu-VAB"/>
-                            <constraint firstItem="MKU-Gn-bkm" firstAttribute="leading" secondItem="bZm-Cm-zfu" secondAttribute="leading" id="f1C-aJ-IF6"/>
-                            <constraint firstItem="bGj-ku-4G0" firstAttribute="centerX" secondItem="x9h-xt-RWr" secondAttribute="centerX" id="jQP-K0-m5g"/>
-                            <constraint firstItem="bGj-ku-4G0" firstAttribute="top" secondItem="bZm-Cm-zfu" secondAttribute="bottom" constant="3" id="rPI-BG-g9s"/>
-                            <constraint firstItem="bZm-Cm-zfu" firstAttribute="leading" secondItem="bGj-ku-4G0" secondAttribute="leading" id="tLi-2t-GUX"/>
-                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Game Finder" id="eWa-uB-bQX">
@@ -277,13 +340,20 @@
                     <connections>
                         <outlet property="addGamesButton" destination="RqU-ut-4cv" id="Ncr-0O-Le5"/>
                         <outlet property="gamesTableView" destination="bGj-ku-4G0" id="PQM-sA-WF6"/>
+                        <outlet property="locationName" destination="1ic-en-yG3" id="WFd-a4-2SA"/>
+                        <outlet property="locationNameView" destination="WWr-4i-qyz" id="MZD-cN-PbF"/>
                         <outlet property="mapView" destination="MKU-Gn-bkm" id="MX2-tl-PYf"/>
+                        <outlet property="numberOfPlayers" destination="5oR-EK-bPq" id="nab-4C-cRa"/>
+                        <outlet property="pickerControl" destination="IJO-d7-QJM" id="CzB-XI-sEc"/>
+                        <outlet property="typeOfLocation" destination="gCm-7i-DxN" id="jBh-OZ-vcM"/>
+                        <outlet property="typePicker" destination="B7l-C0-Wk2" id="wuE-6E-sxd"/>
+                        <outlet property="zoomButton" destination="bZm-Cm-zfu" id="PcH-ih-Jgy"/>
                         <segue destination="nc4-cA-m6e" kind="show" identifier="showPlaceDetail" id="arX-Bc-Kgo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UCE-8b-Sbw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1123" y="-363"/>
+            <point key="canvasLocation" x="817" y="-753"/>
         </scene>
         <!--Title-->
         <scene sceneID="Mo9-RV-Kkb">
@@ -379,7 +449,7 @@
                                 </state>
                                 <state key="highlighted" title="Are you playing here?"/>
                                 <connections>
-                                    <segue destination="bik-xz-Nr6" kind="showDetail" id="tyv-rr-1UY"/>
+                                    <segue destination="bik-xz-Nr6" kind="show" identifier="playHere" id="5Yb-bL-dPA"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zay-uc-wca">
@@ -423,7 +493,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7VM-u9-BPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1583" y="-280"/>
+            <point key="canvasLocation" x="1379" y="-399"/>
         </scene>
         <!--Create Game View Controller-->
         <scene sceneID="4zf-8T-FjK">
@@ -434,36 +504,21 @@
                         <viewControllerLayoutGuide type="bottom" id="M3n-bk-fqO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" horizontalHuggingPriority="200" verticalHuggingPriority="200" horizontalCompressionResistancePriority="500" verticalCompressionResistancePriority="500" id="MCh-uH-HG5">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="v4m-o6-xgZ">
-                                <rect key="frame" x="0.0" y="68" width="320" height="162"/>
-                                <date key="date" timeIntervalSinceReferenceDate="446158809.23311102">
-                                    <!--2015-02-20 21:00:09 +0000-->
-                                </date>
-                            </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cw6-Yv-ktS">
                                 <rect key="frame" x="137" y="247" width="35" height="30"/>
                                 <state key="normal" title="Back">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="backButton:" destination="bik-xz-Nr6" eventType="touchUpInside" id="5y5-la-qFP"/>
-                                </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.80000001192092896" green="0.40000000596046448" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="500"/>
-                    <connections>
-                        <outlet property="datePicker" destination="v4m-o6-xgZ" id="S1z-Se-pa4"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BOP-3q-YFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2043" y="-286"/>
+            <point key="canvasLocation" x="1785" y="-822"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Hl4-l2-INE">
@@ -484,12 +539,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXB-3a-BnV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="618" y="-363"/>
+            <point key="canvasLocation" x="468" y="-776"/>
         </scene>
     </scenes>
     <resources>
         <image name="Icon" width="200" height="150"/>
         <image name="bullseye" width="32" height="32"/>
         <image name="car" width="26" height="26"/>
+        <image name="x" width="26" height="26"/>
     </resources>
 </document>

@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
+#import "CreateGameViewController.h"
 
 
 //Cllocation distance
@@ -26,31 +27,49 @@
     [super viewDidLoad];
     
     
+    self.pickerArray = @[@"1-5",@"6-10",@"11-15", @"More than 20"];
     
-    //Google Drive presentations/Lucid chart
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocationRange:) name:@"updatedLocation" object:nil];
+    self.placeTypeArray = @[@"School", @"Fitness Center", @"Park"];
     
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
-    [self.gamesTableView addSubview:refreshControl];
-//    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-//        if (!error) {
-//
-//            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
-//            [[PFUser currentUser] saveInBackground];
-//            
-//
-//            [self.mapView setDelegate:self];
-//            self.mapView.showsUserLocation = YES;
-//            
-//        }
-//    }];
-  
+    self.locationNameView.hidden = YES;
+    self.locationNameView.layer.cornerRadius = 5;
+    
+    self.locationManager = [[CLLocationManager alloc]init];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.delegate = self;
+    self.locationManager.distanceFilter = 10;
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    tap.numberOfTapsRequired = 1;
+    [self.locationNameView addGestureRecognizer:tap];
+    
+    
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        if (!error) {
+            NSLog(@"User is currently at %f, %f", geoPoint.latitude, geoPoint.longitude);
+            
+            
+            
+            [self.mapView setDelegate:self];
+            self.mapView.showsUserLocation = YES;
+            [[PFUser currentUser] setObject:geoPoint forKey:@"currentLocation"];
+            [[PFUser currentUser] saveInBackground];
+            [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(geoPoint.latitude, geoPoint.longitude), MKCoordinateSpanMake(0.08, 0.08))];
+            [self retrieveFromParse];
+            
+            [self.locationManager startUpdatingLocation];
+        }
+    }];
+
+    
+
     
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self disableAddButton];
+    [self disableAddLocationButton];
+
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -68,23 +87,55 @@
     
     
 }
+#pragma mark- uipicker control delegates
 
-- (void)refresh:(UIRefreshControl *)refreshControl {
-    [refreshControl endRefreshing];
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    if([pickerView isEqual: self.pickerControl]){
+        return [self.pickerArray count];
+    }else if([pickerView isEqual:self.typePicker]){
+        return [self.placeTypeArray count];
+    }else return 0;
+    
 }
 
-#pragma -mark parse queries
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    if([pickerView isEqual: self.pickerControl]){
+        return [self.pickerArray objectAtIndex:row];
+    }else if([pickerView isEqual:self.typePicker]){
+        return [self.placeTypeArray objectAtIndex:row];
+    }else return 0;
+    
+
+}
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    //query parse for game and then add nuber to players array
+    if([pickerView isEqual: self.pickerControl]){
+        [self.numberOfPlayers setText:[self.pickerArray objectAtIndex:row]];
+    }else if([pickerView isEqual:self.typePicker]){
+        [self.typeOfLocation setText:[self.placeTypeArray objectAtIndex:row]];
+    }else return ;
+    
+    
+}
+
+
+#pragma mark- parse queries
 -(void) retrieveFromParse {
+    
     
     PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude];
     //NSLog(@"userGeoPoint is %@", userGeoPoint);
     
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
     [retrieveGames whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:50];
-    
+    [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading"];
     [self.mapView removeAnnotations:self.mapView.annotations];
-    [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading" maskType:SVProgressHUDMaskTypeGradient];
-        
+    
+    
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             
@@ -115,10 +166,15 @@
             //Just added this to show an error popup if you got back an error
             [SVProgressHUD showErrorWithStatus:@"Error!"];
         }
-        [self.gamesTableView reloadData];
-        
+        [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+       
     }];
     
+    
+}
+
+-(void)reloadData:(NSString *)string{
+    [self.gamesTableView reloadData];
 }
 
 -(void)getPlaceDetail{
@@ -140,6 +196,7 @@
     
 }
 
+#pragma mark - segue methods
 -(void)showPlaceDetail:(NSDictionary *)object {
     
     [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
@@ -188,126 +245,24 @@
     }
 }
 
+#pragma mark- Location manager delegate methods
 
--(void)disableAddButton {
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
     
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-       
-        PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.05];
-        [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (objects.count >= 1) {
-               
-                self.addGamesButton.enabled = NO;
-                
-            }if (objects.count < 1) {
-                self.addGamesButton.enabled = YES;
-            }
-            
-        }];
+    [self retrieveFromParse];
+  
+}
 
-        
-    }];
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    NSLog(@"locations are %@", [locations lastObject]);
+    self.currentLocation = [locations lastObject];
+    self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude);
+    [self disableAddLocationButton];
     
 }
 
 
-#pragma -mark TableView datasource methods
-
-
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    //returns the number of sections you need.
-    if (self.gameTimesArray) {
-        
-        self.gamesTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        return 1;
-        
-    } else {
-        // Display a message when the table is empty
-        UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-        
-        messageLabel.text = @"No data is currently available. Please pull down to refresh.";
-        messageLabel.textColor = [UIColor orangeColor];
-        messageLabel.numberOfLines = 0;
-        messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.font = [UIFont fontWithName:@"Palatino-Italic" size:20];
-        [messageLabel sizeToFit];
-        
-        self.gamesTableView.backgroundView = messageLabel;
-        self.gamesTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-    }
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    //how many rows are in each of the above sections (Total number of cells needing to be displayed).
-    return self.gameTimesArray.count;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 70;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //The actual code to return each cell, configured with the data you want to display.
-    
-    static NSString *CellIdentifier = @"LocationCell";
-    
-    CustomTableViewCell *cell = [tableView
-                                 dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSDictionary *tempObject = [self.gameTimesArray objectAtIndex:indexPath.row];
-    
-    if (cell == nil) {
-        cell = [[CustomTableViewCell alloc]
-                initWithStyle:UITableViewCellStyleSubtitle
-                reuseIdentifier:CellIdentifier];
-    }
-    
-    
-    
-    cell.title.text = [tempObject objectForKey:@"name"];
-    cell.subTitle.text = [tempObject objectForKey:@"address"];
-    cell.title.textAlignment = NSTextAlignmentCenter;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    cell.title.font = [UIFont fontWithName:@"optima-bold" size:17.0];
-    cell.title.textColor = [UIColor darkGrayColor];
-    cell.subTitle.textColor = [UIColor lightGrayColor];
-    cell.subTitle.font = [UIFont fontWithName:@"american typewriter" size:10.0];
-    
-    
-    return cell;
-    
-    
-}
-
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section{
-    return 0;
-}
-
-#pragma -mark TableView delegate methods
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
-    //Get the object at the same index in the array
-    NSDictionary *object = [self.gameTimesArray objectAtIndex:indexPath.row];
-    
-    //Send that object along to the segue
-    [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
-    
-    tableView.scrollsToTop = NO;
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma -mark map annotation view
+#pragma mark- map annotation view
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id )annotation{
     
     static NSString *identifier = @"MyLocation";
@@ -351,7 +306,77 @@
     [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
 }
 
+#pragma mark- TableView datasource methods
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    //returns the number of sections you need.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    //how many rows are in each of the above sections (Total number of cells needing to be displayed).
+    return self.gameTimesArray.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 60;
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //The actual code to return each cell, configured with the data you want to display.
+    
+    static NSString *CellIdentifier = @"LocationCell";
+    
+    CustomTableViewCell *cell = [tableView
+                                 dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSDictionary *tempObject = [self.gameTimesArray objectAtIndex:indexPath.row];
+    
+    if (cell == nil) {
+        cell = [[CustomTableViewCell alloc]
+                initWithStyle:UITableViewCellStyleSubtitle
+                reuseIdentifier:CellIdentifier];
+        
+    }
+    
+    
+    
+    cell.title.text = [tempObject objectForKey:@"name"];
+    cell.subTitle.text = [tempObject objectForKey:@"address"];
+    cell.title.textAlignment = NSTextAlignmentCenter;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    cell.title.font = [UIFont fontWithName:@"optima-bold" size:17.0];
+    cell.title.textColor = [UIColor darkGrayColor];
+    cell.subTitle.textColor = [UIColor lightGrayColor];
+    cell.subTitle.font = [UIFont fontWithName:@"american typewriter" size:10.0];
+    
+    
+    return cell;
+    
+    
+}
+
+
+
+#pragma mark- TableView delegate methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    //Get the object at the same index in the array
+    NSDictionary *object = [self.gameTimesArray objectAtIndex:indexPath.row];
+    
+    //Send that object along to the segue
+    [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
+    
+    tableView.scrollsToTop = NO;
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+
+#pragma mark- buttons
 
 - (IBAction)logOut:(id)sender {
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
@@ -369,9 +394,13 @@
     }];
     
 }
+- (IBAction)xButton:(id)sender {
+
+    self.locationNameView.hidden = YES;
+}
 
 - (IBAction)addLocation:(id)sender {
-    
+ 
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
         
@@ -394,9 +423,10 @@
         
         UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *yes) {
             
-            [self okayButton];
+            self.locationNameView.hidden = NO;
+            
         }];
-        
+       
         
         [alert addAction:cancel];
         [alert addAction:yes];
@@ -406,7 +436,7 @@
     
     
 }
-- (void)okayButton {
+- (void)postToParse {
     CLLocation *currentLocation = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
     NSLog(@"currentLocation = %@", currentLocation);
     
@@ -419,14 +449,16 @@
             
             PFObject *postObject = [PFObject objectWithClassName:@"Games"];
             
-            postObject[@"name"] = place.subLocality;
+            postObject[@"name"] = self.locationName.text;
             postObject[@"location"] = geoPoint;
             postObject[@"address"] = place.name;
             postObject[@"city"] = place.locality;
             postObject[@"state"] = place.administrativeArea;
             postObject[@"zip"] = place.postalCode;
+            postObject[@"type"] = self.typeOfLocation.text;
+            postObject[@"players"] = self.numberOfPlayers.text;
             
-            //NSLog(@"address dictionary is %@", place.addressDictionary);
+            
             
             [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (error) {  // Failed to save, show an alert view with the error message
@@ -437,19 +469,22 @@
                     
                     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                         NSLog(@"AlertView Cancelled");
-                        [self dismissViewControllerAnimated:YES completion:nil];
+                      
                     }];
                     
                     
                     [alert addAction:cancel];
                     [self presentViewController:alert animated:YES completion:nil];
                     
+                    
                     return;
                 }
                 if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
+                   
                     [SVProgressHUD showSuccessWithStatus:@"Saved!"];
+                    [self retrieveFromParse];
                     
-                    
+                
                     
                 } else {
                     NSLog(@"Failed to save.");
@@ -466,36 +501,55 @@
 }
 
 
--(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
+-(void)disableAddLocationButton {
     
-    [self retrieveFromParse];
+    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+        
+        PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
+        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.05];
+        [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (objects.count >= 1) {
+                
+                self.addGamesButton.enabled = NO;
+                
+            }if (objects.count < 1) {
+                self.addGamesButton.enabled = YES;
+            }
+            
+        }];
+        
+        
+    }];
+    
+
     
 }
--(void)updateRegion:(CLLocationCoordinate2D) location{
-    
-    self.mapView.showsUserLocation = YES;
-    
-    CLLocationCoordinate2D initialLocationFocus = location;
-    
-    MKCoordinateSpan span = MKCoordinateSpanMake(.06, .06);
-    
-    MKCoordinateRegion region = MKCoordinateRegionMake(initialLocationFocus, span);
-    
-    [self.mapView setRegion:region animated:YES];
-    
-    
-    
+- (IBAction)submitButton:(id)sender {
+    if (self.locationName.text.length >2) {
+    [self postToParse];
+    [self disableAddLocationButton];
+    self.locationNameView.hidden = YES;
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please fill out a location name." message:@" " preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *ok) {
+            }];
+        
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }
+}
+- (IBAction)yesButton:(id)sender {
+    [self performSegueWithIdentifier:@"playingNow" sender:nil];
 }
 
-
-
--(void)updateLocationRange:(NSNotification *)notif {
+-(void)hideKeyboard{
+    [self.locationName resignFirstResponder];
     
-    CLLocation *newLocation = notif.object;
-    
-    [self updateRegion:newLocation.coordinate];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
