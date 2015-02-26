@@ -405,6 +405,7 @@
                         <outlet property="cityLabel" destination="aVR-UL-ng4" id="ap8-Aw-fJE"/>
                         <outlet property="mapDetailView" destination="hPR-7F-CeK" id="Grx-iB-Kai"/>
                         <outlet property="nameLabel" destination="Z2w-3I-e24" id="eRY-er-XFZ"/>
+                        <outlet property="playHereButton" destination="xQj-Qe-MD0" id="qQt-eT-SPo"/>
                         <outlet property="stateLabel" destination="qbz-Wl-3de" id="bCe-ec-bTH"/>
                         <outlet property="typeLabel" destination="Zay-uc-wca" id="nTk-r0-ECJ"/>
                         <outlet property="zipLabel" destination="jAy-aR-qTY" id="LRq-M3-eeI"/>

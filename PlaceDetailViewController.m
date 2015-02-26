@@ -36,7 +36,7 @@
     self.mapDetailView.userInteractionEnabled = NO;
     self.mapDetailView.mapType = MKMapTypeSatellite;
     
-    
+    self.playHereButton.enabled = NO;
     
 }
 
@@ -98,27 +98,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)parseTest:(id)sender {
-    
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            PFUser *user = [PFUser currentUser];
-            NSString *playerName = [user objectForKey:@"username"];
-            
-            PFObject *player = [PFObject objectWithClassName:@"Games"];
-            [player setObject:playerName forKey:@"players"];
-            
-            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    NSLog(@"All good.");
-
-                }
-                
-            }];
-        }];
-    }];
-}
 
 #pragma -mark
 #pragma TableView datasource methods
@@ -171,13 +150,27 @@
 
 - (IBAction)playHereButton:(id)sender {
     
-    PFObject *postObject = [PFObject objectWithClassName:@"Players"];
+    
     PFUser *user = [PFUser currentUser];
-       
-    [postObject addUniqueObject:user.username forKey:@"players"];
+
     
-    
-    [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
+
+    [query whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.01];
+    self.playHereButton.enabled = NO;
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
+        if (!error) {
+            PFObject *postObject = [objects lastObject];
+            
+            [postObject addUniqueObject:user.username forKey:@"players"];
+            
+            [postObject saveInBackground];
+ 
+        }else{
+            self.playHereButton.enabled = YES;
+        }
         
     }];
     
@@ -186,14 +179,5 @@
 
 
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

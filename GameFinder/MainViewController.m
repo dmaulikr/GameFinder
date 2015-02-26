@@ -172,6 +172,8 @@
         NSString *players = [object objectForKey:@"players"];
         
         PFGeoPoint *location = [object objectForKey:@"location"];
+    
+        
         
         //NSDate *createdAt = [object objectForKey:@"createdAt"];
         
@@ -196,8 +198,7 @@
         
         pdc.locationPlayerString = players;
         
-        
-        //pdc.playersCell.title.text = players;
+       
         
     }
 }

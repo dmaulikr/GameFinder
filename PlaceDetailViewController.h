@@ -48,6 +48,10 @@
 
 @property NSDate *locationDateString;
 
+@property NSString *objectIDString;
+
 @property NSMutableArray *players;
+
+@property (weak, nonatomic) IBOutlet UIButton *playHereButton;
 
 @end
