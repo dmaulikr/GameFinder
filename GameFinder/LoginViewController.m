@@ -33,22 +33,26 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     
-    if (textField == self.passwordTextField || self.passwordRegisterTextField) {
+
+    if (textField == self.userTextField) {
+        [textField resignFirstResponder];
+        [self.passwordTextField becomeFirstResponder];
+    }
+    else if (textField == self.userRegisterTextField) {
+        [textField resignFirstResponder];
+        [self.passwordRegisterTextField becomeFirstResponder];
+    }
+    else if (textField == self.passwordRegisterTextField) {
+        [textField resignFirstResponder];
+        [self.emailTextField becomeFirstResponder];
+        
+    }else if (textField == self.passwordTextField || self.emailTextField){
         [self logIn];
-    }else{
-        [self resignFirstResponder];
     }
     return YES;
 }
 
 
-
-
-//-(void)textFieldDidEndEditing:(UITextField *)textField{
-    //self.view.center = CGPointMake(self.view.center.x, self.view.center.y);
-    
-    
-//}
 
 -(void)hideKeyboard {
     [self.userTextField resignFirstResponder];

@@ -15,7 +15,6 @@
 		270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B201A746F150004A632 /* CoreLocation.framework */; };
 		275BAFD81A9736F000697533 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD71A9736F000697533 /* AddressBook.framework */; };
 		275BAFDA1A9736F800697533 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD91A9736F800697533 /* AddressBookUI.framework */; };
-		27671A5D1A97D76A00DFD8B0 /* CreateGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27671A5C1A97D76A00DFD8B0 /* CreateGameViewController.m */; };
 		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
 		277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
@@ -62,8 +61,6 @@
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		275BAFD71A9736F000697533 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		275BAFD91A9736F800697533 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
-		27671A5B1A97D76A00DFD8B0 /* CreateGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateGameViewController.h; path = ../CreateGameViewController.h; sourceTree = "<group>"; };
-		27671A5C1A97D76A00DFD8B0 /* CreateGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateGameViewController.m; path = ../CreateGameViewController.m; sourceTree = "<group>"; };
 		276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = ../PlaceDetailViewController.h; sourceTree = "<group>"; };
@@ -247,8 +244,6 @@
 				276A2E001A7BFF6300BD7600 /* LoginViewController.m */,
 				277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */,
 				277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */,
-				27671A5B1A97D76A00DFD8B0 /* CreateGameViewController.h */,
-				27671A5C1A97D76A00DFD8B0 /* CreateGameViewController.m */,
 			);
 			name = "View Controllers";
 			path = GameFinder;
@@ -369,7 +364,6 @@
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,
 				27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */,
 				27048D1B1A9223A6004E84B5 /* SVIndefiniteAnimatedView.m in Sources */,
-				27671A5D1A97D76A00DFD8B0 /* CreateGameViewController.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
-#import "CreateGameViewController.h"
+
 
 
 //Cllocation distance
@@ -27,21 +27,16 @@
     [super viewDidLoad];
     
     
-    self.pickerArray = @[@"",@"1-5",@"6-10",@"11-15", @"More than 15"];
     
-    self.placeTypeArray = @[@"",@"School", @"Fitness Center", @"Park", @"Other"];
-    
-    self.locationNameView.hidden = YES;
-    self.locationNameView.layer.cornerRadius = 5;
+    [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading"];
     
     self.locationManager = [[CLLocationManager alloc]init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.delegate = self;
-    self.locationManager.distanceFilter = 800;
+    self.locationManager.distanceFilter = 400;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
-    [self.locationNameView addGestureRecognizer:tap];
     [self.mapView setDelegate:self];
     self.mapView.showsUserLocation = YES;
     
@@ -75,43 +70,6 @@
     
     
 }
-#pragma mark- uipicker control delegates
-
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    if([pickerView isEqual: self.pickerControl]){
-        return [self.pickerArray count];
-    }else if([pickerView isEqual:self.typePicker]){
-        return [self.placeTypeArray count];
-    }else return 0;
-    
-}
-
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 1;
-}
-
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    if([pickerView isEqual: self.pickerControl]){
-        return [self.pickerArray objectAtIndex:row];
-    }else if([pickerView isEqual:self.typePicker]){
-        return [self.placeTypeArray objectAtIndex:row];
-    }else return 0;
-    
-    
-}
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    //query parse for game and then add nuber to players array
-    if([pickerView isEqual: self.pickerControl]){
-        [self.numberOfPlayers setText:[self.pickerArray objectAtIndex:row]];
-    }else if([pickerView isEqual:self.typePicker]){
-        [self.typeOfLocation setText:[self.placeTypeArray objectAtIndex:row]];
-    }else return ;
-    
-    
-}
-
-
-
 
 #pragma mark- parse queries
 -(void) retrieveFromParse {
@@ -122,7 +80,7 @@
     
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
     [retrieveGames whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:50];
-    [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading"];
+    
     [self.mapView removeAnnotations:self.mapView.annotations];
     
     
@@ -215,7 +173,7 @@
         
         PFGeoPoint *location = [object objectForKey:@"location"];
         
-        NSDate *createdAt = [object objectForKey:@"createdAt"];
+        //NSDate *createdAt = [object objectForKey:@"createdAt"];
         
         
         PlaceDetailViewController *pdc = [segue destinationViewController];
@@ -236,6 +194,7 @@
         
         pdc.locationCoordinate = location;
         
+        pdc.locationPlayerString = players;
         
         
         //pdc.playersCell.title.text = players;
@@ -390,11 +349,7 @@
     [UIView animateWithDuration:.2 animations:^{
         self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.mapView.userLocation.coordinate.latitude, self.mapView.userLocation.coordinate.longitude);
     }];
-    
-}
-- (IBAction)xButton:(id)sender {
-    
-    self.locationNameView.hidden = YES;
+    [self disableAddLocationButton];
 }
 
 - (IBAction)addLocation:(id)sender {
@@ -421,8 +376,47 @@
         
         UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *yes) {
             
-            self.locationNameView.hidden = NO;
-            self.locationNameView.backgroundColor = [UIColor colorWithWhite:1 alpha:.8];
+            UIAlertController *addLocationNameandType = [UIAlertController alertControllerWithTitle:@"Name and Type" message:@"Please fill out a name and a type of place this is." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                
+            }];
+            
+            UIAlertAction *add = [UIAlertAction actionWithTitle:@"Add Location" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                UITextField *name = addLocationNameandType.textFields.firstObject;
+                UITextField *type = addLocationNameandType.textFields.lastObject;
+                self.locationName = name.text;
+                self.locationType = type.text;
+                if (name.text.length >= 3 && type.text.length >= 4) {
+                    [self postToParse];
+                    [self disableAddLocationButton];
+                }else{
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please enter all fields" message:@" " preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                        [self presentViewController:addLocationNameandType animated:YES completion:nil];
+                    }];
+                    
+                    [alert addAction:ok];
+                    [self presentViewController:alert animated:YES completion:nil];
+                }
+                
+            }];
+            
+            
+            [addLocationNameandType addAction:cancel];
+            [addLocationNameandType addAction:add];
+            
+            [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                textField.textAlignment = NSTextAlignmentCenter;
+                textField.placeholder = @"Name this location";
+                
+            }];
+            
+            
+            [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                textField.textAlignment = NSTextAlignmentCenter;
+                textField.placeholder = @"Park, School, Fitness Center";
+            }];
+            [self presentViewController:addLocationNameandType animated:YES completion:nil];
             
         }];
         
@@ -436,6 +430,7 @@
     
 }
 - (void)postToParse {
+    
     CLLocation *currentLocation = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
     NSLog(@"currentLocation = %@", currentLocation);
     
@@ -448,14 +443,14 @@
             
             PFObject *postObject = [PFObject objectWithClassName:@"Games"];
             
-            postObject[@"name"] = self.locationName.text;
+            
+            postObject[@"name"] = self.locationName;
             postObject[@"location"] = geoPoint;
             postObject[@"address"] = place.name;
             postObject[@"city"] = place.locality;
             postObject[@"state"] = place.administrativeArea;
             postObject[@"zip"] = place.postalCode;
-            postObject[@"type"] = self.typeOfLocation.text;
-            postObject[@"players"] = self.numberOfPlayers.text;
+            postObject[@"type"] = self.locationType;
             
             
             
@@ -482,6 +477,7 @@
                     
                     [SVProgressHUD showSuccessWithStatus:@"Saved!"];
                     [self retrieveFromParse];
+                    [self disableAddLocationButton];
                     
                     
                     
@@ -505,7 +501,7 @@
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
         
         PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.05];
+        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.5];
         [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (objects.count >= 1) {
                 
@@ -523,32 +519,22 @@
     
     
 }
-- (IBAction)submitButton:(id)sender {
-    if (self.locationName.text.length >2 && self.typeOfLocation.text.length >1 && self.numberOfPlayers.text.length >1) {
-        [self postToParse];
-        [self disableAddLocationButton];
-        self.locationNameView.hidden = YES;
-    }else{
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please fill out all fields." message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        
-        
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *ok) {
-        }];
-        
-        
-        [alert addAction:ok];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-    }
-}
-- (IBAction)yesButton:(id)sender {
-    [self performSegueWithIdentifier:@"playingNow" sender:nil];
-}
+
 
 -(void)hideKeyboard{
-    [self.locationName resignFirstResponder];
+    
     
 }
+
+#pragma mark textfield delegate
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self hideKeyboard];
+    return true;
+}
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

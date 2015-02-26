@@ -44,4 +44,10 @@
 
 @property NSString *locationTypeString;
 
+@property NSString *locationPlayerString;
+
+@property NSDate *locationDateString;
+
+@property NSMutableArray *players;
+
 @end

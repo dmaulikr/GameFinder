@@ -30,6 +30,8 @@
     
     self.zipLabel.text = self.locationZipString;
     
+    
+    
     [self.mapDetailView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.locationCoordinate.latitude, self.locationCoordinate.longitude), MKCoordinateSpanMake(0.0004, 0.0004))];
     self.mapDetailView.userInteractionEnabled = NO;
     self.mapDetailView.mapType = MKMapTypeSatellite;
@@ -167,6 +169,20 @@
     
 }
 
+- (IBAction)playHereButton:(id)sender {
+    
+    PFObject *postObject = [PFObject objectWithClassName:@"Players"];
+    PFUser *user = [PFUser currentUser];
+       
+    [postObject addUniqueObject:user.username forKey:@"players"];
+    
+    
+    [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+    }];
+    
+    
+}
 
 
 

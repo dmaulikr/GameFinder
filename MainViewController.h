@@ -14,7 +14,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, CLLocationManagerDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, CLLocationManagerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
@@ -32,21 +32,13 @@
 
 @property NSArray *gameTimesArray;
 
+@property NSString *locationName;
 
-@property (weak, nonatomic) IBOutlet UITextField *locationName;
 
-@property (weak, nonatomic) IBOutlet UIView *locationNameView;
+@property NSString *locationType;
+
 
 @property (nonatomic, retain) CLLocationManager *locationManager;
 
-@property (weak, nonatomic) IBOutlet UIPickerView *pickerControl;
-
-@property (weak, nonatomic) IBOutlet UIPickerView *typePicker;
-
-@property NSArray *pickerArray;
-
-@property NSArray *placeTypeArray;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfPlayers;
-@property (weak, nonatomic) IBOutlet UILabel *typeOfLocation;
 
 @end
