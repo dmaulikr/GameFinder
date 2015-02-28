@@ -8,6 +8,7 @@
 
 #import "PlaceDetailViewController.h"
 #import "Parse/Parse.h"
+#import "AppDelegate.h"
 
 @interface PlaceDetailViewController ()
 
@@ -17,6 +18,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.playHereButton.hidden = YES;
+    self.ballinLabel.hidden = YES;
+    [self isNear];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     self.addressLabel.text = self.address;
     
@@ -36,7 +41,6 @@
     self.mapDetailView.userInteractionEnabled = NO;
     self.mapDetailView.mapType = MKMapTypeSatellite;
     
-    self.playHereButton.enabled = NO;
     
 }
 
@@ -158,7 +162,9 @@
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
 
     [query whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.01];
-    self.playHereButton.enabled = NO;
+    
+    self.playHereButton.hidden = YES;
+    self.ballinLabel.hidden = NO;
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
         if (!error) {
@@ -169,7 +175,8 @@
             [postObject saveInBackground];
  
         }else{
-            self.playHereButton.enabled = YES;
+            self.playHereButton.hidden = NO;
+            self.ballinLabel.hidden = YES;
         }
         
     }];
@@ -177,7 +184,23 @@
     
 }
 
+-(void)updateLocation:(NSNotification *)notif{
+    [self isNear];
+    
+}
 
+-(void)isNear{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    CLLocation *placeLocation = [[CLLocation alloc]initWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
+    CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
+    if (distance <= 402.36) {
+        self.playHereButton.hidden = NO;
+    }
+}
 
+-(void)hasLeft{
+    
+}
 
 @end

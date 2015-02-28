@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
+#import "AppDelegate.h"
 
 
 
@@ -26,22 +27,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
     
     [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading"];
     
-    self.locationManager = [[CLLocationManager alloc]init];
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    self.locationManager.delegate = self;
-    self.locationManager.distanceFilter = 400;
+   
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
     [self.mapView setDelegate:self];
     self.mapView.showsUserLocation = YES;
     
-    [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
-    [self.locationManager startUpdatingLocation];
+    
+    
     
     
     
@@ -74,8 +74,9 @@
 #pragma mark- parse queries
 -(void) retrieveFromParse {
     
-    
-    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLatitude:self.mapView.centerCoordinate.latitude longitude:self.mapView.centerCoordinate.longitude];
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLocation:currentLocation];
     //NSLog(@"userGeoPoint is %@", userGeoPoint);
     
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
@@ -211,10 +212,12 @@
     
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
-    NSLog(@"locations are %@", [locations lastObject]);
-    self.currentLocation = [locations lastObject];
-    self.mapView.centerCoordinate = CLLocationCoordinate2DMake(self.currentLocation.coordinate.latitude, self.currentLocation.coordinate.longitude);
+-(void)initialLocation:(NSNotification *)notif{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
+    
+    
     [self disableAddLocationButton];
     
 }
@@ -498,11 +501,11 @@
 
 
 -(void)disableAddLocationButton {
-    
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-        
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    //[PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
         PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.5];
+        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.25];
         [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (objects.count >= 1) {
                 
@@ -512,7 +515,7 @@
                 self.addGamesButton.enabled = YES;
             }
             
-        }];
+       // }];
         
         
     }];
@@ -534,7 +537,13 @@
     return true;
 }
 
-
+-(void)updateLocation:(NSNotification *)notif{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    
+    self.mapView.centerCoordinate = CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
+    [self disableAddLocationButton];
+}
 
 
 - (void)didReceiveMemoryWarning {

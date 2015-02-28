@@ -14,7 +14,7 @@
 #import <CoreLocation/CoreLocation.h>
 
 
-@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, CLLocationManagerDelegate, UITextFieldDelegate>
+@interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
@@ -22,7 +22,6 @@
 
 @property (strong, nonatomic) PFGeoPoint *userLocation;
 
-@property (strong, nonatomic) CLLocation *currentLocation;
 
 @property (weak, nonatomic) IBOutlet UIButton *zoomButton;
 
@@ -38,7 +37,7 @@
 @property NSString *locationType;
 
 
-@property (nonatomic, retain) CLLocationManager *locationManager;
+
 
 
 @end

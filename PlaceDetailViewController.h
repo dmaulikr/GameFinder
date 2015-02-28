@@ -12,10 +12,10 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CustomTableViewCell.h"
 
+
 @interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapDetailView;
-
 
 
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
@@ -27,6 +27,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *ballinLabel;
 
 @property PFGeoPoint *locationCoordinate;
 

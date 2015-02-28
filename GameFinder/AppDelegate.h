@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LocationManager.h"
 
 
 
@@ -15,7 +16,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-
+@property (nonatomic, retain) LocationManager *locationManager;
 
 
 @end
