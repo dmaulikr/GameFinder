@@ -21,6 +21,7 @@
     self.playHereButton.hidden = YES;
     self.ballinLabel.hidden = YES;
     [self isNear];
+    [self performSelector:@selector(retrievePlayers)];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     self.addressLabel.text = self.address;
@@ -41,6 +42,27 @@
     self.mapDetailView.userInteractionEnabled = NO;
     self.mapDetailView.mapType = MKMapTypeSatellite;
     
+    
+}
+
+-(void)retrievePlayers{
+    
+    PFGeoPoint *locationPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
+    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
+    
+    [query whereKey:@"location" nearGeoPoint:locationPoint withinMiles:0.5];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (id object in objects) {
+                NSArray *players = [object objectForKey:@"players"];
+                NSLog(@"players are %@",players);
+               
+                self.playersArray = [[NSArray alloc]initWithArray:players];
+            }
+        }
+        
+     [self.playersTableView reloadData];
+    }];
     
 }
 
@@ -113,7 +135,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //how many rows are in each of the above sections (Total number of cells needing to be displayed).
-    return 10;
+    return self.playersArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -124,16 +146,20 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //The actual code to return each cell, configured with the data you want to display.
     
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"TimeCell";
     
-    UITableViewCell *cell = [tableView
+    PlaceDetailCustomTableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *tempObject = [self.playersArray objectAtIndex:indexPath.row];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc]
+        cell = [[PlaceDetailCustomTableViewCell alloc]
                 initWithStyle:UITableViewCellStyleSubtitle
                 reuseIdentifier:CellIdentifier];
     }
     
+    cell.title.text = tempObject;
+    cell.detail.text = @"is playing here.";
+    cell.detail.textAlignment = NSTextAlignmentLeft;
     // Configure the cell.
     
     return cell;
@@ -178,6 +204,7 @@
             self.playHereButton.hidden = NO;
             self.ballinLabel.hidden = YES;
         }
+        
         
     }];
     

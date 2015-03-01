@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
 #import <CoreLocation/CoreLocation.h>
-#import "CustomTableViewCell.h"
+#import "PlaceDetailCustomTableViewCell.h"
 
 
 @interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -51,7 +51,9 @@
 
 @property NSString *objectIDString;
 
-@property NSMutableArray *players;
+@property NSArray *playersArray;
+
+@property (weak, nonatomic) IBOutlet UITableView *playersTableView;
 
 @property (weak, nonatomic) IBOutlet UIButton *playHereButton;
 

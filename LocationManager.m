@@ -17,6 +17,7 @@
         self.locationManager.delegate = self;
         self.locationManager.distanceFilter = 402.36;
         
+        
         [self.locationManager requestWhenInUseAuthorization];
         
         

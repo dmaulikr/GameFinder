@@ -14,6 +14,7 @@
 		270495051A9FEA33000D163E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 270495041A9FEA33000D163E /* LocationManager.m */; };
 		270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B1E1A746F0A0004A632 /* MapKit.framework */; };
 		270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B201A746F150004A632 /* CoreLocation.framework */; };
+		275244081AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */; };
 		275BAFD81A9736F000697533 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD71A9736F000697533 /* AddressBook.framework */; };
 		275BAFDA1A9736F800697533 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD91A9736F800697533 /* AddressBookUI.framework */; };
 		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
@@ -62,6 +63,8 @@
 		270495041A9FEA33000D163E /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		270C5B1E1A746F0A0004A632 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		275244061AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailCustomTableViewCell.h; sourceTree = "<group>"; };
+		275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailCustomTableViewCell.m; sourceTree = "<group>"; };
 		275BAFD71A9736F000697533 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		275BAFD91A9736F800697533 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -145,8 +148,8 @@
 		279E2AB01A71A77E0080542E = {
 			isa = PBXGroup;
 			children = (
-				270495031A9FEA33000D163E /* LocationManager.h */,
-				270495041A9FEA33000D163E /* LocationManager.m */,
+				275244061AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.h */,
+				275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */,
 				279E2AC61A71A77F0080542E /* Main.storyboard */,
 				27FC60741A7B40C6005AE24C /* View Controllers */,
 				279E2ABB1A71A77F0080542E /* GameFinder */,
@@ -207,11 +210,13 @@
 		27D188551A9468EA00410B32 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				27048D141A9223A6004E84B5 /* SVProgressHUD */,
+				270495031A9FEA33000D163E /* LocationManager.h */,
+				270495041A9FEA33000D163E /* LocationManager.m */,
 				27D188591A95C99900410B32 /* GamePointAnnotation.m */,
 				27D188581A95C98D00410B32 /* GamePointAnnotation.h */,
 				27048D0E1A8F615D004E84B5 /* CustomTableViewCell.h */,
 				27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */,
+				27048D141A9223A6004E84B5 /* SVProgressHUD */,
 			);
 			name = Classes;
 			path = ..;
@@ -368,6 +373,7 @@
 				27D188571A95C97300410B32 /* MainViewController.m in Sources */,
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,
 				270495051A9FEA33000D163E /* LocationManager.m in Sources */,
+				275244081AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m in Sources */,
 				27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */,
 				27048D1B1A9223A6004E84B5 /* SVIndefiniteAnimatedView.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,

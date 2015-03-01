@@ -32,18 +32,13 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
     
     [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading"];
-    
-   
-    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
     [self.mapView setDelegate:self];
     self.mapView.showsUserLocation = YES;
-    
-    
-    
-    
-    
     
     
     
@@ -78,11 +73,11 @@
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     PFGeoPoint *userGeoPoint = [PFGeoPoint geoPointWithLocation:currentLocation];
     //NSLog(@"userGeoPoint is %@", userGeoPoint);
-    
+    [self.mapView removeAnnotations:self.mapView.annotations];
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
     [retrieveGames whereKey:@"location" nearGeoPoint:userGeoPoint withinMiles:50];
     
-    [self.mapView removeAnnotations:self.mapView.annotations];
+    
     
     
     [retrieveGames findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -115,16 +110,15 @@
             //Just added this to show an error popup if you got back an error
             [SVProgressHUD showErrorWithStatus:@"Error!"];
         }
-        [self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+        [self.gamesTableView reloadData];
+        //[self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
         
     }];
     
     
 }
 
--(void)reloadData:(NSString *)string{
-    [self.gamesTableView reloadData];
-}
+
 
 -(void)getPlaceDetail{
     PFQuery *retrieveGames = [PFQuery queryWithClassName:@"Games"];
@@ -170,14 +164,11 @@
         
         NSString *type = [object objectForKey:@"type"];
         
-        NSString *players = [object objectForKey:@"players"];
         
+
         PFGeoPoint *location = [object objectForKey:@"location"];
-    
         
-        
-        //NSDate *createdAt = [object objectForKey:@"createdAt"];
-        
+                
         
         PlaceDetailViewController *pdc = [segue destinationViewController];
         
@@ -197,7 +188,6 @@
         
         pdc.locationCoordinate = location;
         
-        pdc.locationPlayerString = players;
         
        
         

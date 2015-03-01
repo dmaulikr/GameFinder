@@ -81,7 +81,7 @@
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <color key="textColor" red="0.26274509800000001" green="0.26274509800000001" blue="0.26274509800000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="go" secureTextEntry="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="vXZ-lx-hvc" id="5V0-eE-vIO"/>
                                         </connections>
@@ -172,7 +172,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15" y="-776"/>
+            <point key="canvasLocation" x="-46" y="-872"/>
         </scene>
         <!--Game Finder-->
         <scene sceneID="41p-MG-wHA">
@@ -332,7 +332,7 @@
                                 <rect key="frame" x="0.0" y="381" width="320" height="187"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TimeCell" textLabel="dZp-1g-dFb" detailTextLabel="00B-R5-DoN" style="IBUITableViewCellStyleValue1" id="18O-xa-hMR" customClass="CustomTableViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="4" indentationWidth="9" reuseIdentifier="TimeCell" textLabel="dZp-1g-dFb" detailTextLabel="JMm-TS-dBt" style="IBUITableViewCellStyleValue1" id="18O-xa-hMR" customClass="PlaceDetailCustomTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="gameCell" tableViewCell="18O-xa-hMR" id="DIW-Gc-vct">
@@ -344,7 +344,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="00B-R5-DoN">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JMm-TS-dBt">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
@@ -352,6 +352,10 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="detail" destination="JMm-TS-dBt" id="iOU-dP-HLx"/>
+                                            <outlet property="title" destination="dZp-1g-dFb" id="YVB-Rh-Uan"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -388,7 +392,7 @@
                                     <action selector="openMaps:" destination="nc4-cA-m6e" eventType="touchUpInside" id="Doh-DD-OhT"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ballin'" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAb-DT-c7z">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Ballin'" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAb-DT-c7z">
                                 <rect key="frame" x="182" y="228" width="122" height="37"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -413,6 +417,7 @@
                         <outlet property="mapDetailView" destination="hPR-7F-CeK" id="Grx-iB-Kai"/>
                         <outlet property="nameLabel" destination="Z2w-3I-e24" id="eRY-er-XFZ"/>
                         <outlet property="playHereButton" destination="xQj-Qe-MD0" id="qQt-eT-SPo"/>
+                        <outlet property="playersTableView" destination="AmS-zS-hX3" id="oGd-XO-mE2"/>
                         <outlet property="stateLabel" destination="qbz-Wl-3de" id="bCe-ec-bTH"/>
                         <outlet property="typeLabel" destination="Zay-uc-wca" id="nTk-r0-ECJ"/>
                         <outlet property="zipLabel" destination="jAy-aR-qTY" id="LRq-M3-eeI"/>
@@ -420,7 +425,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7VM-u9-BPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1379" y="-399"/>
+            <point key="canvasLocation" x="1328" y="-884"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Hl4-l2-INE">
@@ -441,7 +446,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXB-3a-BnV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="468" y="-776"/>
+            <point key="canvasLocation" x="380" y="-866"/>
         </scene>
     </scenes>
     <resources>
