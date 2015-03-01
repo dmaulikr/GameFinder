@@ -59,9 +59,8 @@
                
                 self.playersArray = [[NSArray alloc]initWithArray:players];
             }
-        }
+        }[self.playersTableView reloadData];
         
-     [self.playersTableView reloadData];
     }];
     
 }
@@ -223,6 +222,26 @@
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
     if (distance <= 402.36) {
         self.playHereButton.hidden = NO;
+    }else if (distance > 403){
+        PFUser *user = [PFUser currentUser];
+        PFQuery *query = [PFQuery queryWithClassName:@"Games"];
+        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
+        
+        [query whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.1];
+ 
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            
+            if (!error) {
+                PFObject *players = [objects lastObject];
+               
+                
+                [players removeObject:user.username forKey:@"players"];
+                [players saveInBackground];
+                [self.playersTableView reloadData];
+            
+            }
+            
+            }];
     }
 }
 
