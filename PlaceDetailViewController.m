@@ -18,10 +18,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.playHereButton.hidden = YES;
-    self.ballinLabel.hidden = YES;
-    [self isNear];
-    [self performSelector:@selector(retrievePlayers)];
+    
+    
+      self.playHereButton.enabled = NO;
+//    self.playHereButton.backgroundColor = [UIColor lightGrayColor];
+//    self.playHereButton.tintColor = [UIColor lightTextColor];
+//    
+
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     self.addressLabel.text = self.address;
@@ -36,14 +39,16 @@
     
     self.zipLabel.text = self.locationZipString;
     
-    
-    
+    [self performSelector:@selector(isNear)];
+    [self performSelector:@selector(retrievePlayers)];
     [self.mapDetailView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.locationCoordinate.latitude, self.locationCoordinate.longitude), MKCoordinateSpanMake(0.0004, 0.0004))];
     self.mapDetailView.userInteractionEnabled = NO;
     self.mapDetailView.mapType = MKMapTypeSatellite;
     
     
 }
+
+
 
 -(void)retrievePlayers{
     
@@ -188,8 +193,10 @@
 
     [query whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.01];
     
-    self.playHereButton.hidden = YES;
-    self.ballinLabel.hidden = NO;
+    self.playHereButton.enabled = NO;
+//    self.playHereButton.backgroundColor = [UIColor lightGrayColor];
+//    self.playHereButton.tintColor = [UIColor blackColor];
+
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
         if (!error) {
@@ -198,17 +205,21 @@
             [postObject addUniqueObject:user.username forKey:@"players"];
             
             [postObject saveInBackground];
+            [self retrievePlayers];
  
         }else{
-            self.playHereButton.hidden = NO;
-            self.ballinLabel.hidden = YES;
+            self.playHereButton.enabled = YES;
+            self.playHereButton.backgroundColor = [UIColor darkGrayColor];
+            self.playHereButton.tintColor = [UIColor colorWithRed:.4 green:1 blue:.4 alpha:1];
+           
         }
         
         
     }];
-    
-    
+    [self.playersTableView reloadData];
 }
+
+
 
 -(void)updateLocation:(NSNotification *)notif{
     [self isNear];
@@ -221,8 +232,10 @@
     CLLocation *placeLocation = [[CLLocation alloc]initWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
     if (distance <= 402.36) {
-        self.playHereButton.hidden = NO;
-    }else if (distance > 403){
+        self.playHereButton.enabled = YES;
+        self.playHereButton.backgroundColor = [UIColor darkGrayColor];
+        self.playHereButton.tintColor = [UIColor colorWithRed:.4 green:1 blue:.4 alpha:1];
+    }else if (distance >= 403){
         PFUser *user = [PFUser currentUser];
         PFQuery *query = [PFQuery queryWithClassName:@"Games"];
         PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
@@ -237,12 +250,13 @@
                 
                 [players removeObject:user.username forKey:@"players"];
                 [players saveInBackground];
-                [self.playersTableView reloadData];
+                [self retrievePlayers];
             
             }
             
             }];
     }
+    //[self.playersTableView reloadData];
 }
 
 -(void)hasLeft{

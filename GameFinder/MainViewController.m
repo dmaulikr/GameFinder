@@ -358,11 +358,16 @@
         
     } else {
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to add this location?" message:@" " preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         
+        NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Do you want to add this location?"];
         
+        [attributedTitle addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:15.0] range:NSMakeRange(0, attributedTitle.length)];
+        [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:.27 green:.27 blue:.27 alpha:1.0] range:NSMakeRange(0, attributedTitle.length)];
+        
+        [alert setValue:attributedTitle forKey:@"attributedTitle"];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            NSLog(@"AlertView Cancelled");
+            
             
             
         }];
@@ -370,7 +375,7 @@
         
         UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *yes) {
             
-            UIAlertController *addLocationNameandType = [UIAlertController alertControllerWithTitle:@"Name and Type" message:@"Please fill out a name and a type of place this is." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *addLocationNameandType = [UIAlertController alertControllerWithTitle:@"Name and Type" message:@"Please fill out a name and a type of place." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                 
             }];
@@ -402,6 +407,7 @@
             [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
                 textField.textAlignment = NSTextAlignmentCenter;
                 textField.placeholder = @"Name this location";
+                textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
                 
             }];
             
@@ -409,6 +415,7 @@
             [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
                 textField.textAlignment = NSTextAlignmentCenter;
                 textField.placeholder = @"Park, School, Fitness Center";
+                textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
             }];
             [self presentViewController:addLocationNameandType animated:YES completion:nil];
             
