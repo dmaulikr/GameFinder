@@ -20,10 +20,7 @@
     [super viewDidLoad];
     
     
-      self.playHereButton.enabled = NO;
-//    self.playHereButton.backgroundColor = [UIColor lightGrayColor];
-//    self.playHereButton.tintColor = [UIColor lightTextColor];
-//    
+    self.playHereButton.hidden = YES;
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
@@ -54,12 +51,24 @@
     
     PFGeoPoint *locationPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
     PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-    
+    PFUser *user = [PFUser currentUser];
     [query whereKey:@"location" nearGeoPoint:locationPoint withinMiles:0.5];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (id object in objects) {
                 NSArray *players = [object objectForKey:@"players"];
+                if ([players containsObject:user.username]) {
+                    self.playHereButton.hidden = NO;
+                    self.playHereButton.enabled = NO;
+                    [self.playHereButton setTitle:@"Ballin'" forState:UIControlStateNormal];
+                    [self.playHereButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                    [self.playHereButton setBackgroundImage:[UIImage imageNamed:@"bball"] forState:UIControlStateNormal];
+                    [self.playHereButton setBackgroundColor:[UIColor clearColor]];
+                    self.isCheckedIn = YES;
+                }else{
+                    //self.playHereButton.enabled = YES;
+                    self.isCheckedIn = NO;
+                }
                 NSLog(@"players are %@",players);
                
                 self.playersArray = [[NSArray alloc]initWithArray:players];
@@ -193,10 +202,7 @@
 
     [query whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.01];
     
-    self.playHereButton.enabled = NO;
-//    self.playHereButton.backgroundColor = [UIColor lightGrayColor];
-//    self.playHereButton.tintColor = [UIColor blackColor];
-
+    
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
         if (!error) {
@@ -208,12 +214,9 @@
             [self retrievePlayers];
  
         }else{
-            self.playHereButton.enabled = YES;
-            self.playHereButton.backgroundColor = [UIColor darkGrayColor];
-            self.playHereButton.tintColor = [UIColor colorWithRed:.4 green:1 blue:.4 alpha:1];
-           
+            self.playHereButton.hidden = NO;
+            
         }
-        
         
     }];
     [self.playersTableView reloadData];
@@ -231,12 +234,12 @@
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     CLLocation *placeLocation = [[CLLocation alloc]initWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
-    if (distance <= 402.36) {
-        self.playHereButton.enabled = YES;
-        self.playHereButton.backgroundColor = [UIColor darkGrayColor];
-        self.playHereButton.tintColor = [UIColor colorWithRed:.4 green:1 blue:.4 alpha:1];
+    if (distance <= 402.36 &&  !self.isCheckedIn) {
+        self.playHereButton.hidden = NO;
+
         
     }else if (distance >= 403){
+        self.playHereButton.hidden = YES;
         PFUser *user = [PFUser currentUser];
         PFQuery *query = [PFQuery queryWithClassName:@"Games"];
         PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
@@ -247,8 +250,7 @@
             
             if (!error) {
                 PFObject *players = [objects lastObject];
-               
-                
+     
                 [players removeObject:user.username forKey:@"players"];
                 [players saveInBackground];
                 [self retrievePlayers];
@@ -260,6 +262,8 @@
     }
     
 }
+
+
 
 
 

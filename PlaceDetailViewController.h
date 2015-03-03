@@ -57,4 +57,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *playHereButton;
 
+@property (nonatomic) BOOL isCheckedIn;
+
 @end
