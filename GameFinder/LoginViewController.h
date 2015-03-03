@@ -22,7 +22,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *forgotButton;
 
 #pragma mark views
-@property (weak, nonatomic) IBOutlet UIView *gameFinderView;
+@property (weak, nonatomic) IBOutlet UIView *logInView;
+@property (weak, nonatomic) IBOutlet UIView *signUpView;
 
 
 

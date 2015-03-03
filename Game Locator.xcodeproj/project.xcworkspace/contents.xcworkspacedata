@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:GameFinder.xcodeproj">
+      location = "self:Game Locator.xcodeproj">
    </FileRef>
 </Workspace>

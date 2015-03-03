@@ -19,7 +19,8 @@
     [super viewDidLoad];
 
    
-    
+    self.logInView.alpha = 1;
+    self.signUpView.alpha = 0;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tap];
@@ -67,7 +68,8 @@
 - (IBAction)signUp:(id)sender {
     NSLog(@"signUp pressed");
     [UIView animateWithDuration:.5 animations:^{
-        self.gameFinderView.alpha = 0;
+        self.logInView.alpha = 0;
+        self.signUpView.alpha = 1;
     }];
     
 }
@@ -75,7 +77,8 @@
 - (IBAction)logInButtonInstead:(id)sender {
     
     [UIView animateWithDuration:.5 animations:^{
-        self.gameFinderView.alpha = 1;
+        self.logInView.alpha = 1;
+        self.signUpView.alpha = 0;
 
     }];
 }

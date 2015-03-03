@@ -262,9 +262,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		279E2AB81A71A77F0080542E /* GameFinder */ = {
+		279E2AB81A71A77F0080542E /* Game Locator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 279E2ADC1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameFinder" */;
+			buildConfigurationList = 279E2ADC1A71A7800080542E /* Build configuration list for PBXNativeTarget "Game Locator" */;
 			buildPhases = (
 				279E2AB51A71A77F0080542E /* Sources */,
 				279E2AB61A71A77F0080542E /* Frameworks */,
@@ -274,14 +274,14 @@
 			);
 			dependencies = (
 			);
-			name = GameFinder;
+			name = "Game Locator";
 			productName = GameFinder;
 			productReference = 279E2AB91A71A77F0080542E /* GameFinder.app */;
 			productType = "com.apple.product-type.application";
 		};
-		279E2AD11A71A7800080542E /* GameFinderTests */ = {
+		279E2AD11A71A7800080542E /* GameLocatorTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 279E2ADF1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameFinderTests" */;
+			buildConfigurationList = 279E2ADF1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameLocatorTests" */;
 			buildPhases = (
 				279E2ACE1A71A7800080542E /* Sources */,
 				279E2ACF1A71A7800080542E /* Frameworks */,
@@ -292,7 +292,7 @@
 			dependencies = (
 				279E2AD41A71A7800080542E /* PBXTargetDependency */,
 			);
-			name = GameFinderTests;
+			name = GameLocatorTests;
 			productName = GameFinderTests;
 			productReference = 279E2AD21A71A7800080542E /* GameFinderTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -321,7 +321,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 279E2AB41A71A77F0080542E /* Build configuration list for PBXProject "GameFinder" */;
+			buildConfigurationList = 279E2AB41A71A77F0080542E /* Build configuration list for PBXProject "Game Locator" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -334,8 +334,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				279E2AB81A71A77F0080542E /* GameFinder */,
-				279E2AD11A71A7800080542E /* GameFinderTests */,
+				279E2AB81A71A77F0080542E /* Game Locator */,
+				279E2AD11A71A7800080542E /* GameLocatorTests */,
 			);
 		};
 /* End PBXProject section */
@@ -393,7 +393,7 @@
 /* Begin PBXTargetDependency section */
 		279E2AD41A71A7800080542E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 279E2AB81A71A77F0080542E /* GameFinder */;
+			target = 279E2AB81A71A77F0080542E /* Game Locator */;
 			targetProxy = 279E2AD31A71A7800080542E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -562,7 +562,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		279E2AB41A71A77F0080542E /* Build configuration list for PBXProject "GameFinder" */ = {
+		279E2AB41A71A77F0080542E /* Build configuration list for PBXProject "Game Locator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				279E2ADA1A71A7800080542E /* Debug */,
@@ -571,7 +571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		279E2ADC1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameFinder" */ = {
+		279E2ADC1A71A7800080542E /* Build configuration list for PBXNativeTarget "Game Locator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				279E2ADD1A71A7800080542E /* Debug */,
@@ -580,7 +580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		279E2ADF1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameFinderTests" */ = {
+		279E2ADF1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameLocatorTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				279E2AE01A71A7800080542E /* Debug */,
