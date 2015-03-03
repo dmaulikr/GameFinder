@@ -108,10 +108,33 @@
             [self presentViewController:alert animated:YES completion:nil];
         }
     }];
-        
     
-
 }
+
+- (IBAction)forgotButton:(id)sender {
+    UIAlertController *forgot = [UIAlertController alertControllerWithTitle:@"Forgot Password" message:@"enter your email address." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *submit = [UIAlertAction actionWithTitle:@"Submit" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UITextField *email = forgot.textFields.firstObject;
+        [PFUser requestPasswordResetForEmailInBackground:email.text];
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        
+    }];
+    
+    [forgot addAction:cancel];
+    [forgot addAction:submit];
+    
+    [forgot addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.textAlignment = NSTextAlignmentCenter;
+        textField.placeholder = @"email address";
+        textField.keyboardType = UIKeyboardTypeEmailAddress;
+        
+    }];
+    
+    [self presentViewController:forgot animated:YES completion:nil];
+    
+}
+
 #pragma mark Register New User
 
 - (IBAction)signUpButtonPressed:(id)sender {
@@ -142,6 +165,7 @@
         }
     }];
 }
+
 
 
 - (void)didReceiveMemoryWarning {

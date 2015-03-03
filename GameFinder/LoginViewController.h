@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *userRegisterTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordRegisterTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UIButton *forgotButton;
 
 #pragma mark views
 @property (weak, nonatomic) IBOutlet UIView *gameFinderView;

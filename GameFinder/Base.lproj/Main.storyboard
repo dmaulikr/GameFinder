@@ -16,9 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-NZ-GPG">
-                                <rect key="frame" x="0.0" y="320" width="320" height="248"/>
-                            </imageView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ybW-XM-Kj7">
                                 <rect key="frame" x="0.0" y="20" width="320" height="300"/>
                                 <subviews>
@@ -87,7 +84,7 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h0T-BW-WCI">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                                        <rect key="frame" x="4" y="0.0" width="312" height="301"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Game Finder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Goy-tU-Pob">
                                                 <rect key="frame" x="23" y="25" width="275" height="55"/>
@@ -109,16 +106,6 @@
                                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="0g1-vi-Ybo"/>
-                                                </connections>
-                                            </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vL1-zH-8xk">
-                                                <rect key="frame" x="23" y="155" width="275" height="30"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                                <color key="textColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
-                                                <connections>
-                                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="mBg-za-SJD"/>
                                                 </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zx5-Fz-XcT">
@@ -149,19 +136,51 @@
                                                     <action selector="signUp:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ahH-fr-FdQ"/>
                                                 </connections>
                                             </button>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vL1-zH-8xk">
+                                                <rect key="frame" x="23" y="148" width="275" height="30"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <color key="textColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="mBg-za-SJD"/>
+                                                </connections>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lFf-NP-4Vf">
+                                <rect key="frame" x="136" y="320" width="48" height="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-ThinItalic" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Forgot?">
+                                    <color key="titleColor" red="0.20392156862745098" green="0.20392156862745098" blue="0.20392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="forgotButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Bzf-a5-DeX"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-NZ-GPG">
+                                <rect key="frame" x="0.0" y="320" width="320" height="248"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="248" id="Fkk-W6-B74"/>
+                                    <constraint firstAttribute="width" constant="320" id="fBJ-iv-iu2"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Mfu-NZ-GPG" secondAttribute="bottom" id="8PX-zp-7za"/>
+                            <constraint firstAttribute="centerX" secondItem="Mfu-NZ-GPG" secondAttribute="centerX" id="aSV-Y3-rWo"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nQ2-uY-4fI"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="emailTextField" destination="fAG-zz-J5v" id="Jf4-ft-z3n"/>
+                        <outlet property="forgotButton" destination="lFf-NP-4Vf" id="xjC-SK-4pL"/>
                         <outlet property="gameFinderView" destination="h0T-BW-WCI" id="7t7-7v-BTP"/>
                         <outlet property="passwordRegisterTextField" destination="QzY-wX-Wfq" id="IhM-iZ-tOw"/>
                         <outlet property="passwordTextField" destination="vL1-zH-8xk" id="0eQ-qB-Hqw"/>
@@ -172,7 +191,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-46" y="-872"/>
+            <point key="canvasLocation" x="-106" y="-958"/>
         </scene>
         <!--Game Finder-->
         <scene sceneID="41p-MG-wHA">
@@ -272,7 +291,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UCE-8b-Sbw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="817" y="-889"/>
+            <point key="canvasLocation" x="798" y="-958"/>
         </scene>
         <!--Title-->
         <scene sceneID="Mo9-RV-Kkb">
@@ -438,7 +457,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXB-3a-BnV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="380" y="-866"/>
+            <point key="canvasLocation" x="375" y="-958"/>
         </scene>
     </scenes>
     <resources>

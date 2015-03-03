@@ -148,8 +148,6 @@
 		279E2AB01A71A77E0080542E = {
 			isa = PBXGroup;
 			children = (
-				275244061AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.h */,
-				275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */,
 				279E2AC61A71A77F0080542E /* Main.storyboard */,
 				27FC60741A7B40C6005AE24C /* View Controllers */,
 				279E2ABB1A71A77F0080542E /* GameFinder */,
@@ -210,6 +208,8 @@
 		27D188551A9468EA00410B32 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				275244061AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.h */,
+				275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */,
 				270495031A9FEA33000D163E /* LocationManager.h */,
 				270495041A9FEA33000D163E /* LocationManager.m */,
 				27D188591A95C99900410B32 /* GamePointAnnotation.m */,

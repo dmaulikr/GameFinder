@@ -223,7 +223,7 @@
 
 -(void)updateLocation:(NSNotification *)notif{
     [self isNear];
-    
+    [self.playersTableView reloadData];
 }
 
 -(void)isNear{
@@ -235,6 +235,7 @@
         self.playHereButton.enabled = YES;
         self.playHereButton.backgroundColor = [UIColor darkGrayColor];
         self.playHereButton.tintColor = [UIColor colorWithRed:.4 green:1 blue:.4 alpha:1];
+        
     }else if (distance >= 403){
         PFUser *user = [PFUser currentUser];
         PFQuery *query = [PFQuery queryWithClassName:@"Games"];
@@ -251,16 +252,15 @@
                 [players removeObject:user.username forKey:@"players"];
                 [players saveInBackground];
                 [self retrievePlayers];
-            
+                
+                
             }
             
             }];
     }
-    //[self.playersTableView reloadData];
-}
-
--(void)hasLeft{
     
 }
+
+
 
 @end
