@@ -52,7 +52,7 @@
     PFGeoPoint *locationPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
     PFQuery *query = [PFQuery queryWithClassName:@"Games"];
     PFUser *user = [PFUser currentUser];
-    [query whereKey:@"location" nearGeoPoint:locationPoint withinMiles:0.5];
+    [query whereKey:@"location" nearGeoPoint:locationPoint withinMiles:0.01];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (id object in objects) {
@@ -234,11 +234,11 @@
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     CLLocation *placeLocation = [[CLLocation alloc]initWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
-    if (distance <= 402.36 &&  !self.isCheckedIn) {
+    if (distance <= 102.36 &&  !self.isCheckedIn) {
         self.playHereButton.hidden = NO;
 
         
-    }else if (distance >= 403){
+    }else if (distance >= 103){
         self.playHereButton.hidden = YES;
         PFUser *user = [PFUser currentUser];
         PFQuery *query = [PFQuery queryWithClassName:@"Games"];
@@ -260,7 +260,7 @@
             
             }];
     }
-    
+    [self.playersTableView reloadData];
 }
 
 

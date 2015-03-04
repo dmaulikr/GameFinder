@@ -71,7 +71,7 @@
 		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = ../PlaceDetailViewController.h; sourceTree = "<group>"; };
 		277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceDetailViewController.m; path = ../PlaceDetailViewController.m; sourceTree = "<group>"; };
-		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GameFinder.app; path = "Game Locator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2ABD1A71A77F0080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2ABE1A71A77F0080542E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		279E2AC01A71A77F0080542E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 		279E2AC71A71A77F0080542E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		279E2AC91A71A77F0080542E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		279E2ACC1A71A77F0080542E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		279E2AD21A71A7800080542E /* GameFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		279E2AD21A71A7800080542E /* GameFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GameFinderTests.xctest; path = GameLocatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2AD71A71A7800080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2AD81A71A7800080542E /* GameFinderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameFinderTests.m; sourceTree = "<group>"; };
 		27C1602D1A89DC5100746FC9 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
@@ -262,9 +262,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		279E2AB81A71A77F0080542E /* Game Locator */ = {
+		279E2AB81A71A77F0080542E /* GameFinder */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 279E2ADC1A71A7800080542E /* Build configuration list for PBXNativeTarget "Game Locator" */;
+			buildConfigurationList = 279E2ADC1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameFinder" */;
 			buildPhases = (
 				279E2AB51A71A77F0080542E /* Sources */,
 				279E2AB61A71A77F0080542E /* Frameworks */,
@@ -274,7 +274,7 @@
 			);
 			dependencies = (
 			);
-			name = "Game Locator";
+			name = GameFinder;
 			productName = GameFinder;
 			productReference = 279E2AB91A71A77F0080542E /* GameFinder.app */;
 			productType = "com.apple.product-type.application";
@@ -321,7 +321,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 279E2AB41A71A77F0080542E /* Build configuration list for PBXProject "Game Locator" */;
+			buildConfigurationList = 279E2AB41A71A77F0080542E /* Build configuration list for PBXProject "GameFinder" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -334,7 +334,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				279E2AB81A71A77F0080542E /* Game Locator */,
+				279E2AB81A71A77F0080542E /* GameFinder */,
 				279E2AD11A71A7800080542E /* GameLocatorTests */,
 			);
 		};
@@ -393,7 +393,7 @@
 /* Begin PBXTargetDependency section */
 		279E2AD41A71A7800080542E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 279E2AB81A71A77F0080542E /* Game Locator */;
+			target = 279E2AB81A71A77F0080542E /* GameFinder */;
 			targetProxy = 279E2AD31A71A7800080542E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -506,7 +506,7 @@
 				);
 				INFOPLIST_FILE = GameFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GameFinder;
 			};
 			name = Debug;
 		};
@@ -521,7 +521,7 @@
 				);
 				INFOPLIST_FILE = GameFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = GameFinder;
 			};
 			name = Release;
 		};
@@ -562,7 +562,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		279E2AB41A71A77F0080542E /* Build configuration list for PBXProject "Game Locator" */ = {
+		279E2AB41A71A77F0080542E /* Build configuration list for PBXProject "GameFinder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				279E2ADA1A71A7800080542E /* Debug */,
@@ -571,7 +571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		279E2ADC1A71A7800080542E /* Build configuration list for PBXNativeTarget "Game Locator" */ = {
+		279E2ADC1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameFinder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				279E2ADD1A71A7800080542E /* Debug */,

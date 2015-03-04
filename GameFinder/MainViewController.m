@@ -502,7 +502,7 @@
     //[PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
         PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.25];
+        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.05];
         [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (objects.count >= 1) {
                 

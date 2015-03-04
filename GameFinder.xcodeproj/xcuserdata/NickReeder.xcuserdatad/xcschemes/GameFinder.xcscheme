@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "279E2AB81A71A77F0080542E"
-               BuildableName = "Game Locator.app"
-               BlueprintName = "Game Locator"
-               ReferencedContainer = "container:Game Locator.xcodeproj">
+               BuildableName = "GameFinder.app"
+               BlueprintName = "GameFinder"
+               ReferencedContainer = "container:GameFinder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,7 +31,7 @@
                BlueprintIdentifier = "279E2AD11A71A7800080542E"
                BuildableName = "GameLocatorTests.xctest"
                BlueprintName = "GameLocatorTests"
-               ReferencedContainer = "container:Game Locator.xcodeproj">
+               ReferencedContainer = "container:GameFinder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,7 +49,7 @@
                BlueprintIdentifier = "279E2AD11A71A7800080542E"
                BuildableName = "GameLocatorTests.xctest"
                BlueprintName = "GameLocatorTests"
-               ReferencedContainer = "container:Game Locator.xcodeproj">
+               ReferencedContainer = "container:GameFinder.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "279E2AB81A71A77F0080542E"
-            BuildableName = "Game Locator.app"
-            BlueprintName = "Game Locator"
-            ReferencedContainer = "container:Game Locator.xcodeproj">
+            BuildableName = "GameFinder.app"
+            BlueprintName = "GameFinder"
+            ReferencedContainer = "container:GameFinder.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "279E2AB81A71A77F0080542E"
-            BuildableName = "Game Locator.app"
-            BlueprintName = "Game Locator"
-            ReferencedContainer = "container:Game Locator.xcodeproj">
+            BuildableName = "GameFinder.app"
+            BlueprintName = "GameFinder"
+            ReferencedContainer = "container:GameFinder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "279E2AB81A71A77F0080542E"
-            BuildableName = "Game Locator.app"
-            BlueprintName = "Game Locator"
-            ReferencedContainer = "container:Game Locator.xcodeproj">
+            BuildableName = "GameFinder.app"
+            BlueprintName = "GameFinder"
+            ReferencedContainer = "container:GameFinder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
