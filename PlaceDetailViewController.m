@@ -20,7 +20,7 @@
     [super viewDidLoad];
     
     
-    self.playHereButton.hidden = YES;
+    //self.playHereButton.hidden = YES;
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
@@ -58,16 +58,17 @@
             for (id object in objects) {
                 NSArray *players = [object objectForKey:@"players"];
                 if ([players containsObject:user.username]) {
-                    self.playHereButton.hidden = NO;
+                    //self.playHereButton.hidden = NO;
                     self.playHereButton.enabled = NO;
-                    [self.playHereButton setTitle:@"Ballin'" forState:UIControlStateNormal];
-                    [self.playHereButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                    [self.playHereButton setBackgroundImage:[UIImage imageNamed:@"bball"] forState:UIControlStateNormal];
+                    [self.playHereButton setTitle:@" " forState:UIControlStateDisabled];
+                    [self.playHereButton setTitleColor:[UIColor blackColor] forState:UIControlStateDisabled];
+                    [self.playHereButton setBackgroundImage:[UIImage imageNamed:@"player_check"] forState:UIControlStateDisabled];
                     [self.playHereButton setBackgroundColor:[UIColor clearColor]];
                     self.isCheckedIn = YES;
                 }else{
-                    //self.playHereButton.enabled = YES;
+                    self.playHereButton.enabled = YES;
                     self.isCheckedIn = NO;
+                    //[self.playHereButton setBackgroundColor:[UIColor darkGrayColor]];
                 }
                 NSLog(@"players are %@",players);
                
@@ -214,7 +215,7 @@
             [self retrievePlayers];
  
         }else{
-            self.playHereButton.hidden = NO;
+            //self.playHereButton.hidden = NO;
             
         }
         
@@ -234,11 +235,11 @@
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     CLLocation *placeLocation = [[CLLocation alloc]initWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
-    if (distance <= 102.36 &&  !self.isCheckedIn) {
+    if (distance <= 160.01 &&  !self.isCheckedIn) {
         self.playHereButton.hidden = NO;
 
         
-    }else if (distance >= 103){
+    }else if (distance >= 160.05){
         self.playHereButton.hidden = YES;
         PFUser *user = [PFUser currentUser];
         PFQuery *query = [PFQuery queryWithClassName:@"Games"];
@@ -259,8 +260,8 @@
             }
             
             }];
-    }
-    [self.playersTableView reloadData];
+    }[self.playersTableView reloadData];
+    
 }
 
 

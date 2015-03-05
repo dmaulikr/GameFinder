@@ -71,7 +71,7 @@
 		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = ../PlaceDetailViewController.h; sourceTree = "<group>"; };
 		277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceDetailViewController.m; path = ../PlaceDetailViewController.m; sourceTree = "<group>"; };
-		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = GameFinder.app; path = "Game Locator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2ABD1A71A77F0080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2ABE1A71A77F0080542E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		279E2AC01A71A77F0080542E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 		279E2AC71A71A77F0080542E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		279E2AC91A71A77F0080542E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		279E2ACC1A71A77F0080542E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		279E2AD21A71A7800080542E /* GameFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = GameFinderTests.xctest; path = GameLocatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		279E2AD21A71A7800080542E /* GameLocatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameLocatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2AD71A71A7800080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2AD81A71A7800080542E /* GameFinderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameFinderTests.m; sourceTree = "<group>"; };
 		27C1602D1A89DC5100746FC9 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				279E2AB91A71A77F0080542E /* GameFinder.app */,
-				279E2AD21A71A7800080542E /* GameFinderTests.xctest */,
+				279E2AD21A71A7800080542E /* GameLocatorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -294,7 +294,7 @@
 			);
 			name = GameLocatorTests;
 			productName = GameFinderTests;
-			productReference = 279E2AD21A71A7800080542E /* GameFinderTests.xctest */;
+			productReference = 279E2AD21A71A7800080542E /* GameLocatorTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
