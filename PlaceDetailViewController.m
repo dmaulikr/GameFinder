@@ -19,9 +19,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    //self.playHereButton.hidden = YES;
 
+    
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     self.addressLabel.text = self.address;
@@ -41,7 +41,6 @@
     [self.mapDetailView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.locationCoordinate.latitude, self.locationCoordinate.longitude), MKCoordinateSpanMake(0.0004, 0.0004))];
     self.mapDetailView.userInteractionEnabled = NO;
     self.mapDetailView.mapType = MKMapTypeSatellite;
-    
     
 }
 
@@ -68,13 +67,12 @@
                 }else{
                     self.playHereButton.enabled = YES;
                     self.isCheckedIn = NO;
-                    //[self.playHereButton setBackgroundColor:[UIColor darkGrayColor]];
+                    
                 }
-                NSLog(@"players are %@",players);
-               
                 self.playersArray = [[NSArray alloc]initWithArray:players];
-            }
-        }[self.playersTableView reloadData];
+                NSLog(@"players are %@",players);
+            }[self.playersTableView reloadData];
+        }
         
     }];
     
@@ -194,7 +192,6 @@
 
 - (IBAction)playHereButton:(id)sender {
     
-    
     PFUser *user = [PFUser currentUser];
 
     
@@ -213,18 +210,49 @@
             
             [postObject saveInBackground];
             [self retrievePlayers];
+            [self setTimer];
+            
  
-        }else{
-            //self.playHereButton.hidden = NO;
+        }
+        
+    }];
+    
+}
+
+-(void)removePlayer{
+    PFUser *user = [PFUser currentUser];
+    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
+    //NSLog(@"geopoint is %@", geoPoint);
+    
+    [query whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.01];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
+        if (!error) {
+            PFObject *players = [objects lastObject];
+            //NSLog(@"players are %@", players);
+            
+            [players removeObject:user.username forKey:@"players"];
+            [players saveInBackground];
+            [self retrievePlayers];
+            
+            
             
         }
         
     }];
-    [self.playersTableView reloadData];
+    //[self.playersTableView reloadData];
+    
 }
 
+-(void)setTimer{
+    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:4200 target:self selector:@selector(removePlayer) userInfo:nil repeats:1];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    
 
-
+}
 -(void)updateLocation:(NSNotification *)notif{
     [self isNear];
     [self.playersTableView reloadData];
@@ -241,27 +269,9 @@
         
     }else if (distance >= 160.05){
         self.playHereButton.hidden = YES;
-        PFUser *user = [PFUser currentUser];
-        PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
-        
-        [query whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.1];
- 
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            
-            if (!error) {
-                PFObject *players = [objects lastObject];
-     
-                [players removeObject:user.username forKey:@"players"];
-                [players saveInBackground];
-                [self retrievePlayers];
-                
-                
-            }
-            
-            }];
-    }[self.playersTableView reloadData];
-    
+        [self removePlayer];
+    }
+    [self.playersTableView reloadData];
 }
 
 

@@ -27,6 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
@@ -51,6 +52,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    
     
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LogInScreen"];
     
@@ -231,11 +233,10 @@
             
             // If an existing pin view was not available, create one.
             pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-            //pinView.animatesDrop = YES;
             pinView.canShowCallout = YES;
             UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
             pinView.rightCalloutAccessoryView = rightButton;
-            pinView.image = [UIImage imageNamed:@"basketball"];
+            pinView.image = [UIImage imageNamed:@"basketball-pin"];
             
         } else {
             pinView.annotation = annotation;
@@ -330,12 +331,24 @@
 #pragma mark- buttons
 
 - (IBAction)logOut:(id)sender {
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
+    PFUser *user = [PFUser currentUser];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        for (id object in objects) {
+            
+            [object removeObject:user.username forKey:@"players"];
+            [object saveInBackground];
+            [PFUser logOut];
+            
+        }
+    }];
     UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
     
-    [PFUser logOut];
     [self presentViewController:vc animated:YES completion:^{
         
     }];
+    
 }
 
 - (IBAction)zoomButton:(id)sender {
@@ -357,7 +370,7 @@
         
         
     } else {
-        
+               
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Do you want to add this location?"];

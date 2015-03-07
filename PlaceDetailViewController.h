@@ -27,7 +27,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
-
+@property (strong, nonatomic) NSTimer *timer;
 
 @property PFGeoPoint *locationCoordinate;
 
