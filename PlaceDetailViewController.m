@@ -215,6 +215,7 @@
                         localNotification.alertBody = @"Are you still playing?";
                         localNotification.timeZone = [NSTimeZone defaultTimeZone];
                         localNotification.applicationIconBadgeNumber = 0;
+                        localNotification.soundName = @"swish.mp3";
                         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
                         //[self setTimer];
                     });
