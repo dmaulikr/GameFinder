@@ -11,11 +11,6 @@
 #import "GamePointAnnotation.h"
 #import "AppDelegate.h"
 
-
-
-//Cllocation distance
-
-
 @interface MainViewController ()
 
 
@@ -27,6 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNotificationReceived) name:@"localNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
@@ -68,6 +65,28 @@
     
 }
 
+-(void)pushNotificationReceived{
+    
+    
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Still Playing" message:@"Are you still hoopin?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"stillPlaying" object:nil];
+    }];
+    
+    UIAlertAction *no = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"notPlaying" object:nil];
+    }];
+    
+    [alert addAction:no];
+    [alert addAction:yes];
+    [self presentViewController:alert animated:YES completion:^{
+        
+    }];
+}
+
+
+
 #pragma mark- parse queries
 -(void) retrieveFromParse {
     
@@ -100,20 +119,18 @@
                 
                 //Need to store the index of this object from the array so you can send this same object to your next screen
                 annotation.index = x;
-                
-                
-                
+     
                 [self.mapView addAnnotation:annotation];
-                
-                
+
             }
             self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
         } else {
             //Just added this to show an error popup if you got back an error
             [SVProgressHUD showErrorWithStatus:@"Error!"];
         }
-        [self.gamesTableView reloadData];
-        //[self performSelectorOnMainThread:@selector(reloadData:) withObject:nil waitUntilDone:NO];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.gamesTableView reloadData];
+        });
         
     }];
     
@@ -398,11 +415,11 @@
                 UITextField *type = addLocationNameandType.textFields.lastObject;
                 self.locationName = name.text;
                 self.locationType = type.text;
-                if (name.text.length >= 3 && type.text.length >= 4) {
+                if ((name.text.length >= 3 && [type.text isEqualToString:@"Park"]) || [type.text isEqualToString:@"School"] || [type.text isEqualToString:@"Fitness Center"] || [type.text isEqualToString:@"Other"]) {
                     [self postToParse];
                     [self disableAddLocationButton];
                 }else{
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please enter all fields" message:@" " preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please enter all fields" message:@"Place type must be School, Park, Fitness Center or Other " preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
                         [self presentViewController:addLocationNameandType animated:YES completion:nil];
                     }];
@@ -512,10 +529,9 @@
 
 -(void)disableAddLocationButton {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    //[PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
+        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
         PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.05];
+        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.09];
         [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (objects.count >= 1) {
                 
@@ -525,7 +541,7 @@
                 self.addGamesButton.enabled = YES;
             }
             
-       // }];
+       
         
         
     }];

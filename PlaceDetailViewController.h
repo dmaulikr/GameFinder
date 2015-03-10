@@ -13,17 +13,14 @@
 #import "PlaceDetailCustomTableViewCell.h"
 
 
-@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, UIApplicationDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapDetailView;
 
 
-@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *cityLabel;
-@property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *zipLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+
 
 @property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 

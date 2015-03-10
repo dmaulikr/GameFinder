@@ -27,9 +27,23 @@
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
+    //NSSet *categories = [NSSet setWithObjects:inviteCategory];
     
+    UIUserNotificationType types = UIUserNotificationTypeBadge |
+    UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    
+    UIUserNotificationSettings *mySettings =
+    [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
     
     return YES;
+}
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"localNotification" object:nil];
+
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

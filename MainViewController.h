@@ -33,8 +33,6 @@
 
 @property NSString *locationName;
 
-@property (weak, nonatomic) IBOutlet UIView *addLocationView;
-
 @property NSString *locationType;
 
 

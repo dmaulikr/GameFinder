@@ -20,21 +20,19 @@
     [super viewDidLoad];
     
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(retrievePlayers) name:@"stillPlaying" object:nil];
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePlayer) name:@"notPlaying" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
-    self.addressLabel.text = self.address;
+    
     
     self.nameLabel.text = self.locationNameString;
     
-    self.cityLabel.text = self.locationCityString;
-    
-    self.stateLabel.text = self.locationStateString;
-    
     self.typeLabel.text = self.locationTypeString;
     
-    self.zipLabel.text = self.locationZipString;
     
     [self performSelector:@selector(isNear)];
     [self performSelector:@selector(retrievePlayers)];
@@ -57,7 +55,6 @@
             for (id object in objects) {
                 NSArray *players = [object objectForKey:@"players"];
                 if ([players containsObject:user.username]) {
-                    //self.playHereButton.hidden = NO;
                     self.playHereButton.enabled = NO;
                     [self.playHereButton setTitle:@" " forState:UIControlStateDisabled];
                     [self.playHereButton setTitleColor:[UIColor blackColor] forState:UIControlStateDisabled];
@@ -71,7 +68,9 @@
                 }
                 self.playersArray = [[NSArray alloc]initWithArray:players];
                 NSLog(@"players are %@",players);
-            }[self.playersTableView reloadData];
+            }dispatch_async(dispatch_get_main_queue(), ^{
+                [self.playersTableView reloadData];
+            });
         }
         
     }];
@@ -207,14 +206,25 @@
             PFObject *postObject = [objects lastObject];
             
             [postObject addUniqueObject:user.username forKey:@"players"];
+            [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self retrievePlayers];
+                        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+                        localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:20];
+                        localNotification.alertBody = @"Are you still playing?";
+                        localNotification.timeZone = [NSTimeZone defaultTimeZone];
+                        localNotification.applicationIconBadgeNumber = 0;
+                        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+                        //[self setTimer];
+                    });
+                    
+                }
+                
+            }];
             
-            [postObject saveInBackground];
-            [self retrievePlayers];
-            [self setTimer];
-            
- 
         }
-        
+       
     }];
     
 }
@@ -223,36 +233,32 @@
     PFUser *user = [PFUser currentUser];
     PFQuery *query = [PFQuery queryWithClassName:@"Games"];
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
-    //NSLog(@"geopoint is %@", geoPoint);
-    
+ 
     [query whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.01];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         
         if (!error) {
             PFObject *players = [objects lastObject];
-            //NSLog(@"players are %@", players);
             
             [players removeObject:user.username forKey:@"players"];
-            [players saveInBackground];
-            [self retrievePlayers];
-            
-            
+            [players saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self retrievePlayers];
+                        
+                    });
+                }
+            }];
+   
             
         }
         
+        
     }];
-    //[self.playersTableView reloadData];
     
 }
 
--(void)setTimer{
-    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:4200 target:self selector:@selector(removePlayer) userInfo:nil repeats:1];
-    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-    
-
-}
 -(void)updateLocation:(NSNotification *)notif{
     [self isNear];
     [self.playersTableView reloadData];
@@ -274,7 +280,13 @@
     [self.playersTableView reloadData];
 }
 
-
+//-(void)setTimer{
+//    [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:2400 target:self selector:@selector(removePlayer) userInfo:nil repeats:1];
+//    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+//    NSLog(@"time remaining is %f", self.timer.fireDate.timeIntervalSinceNow);
+//    
+//}
 
 
 
