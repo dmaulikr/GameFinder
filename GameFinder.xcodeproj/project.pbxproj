@@ -15,6 +15,10 @@
 		270495051A9FEA33000D163E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 270495041A9FEA33000D163E /* LocationManager.m */; };
 		270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B1E1A746F0A0004A632 /* MapKit.framework */; };
 		270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B201A746F150004A632 /* CoreLocation.framework */; };
+		271DAFCE1AB6A7670007BFF8 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFCD1AB6A7670007BFF8 /* ParseCrashReporting.framework */; };
+		271DAFD31AB6AAD90007BFF8 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */; };
+		271DAFD71AB6AC4B0007BFF8 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFD61AB6AC4B0007BFF8 /* Parse.framework */; };
+		271DAFD91AB6AC860007BFF8 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFD81AB6AC860007BFF8 /* Bolts.framework */; };
 		275244081AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */; };
 		275BAFD81A9736F000697533 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD71A9736F000697533 /* AddressBook.framework */; };
 		275BAFDA1A9736F800697533 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD91A9736F800697533 /* AddressBookUI.framework */; };
@@ -28,8 +32,6 @@
 		279E2AD91A71A7800080542E /* GameFinderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AD81A71A7800080542E /* GameFinderTests.m */; };
 		27D188571A95C97300410B32 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D188561A95C97300410B32 /* MainViewController.m */; };
 		27D1885A1A95C99900410B32 /* GamePointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D188591A95C99900410B32 /* GamePointAnnotation.m */; };
-		27FC60701A7B4073005AE24C /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC606F1A7B4073005AE24C /* Bolts.framework */; };
-		27FC60721A7B4086005AE24C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60711A7B4086005AE24C /* Parse.framework */; };
 		27FC60761A7B418A005AE24C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60751A7B418A005AE24C /* AudioToolbox.framework */; };
 		27FC60781A7B4192005AE24C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60771A7B4192005AE24C /* CFNetwork.framework */; };
 		27FC607A1A7B419F005AE24C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60791A7B419F005AE24C /* CoreGraphics.framework */; };
@@ -65,6 +67,12 @@
 		270495041A9FEA33000D163E /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		270C5B1E1A746F0A0004A632 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		271DAFCD1AB6A7670007BFF8 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
+		271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
+		271DAFD11AB6AACB0007BFF8 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		271DAFD41AB6ABE50007BFF8 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		271DAFD61AB6AC4B0007BFF8 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		271DAFD81AB6AC860007BFF8 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../Downloads/parse-library-1/Bolts.framework"; sourceTree = "<group>"; };
 		275244061AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailCustomTableViewCell.h; sourceTree = "<group>"; };
 		275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailCustomTableViewCell.m; sourceTree = "<group>"; };
 		275BAFD71A9736F000697533 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -81,15 +89,13 @@
 		279E2AC71A71A77F0080542E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		279E2AC91A71A77F0080542E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		279E2ACC1A71A77F0080542E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		279E2AD21A71A7800080542E /* GameLocatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameLocatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		279E2AD21A71A7800080542E /* GameFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2AD71A71A7800080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2AD81A71A7800080542E /* GameFinderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameFinderTests.m; sourceTree = "<group>"; };
 		27C1602D1A89DC5100746FC9 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
 		27D188561A95C97300410B32 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		27D188581A95C98D00410B32 /* GamePointAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GamePointAnnotation.h; path = GameFinder/GamePointAnnotation.h; sourceTree = "<group>"; };
 		27D188591A95C99900410B32 /* GamePointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePointAnnotation.m; path = GameFinder/GamePointAnnotation.m; sourceTree = "<group>"; };
-		27FC606F1A7B4073005AE24C /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = GameFinder/Bolts.framework; sourceTree = "<group>"; };
-		27FC60711A7B4086005AE24C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		27FC60751A7B418A005AE24C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		27FC60771A7B4192005AE24C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		27FC60791A7B419F005AE24C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -106,21 +112,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271DAFD91AB6AC860007BFF8 /* Bolts.framework in Frameworks */,
+				271DAFD31AB6AAD90007BFF8 /* libstdc++.6.dylib in Frameworks */,
 				275BAFDA1A9736F800697533 /* AddressBookUI.framework in Frameworks */,
 				275BAFD81A9736F000697533 /* AddressBook.framework in Frameworks */,
 				27FC60881A7B41F3005AE24C /* libsqlite3.dylib in Frameworks */,
 				27FC60861A7B41E7005AE24C /* libz.dylib in Frameworks */,
 				27FC60841A7B41DB005AE24C /* SystemConfiguration.framework in Frameworks */,
+				271DAFD71AB6AC4B0007BFF8 /* Parse.framework in Frameworks */,
 				27FC60801A7B41BB005AE24C /* Security.framework in Frameworks */,
 				27FC607E1A7B41B1005AE24C /* QuartzCore.framework in Frameworks */,
 				27FC607C1A7B41A9005AE24C /* MobileCoreServices.framework in Frameworks */,
 				27FC607A1A7B419F005AE24C /* CoreGraphics.framework in Frameworks */,
 				27FC60781A7B4192005AE24C /* CFNetwork.framework in Frameworks */,
 				27FC60761A7B418A005AE24C /* AudioToolbox.framework in Frameworks */,
-				27FC60701A7B4073005AE24C /* Bolts.framework in Frameworks */,
 				270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */,
-				27FC60721A7B4086005AE24C /* Parse.framework in Frameworks */,
 				270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */,
+				271DAFCE1AB6A7670007BFF8 /* ParseCrashReporting.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				279E2AB91A71A77F0080542E /* GameFinder.app */,
-				279E2AD21A71A7800080542E /* GameLocatorTests.xctest */,
+				279E2AD21A71A7800080542E /* GameFinderTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -228,6 +236,12 @@
 		27FC60731A7B40AE005AE24C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				271DAFD11AB6AACB0007BFF8 /* libstdc++.6.0.9.dylib */,
+				271DAFD81AB6AC860007BFF8 /* Bolts.framework */,
+				271DAFD41AB6ABE50007BFF8 /* Bolts.framework */,
+				271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */,
+				271DAFD61AB6AC4B0007BFF8 /* Parse.framework */,
+				271DAFCD1AB6A7670007BFF8 /* ParseCrashReporting.framework */,
 				275BAFD91A9736F800697533 /* AddressBookUI.framework */,
 				275BAFD71A9736F000697533 /* AddressBook.framework */,
 				27FC60871A7B41F3005AE24C /* libsqlite3.dylib */,
@@ -239,8 +253,6 @@
 				27FC60791A7B419F005AE24C /* CoreGraphics.framework */,
 				27FC60771A7B4192005AE24C /* CFNetwork.framework */,
 				27FC60751A7B418A005AE24C /* AudioToolbox.framework */,
-				27FC606F1A7B4073005AE24C /* Bolts.framework */,
-				27FC60711A7B4086005AE24C /* Parse.framework */,
 				270C5B201A746F150004A632 /* CoreLocation.framework */,
 				270C5B1E1A746F0A0004A632 /* MapKit.framework */,
 			);
@@ -272,6 +284,7 @@
 				279E2AB51A71A77F0080542E /* Sources */,
 				279E2AB61A71A77F0080542E /* Frameworks */,
 				279E2AB71A71A77F0080542E /* Resources */,
+				271DAFDA1AB6AE060007BFF8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -282,9 +295,9 @@
 			productReference = 279E2AB91A71A77F0080542E /* GameFinder.app */;
 			productType = "com.apple.product-type.application";
 		};
-		279E2AD11A71A7800080542E /* GameLocatorTests */ = {
+		279E2AD11A71A7800080542E /* GameFinderTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 279E2ADF1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameLocatorTests" */;
+			buildConfigurationList = 279E2ADF1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameFinderTests" */;
 			buildPhases = (
 				279E2ACE1A71A7800080542E /* Sources */,
 				279E2ACF1A71A7800080542E /* Frameworks */,
@@ -295,9 +308,9 @@
 			dependencies = (
 				279E2AD41A71A7800080542E /* PBXTargetDependency */,
 			);
-			name = GameLocatorTests;
+			name = GameFinderTests;
 			productName = GameFinderTests;
-			productReference = 279E2AD21A71A7800080542E /* GameLocatorTests.xctest */;
+			productReference = 279E2AD21A71A7800080542E /* GameFinderTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -341,7 +354,7 @@
 			projectRoot = "";
 			targets = (
 				279E2AB81A71A77F0080542E /* GameFinder */,
-				279E2AD11A71A7800080542E /* GameLocatorTests */,
+				279E2AD11A71A7800080542E /* GameFinderTests */,
 			);
 		};
 /* End PBXProject section */
@@ -367,6 +380,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		271DAFDA1AB6AE060007BFF8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=/usr/local/bin:$PATH\ncd /Users/NickReeder/desktop/ios/GameFinder/parse\n\nparse symbols \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		279E2AB51A71A77F0080542E /* Sources */ = {
@@ -510,10 +539,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GameFinder",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/parse-library-1",
+					"/Users/NickReeder/Downloads/parse-library-1",
 				);
 				INFOPLIST_FILE = GameFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GameFinder;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -525,10 +557,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/GameFinder",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/parse-library-1",
+					"/Users/NickReeder/Downloads/parse-library-1",
 				);
 				INFOPLIST_FILE = GameFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GameFinder;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -587,7 +622,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		279E2ADF1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameLocatorTests" */ = {
+		279E2ADF1A71A7800080542E /* Build configuration list for PBXNativeTarget "GameFinderTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				279E2AE01A71A7800080542E /* Debug */,

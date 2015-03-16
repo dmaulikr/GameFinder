@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "279E2AD11A71A7800080542E"
-               BuildableName = "GameLocatorTests.xctest"
-               BlueprintName = "GameLocatorTests"
+               BuildableName = "GameFinderTests.xctest"
+               BlueprintName = "GameFinderTests"
                ReferencedContainer = "container:GameFinder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,8 +47,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "279E2AD11A71A7800080542E"
-               BuildableName = "GameLocatorTests.xctest"
-               BlueprintName = "GameLocatorTests"
+               BuildableName = "GameFinderTests.xctest"
+               BlueprintName = "GameFinderTests"
                ReferencedContainer = "container:GameFinder.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -72,7 +72,8 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "279E2AB81A71A77F0080542E"
@@ -90,7 +91,8 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "279E2AB81A71A77F0080542E"

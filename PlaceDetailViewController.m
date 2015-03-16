@@ -211,7 +211,7 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self retrievePlayers];
                         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-                        localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:20];
+                        localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5400];
                         localNotification.alertBody = @"Are you still playing?";
                         localNotification.timeZone = [NSTimeZone defaultTimeZone];
                         localNotification.applicationIconBadgeNumber = 0;

@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+#import <ParseCrashReporting/ParseCrashReporting.h>
+
 
 @interface AppDelegate ()
 
@@ -19,13 +21,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
  
     self.locationManager = [[LocationManager alloc]init];
-        
+    
+    // Crash Reporting
+    [ParseCrashReporting enable];
+    
     // Initialize Parse.
     [Parse setApplicationId:@"LnUNaEGAGswpuwBrJopys7uC932p5pi6WnlI6SJL"
                   clientKey:@"RnEaAcsjRB6mJ3poGGer7QXHxVYJg1PgJoRlRKhU"];
     
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
     
     //NSSet *categories = [NSSet setWithObjects:inviteCategory];
     
