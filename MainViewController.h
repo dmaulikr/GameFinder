@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *zoomButton;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGamesButton;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navigationTitle;
 
 @property CLGeocoder *geoCoder;
 

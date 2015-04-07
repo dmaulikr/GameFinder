@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIView *logInView;
 @property (weak, nonatomic) IBOutlet UIView *signUpView;
 
+@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 
 
 @end

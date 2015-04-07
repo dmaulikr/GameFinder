@@ -9,19 +9,18 @@
 /* Begin PBXBuildFile section */
 		27027DF91AAF8D3F002AE723 /* swish.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 27027DF81AAF8D3F002AE723 /* swish.mp3 */; };
 		27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */; };
-		27048D1B1A9223A6004E84B5 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D161A9223A6004E84B5 /* SVIndefiniteAnimatedView.m */; };
 		27048D1C1A9223A6004E84B5 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27048D181A9223A6004E84B5 /* SVProgressHUD.bundle */; };
-		27048D1D1A9223A6004E84B5 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */; };
 		270495051A9FEA33000D163E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 270495041A9FEA33000D163E /* LocationManager.m */; };
 		270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B1E1A746F0A0004A632 /* MapKit.framework */; };
 		270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270C5B201A746F150004A632 /* CoreLocation.framework */; };
-		271DAFCE1AB6A7670007BFF8 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFCD1AB6A7670007BFF8 /* ParseCrashReporting.framework */; };
+		271BBE5E1ACD28BD00BEC46C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271BBE5D1ACD28BD00BEC46C /* Parse.framework */; };
+		271BBE601ACD29CD00BEC46C /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271BBE5F1ACD29CD00BEC46C /* Bolts.framework */; };
+		271BBE611ACD2D6600BEC46C /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */; };
+		271BBE621ACD2D6900BEC46C /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D161A9223A6004E84B5 /* SVIndefiniteAnimatedView.m */; };
+		271BBE641ACD2DD900BEC46C /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271BBE631ACD2DD900BEC46C /* Bolts.framework */; };
 		271DAFD31AB6AAD90007BFF8 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */; };
-		271DAFD71AB6AC4B0007BFF8 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFD61AB6AC4B0007BFF8 /* Parse.framework */; };
-		271DAFD91AB6AC860007BFF8 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFD81AB6AC860007BFF8 /* Bolts.framework */; };
+		273C64BD1AD350CD006A9169 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C64BC1AD350CD006A9169 /* SettingsViewController.m */; };
 		275244081AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */; };
-		275BAFD81A9736F000697533 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD71A9736F000697533 /* AddressBook.framework */; };
-		275BAFDA1A9736F800697533 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD91A9736F800697533 /* AddressBookUI.framework */; };
 		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
 		277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
@@ -67,12 +66,13 @@
 		270495041A9FEA33000D163E /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		270C5B1E1A746F0A0004A632 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		271DAFCD1AB6A7670007BFF8 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
+		271BBE5D1ACD28BD00BEC46C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "../../parse-library-1/Parse.framework"; sourceTree = "<group>"; };
+		271BBE5F1ACD29CD00BEC46C /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		271BBE631ACD2DD900BEC46C /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = SVProgressHUD/Bolts.framework; sourceTree = "<group>"; };
 		271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		271DAFD11AB6AACB0007BFF8 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
-		271DAFD41AB6ABE50007BFF8 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		271DAFD61AB6AC4B0007BFF8 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		271DAFD81AB6AC860007BFF8 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "../../../Downloads/parse-library-1/Bolts.framework"; sourceTree = "<group>"; };
+		273C64BB1AD350CD006A9169 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		273C64BC1AD350CD006A9169 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		275244061AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailCustomTableViewCell.h; sourceTree = "<group>"; };
 		275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailCustomTableViewCell.m; sourceTree = "<group>"; };
 		275BAFD71A9736F000697533 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -112,14 +112,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				271DAFD91AB6AC860007BFF8 /* Bolts.framework in Frameworks */,
+				271BBE641ACD2DD900BEC46C /* Bolts.framework in Frameworks */,
+				271BBE5E1ACD28BD00BEC46C /* Parse.framework in Frameworks */,
+				271BBE601ACD29CD00BEC46C /* Bolts.framework in Frameworks */,
 				271DAFD31AB6AAD90007BFF8 /* libstdc++.6.dylib in Frameworks */,
-				275BAFDA1A9736F800697533 /* AddressBookUI.framework in Frameworks */,
-				275BAFD81A9736F000697533 /* AddressBook.framework in Frameworks */,
 				27FC60881A7B41F3005AE24C /* libsqlite3.dylib in Frameworks */,
 				27FC60861A7B41E7005AE24C /* libz.dylib in Frameworks */,
 				27FC60841A7B41DB005AE24C /* SystemConfiguration.framework in Frameworks */,
-				271DAFD71AB6AC4B0007BFF8 /* Parse.framework in Frameworks */,
 				27FC60801A7B41BB005AE24C /* Security.framework in Frameworks */,
 				27FC607E1A7B41B1005AE24C /* QuartzCore.framework in Frameworks */,
 				27FC607C1A7B41A9005AE24C /* MobileCoreServices.framework in Frameworks */,
@@ -128,7 +127,6 @@
 				27FC60761A7B418A005AE24C /* AudioToolbox.framework in Frameworks */,
 				270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */,
 				270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */,
-				271DAFCE1AB6A7670007BFF8 /* ParseCrashReporting.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +156,8 @@
 		279E2AB01A71A77E0080542E = {
 			isa = PBXGroup;
 			children = (
+				273C64BB1AD350CD006A9169 /* SettingsViewController.h */,
+				273C64BC1AD350CD006A9169 /* SettingsViewController.m */,
 				279E2AC61A71A77F0080542E /* Main.storyboard */,
 				27FC60741A7B40C6005AE24C /* View Controllers */,
 				279E2ABB1A71A77F0080542E /* GameFinder */,
@@ -227,7 +227,6 @@
 				27D188581A95C98D00410B32 /* GamePointAnnotation.h */,
 				27048D0E1A8F615D004E84B5 /* CustomTableViewCell.h */,
 				27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */,
-				27048D141A9223A6004E84B5 /* SVProgressHUD */,
 			);
 			name = Classes;
 			path = ..;
@@ -236,12 +235,12 @@
 		27FC60731A7B40AE005AE24C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				271BBE631ACD2DD900BEC46C /* Bolts.framework */,
+				27048D141A9223A6004E84B5 /* SVProgressHUD */,
+				271BBE5F1ACD29CD00BEC46C /* Bolts.framework */,
+				271BBE5D1ACD28BD00BEC46C /* Parse.framework */,
 				271DAFD11AB6AACB0007BFF8 /* libstdc++.6.0.9.dylib */,
-				271DAFD81AB6AC860007BFF8 /* Bolts.framework */,
-				271DAFD41AB6ABE50007BFF8 /* Bolts.framework */,
 				271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */,
-				271DAFD61AB6AC4B0007BFF8 /* Parse.framework */,
-				271DAFCD1AB6A7670007BFF8 /* ParseCrashReporting.framework */,
 				275BAFD91A9736F800697533 /* AddressBookUI.framework */,
 				275BAFD71A9736F000697533 /* AddressBook.framework */,
 				27FC60871A7B41F3005AE24C /* libsqlite3.dylib */,
@@ -393,7 +392,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=/usr/local/bin:$PATH\ncd /Users/NickReeder/desktop/ios/GameFinder/parse\n\nparse symbols \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -403,15 +402,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				27D1885A1A95C99900410B32 /* GamePointAnnotation.m in Sources */,
-				27048D1D1A9223A6004E84B5 /* SVProgressHUD.m in Sources */,
 				276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */,
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
+				273C64BD1AD350CD006A9169 /* SettingsViewController.m in Sources */,
 				27D188571A95C97300410B32 /* MainViewController.m in Sources */,
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,
+				271BBE621ACD2D6900BEC46C /* SVIndefiniteAnimatedView.m in Sources */,
+				271BBE611ACD2D6600BEC46C /* SVProgressHUD.m in Sources */,
 				270495051A9FEA33000D163E /* LocationManager.m in Sources */,
 				275244081AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m in Sources */,
 				27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */,
-				27048D1B1A9223A6004E84B5 /* SVIndefiniteAnimatedView.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -541,6 +541,9 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/parse-library-1",
 					"/Users/NickReeder/Downloads/parse-library-1",
+					/Users/NickReeder/Documents/FacebookSDK,
+					"/Users/NickReeder/Desktop/parse-library-1",
+					"$(PROJECT_DIR)/SVProgressHUD",
 				);
 				INFOPLIST_FILE = GameFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -559,6 +562,9 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/parse-library-1",
 					"/Users/NickReeder/Downloads/parse-library-1",
+					/Users/NickReeder/Documents/FacebookSDK,
+					"/Users/NickReeder/Desktop/parse-library-1",
+					"$(PROJECT_DIR)/SVProgressHUD",
 				);
 				INFOPLIST_FILE = GameFinder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

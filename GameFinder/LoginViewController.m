@@ -24,7 +24,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tap];
-    
+    self.facebookButton.hidden = YES;
     
 }
 
@@ -70,6 +70,7 @@
     [UIView animateWithDuration:.5 animations:^{
         self.logInView.alpha = 0;
         self.signUpView.alpha = 1;
+        self.facebookButton.hidden = NO;
     }];
     
 }
@@ -90,16 +91,20 @@
     
     [self logIn];
     
-    }
+}
 
 -(void)logIn {
+   
     
-    
-        
     [PFUser logInWithUsernameInBackground:self.userTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
-                if (!error) {
+        if (!error) {
             [self performSegueWithIdentifier:@"LoginSuccessful" sender:self];
-        } else {
+        
+        
+    
+    
+     
+    } else {
             NSString *errorString = [error userInfo][@"error"];
             NSLog(@"%@", errorString);
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:errorString.uppercaseString preferredStyle:UIAlertControllerStyleAlert];
@@ -111,7 +116,6 @@
             [self presentViewController:alert animated:YES completion:nil];
         }
     }];
-    
 }
 
 - (IBAction)forgotButton:(id)sender {
@@ -154,7 +158,9 @@
 
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
+            
             [self performSegueWithIdentifier:@"LoginSuccessful" sender:self];
+        
         } else {
             NSString *errorString = [error userInfo][@"error"];
             NSLog(@"%@", errorString);

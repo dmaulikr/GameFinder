@@ -11,6 +11,7 @@
 #import "GamePointAnnotation.h"
 #import "AppDelegate.h"
 
+
 @interface MainViewController ()
 
 
@@ -37,7 +38,7 @@
     tap.numberOfTapsRequired = 1;
     [self.mapView setDelegate:self];
     self.mapView.showsUserLocation = YES;
-    
+    self.navigationTitle.title = [NSString stringWithFormat:@"Hey, %@. Let's ball!", [PFUser currentUser].username];
     
     
 }
@@ -63,6 +64,9 @@
     }
     
     
+}
+- (IBAction)profileButton:(id)sender {
+   
 }
 
 -(void)pushNotificationReceived{
@@ -347,26 +351,6 @@
 
 #pragma mark- buttons
 
-- (IBAction)logOut:(id)sender {
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-    PFUser *user = [PFUser currentUser];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (id object in objects) {
-            
-            [object removeObject:user.username forKey:@"players"];
-            [object saveInBackground];
-            [PFUser logOut];
-            
-        }
-    }];
-    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
-    
-    [self presentViewController:vc animated:YES completion:^{
-        
-    }];
-    
-}
 
 - (IBAction)zoomButton:(id)sender {
     

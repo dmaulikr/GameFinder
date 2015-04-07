@@ -43,5 +43,18 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>FacebookAppID</key>
+	<string>374420162760387</string>
+	<key>FacebookDisplayName</key>
+	<string>GameFinder</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb374420162760387</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
