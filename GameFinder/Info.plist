@@ -18,8 +18,46 @@
 	<string>2.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb374420162760387</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>de4aa61b30e146d0c591cffe885fe6a2e7ca83ca</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>consumerKey</key>
+					<string>iVCW9IduMFthtmWheiZ5qpOgH</string>
+					<key>consumerSecret</key>
+					<string>8EbtlWPWVeG5OrmJAuysV1ToBcLml879Gr2sO5PDFAIPCqVKRb</string>
+				</dict>
+				<key>KitName</key>
+				<string>Twitter</string>
+			</dict>
+		</array>
+	</dict>
+	<key>FacebookAppID</key>
+	<string>374420162760387</string>
+	<key>FacebookDisplayName</key>
+	<string>GameFinder</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -42,19 +80,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-	</array>
-	<key>FacebookAppID</key>
-	<string>374420162760387</string>
-	<key>FacebookDisplayName</key>
-	<string>GameFinder</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb374420162760387</string>
-			</array>
-		</dict>
 	</array>
 </dict>
 </plist>

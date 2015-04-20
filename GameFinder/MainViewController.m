@@ -7,9 +7,14 @@
 //
 
 #import "MainViewController.h"
+
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
 #import "AppDelegate.h"
+
+
+
+
 
 
 @interface MainViewController ()
@@ -23,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+        //NSLog(@"user: %@", [PFUser currentUser]);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNotificationReceived) name:@"localNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
@@ -39,7 +44,7 @@
     [self.mapView setDelegate:self];
     self.mapView.showsUserLocation = YES;
     self.navigationTitle.title = [NSString stringWithFormat:@"Hey, %@. Let's ball!", [PFUser currentUser].username];
-    
+
     
 }
 
@@ -538,6 +543,28 @@
 -(void)hideKeyboard{
     
     
+}
+
+-(void)userImage{
+    PFUser *user = [PFUser currentUser];
+    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
+    [query whereKey:@"username" equalTo:user.username];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error ){
+        
+        for (id userData in objects) {
+            NSString *fbPicString = userData[@"facebookImageUrl"];
+            NSURL *url = [NSURL URLWithString:fbPicString];
+            NSData *data = [NSData dataWithContentsOfURL:url];
+            UIImage *image = [UIImage imageWithData:data];
+            
+            
+            
+
+           
+           // NSLog(@"fbPicUrl: %@", fbPicUrl);
+            
+        }
+    }];
 }
 
 #pragma mark textfield delegate

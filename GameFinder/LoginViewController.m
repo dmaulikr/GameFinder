@@ -8,6 +8,9 @@
 
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import <TwitterKit/TwitterKit.h>
 
 @interface LoginViewController ()
 
@@ -17,14 +20,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-   
-    self.logInView.alpha = 1;
-    self.signUpView.alpha = 0;
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tap];
-    self.facebookButton.hidden = YES;
+    self.socialLoginView.hidden = YES;
+    
     
 }
 
@@ -34,20 +35,17 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     
-
+    
     if (textField == self.userTextField) {
         [textField resignFirstResponder];
         [self.passwordTextField becomeFirstResponder];
-    }
-    else if (textField == self.userRegisterTextField) {
-        [textField resignFirstResponder];
-        [self.passwordRegisterTextField becomeFirstResponder];
     }
     else if (textField == self.passwordRegisterTextField) {
         [textField resignFirstResponder];
         [self.emailTextField becomeFirstResponder];
         
-    }else if (textField == self.passwordTextField || self.emailTextField){
+    }
+    else if (textField == self.passwordTextField || self.emailTextField){
         [self logIn];
     }
     return YES;
@@ -57,34 +55,92 @@
 
 -(void)hideKeyboard {
     [self.userTextField resignFirstResponder];
-    [self.userRegisterTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
-    [self.passwordRegisterTextField resignFirstResponder];
     [self.emailTextField resignFirstResponder];
 }
 
 
-#pragma mark Animation between login and sign up
-- (IBAction)signUp:(id)sender {
-    NSLog(@"signUp pressed");
-    [UIView animateWithDuration:.5 animations:^{
-        self.logInView.alpha = 0;
-        self.signUpView.alpha = 1;
-        self.facebookButton.hidden = NO;
+- (IBAction)logInWithFacebookOrTwitterButton:(id)sender {
+    self.socialLoginView.backgroundColor = [UIColor colorWithHue:359.0 saturation:0 brightness:.26 alpha:.90];
+    self.socialLoginView.hidden = NO;
+}
+
+- (IBAction)cancelSocialLoginButton:(id)sender {
+    self.socialLoginView.hidden = YES;
+}
+- (IBAction)facebookLogInButton:(id)sender {
+    NSArray *permissions = @[@"public_profile"];
+    [PFFacebookUtils logInInBackgroundWithReadPermissions:permissions block:^(PFUser *user, NSError *error) {
+        if (user) {
+            [self performSegueWithIdentifier:@"LoginSuccessful" sender:self];
+        }
+        if (user.isNew){
+            if ([FBSDKAccessToken currentAccessToken]) {
+                [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
+                 startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                     if (!error) {
+                         
+                         //NSLog(@"result: %@", result);
+                         
+                         NSString *email = result[@"email"];
+                         NSString *fbId = result[@"id"];
+                         NSRange range = [email rangeOfString:@"@"];
+                         NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", fbId]];
+                         NSString *bday = result[@"birthday"];
+                         
+                         NSString *facebookPic = [pictureURL absoluteString];
+                         
+                         NSString *username = [email substringToIndex:range.location];
+                         
+                         if (email.length > 1 && fbId.length > 1 && facebookPic.length >1 && username.length >1){
+                             [user setObject:username forKey:@"username"];
+                             [user setObject:fbId forKey:@"facebookId"];
+                             [user setObject:facebookPic forKey:@"facebookImageUrl"];
+                             [user setObject:bday forKey:@"birthday"];
+                             [user setObject:email forKey:@"email"];
+                             [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+                                 if (succeeded) {
+                                     UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"settingsStoryboard"];
+                                     [self presentViewController:vc animated:YES completion:nil];
+                                 }
+                             }];
+                             
+                             
+                             
+                         }
+                     }
+                 }];
+            }
+        }
     }];
     
 }
 
-- (IBAction)logInButtonInstead:(id)sender {
-    
-    [UIView animateWithDuration:.5 animations:^{
-        self.logInView.alpha = 1;
-        self.signUpView.alpha = 0;
-
-    }];
-}
-
-
+/*
+ - (IBAction)twitterLogInButton:(id)sender {
+ [PFTwitterUtils logInWithBlock:^(PFUser *user, NSError *error) {
+ if (!user) {
+ NSLog(@"Uh oh. The user cancelled the Twitter login.");
+ return;
+ } else if (user.isNew) {
+ NSURL *verify = [NSURL URLWithString:@"https://api.twitter.com/1.1/account/verify_credentials.json"];
+ NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:verify];
+ [[PFTwitterUtils twitter] signRequest:request];
+ NSURLResponse *response = nil;
+ NSData *data = [NSURLConnection sendSynchronousRequest:request
+ returningResponse:&response
+ error:&error];
+ 
+ NSError* error;
+ // If response JSON starts with {}, it represents dictionary
+ NSDictionary *dicData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+ 
+ NSLog(@"dicData %@", dicData);
+ }
+ }];
+ 
+ }
+ */
 
 #pragma mark Login User
 - (IBAction)logInPressed:(id)sender {
@@ -94,17 +150,17 @@
 }
 
 -(void)logIn {
-   
+    
     
     [PFUser logInWithUsernameInBackground:self.userTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
         if (!error) {
             [self performSegueWithIdentifier:@"LoginSuccessful" sender:self];
-        
-        
-    
-    
-     
-    } else {
+            
+            
+            
+            
+            
+        } else {
             NSString *errorString = [error userInfo][@"error"];
             NSLog(@"%@", errorString);
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:errorString.uppercaseString preferredStyle:UIAlertControllerStyleAlert];
@@ -144,36 +200,6 @@
 
 #pragma mark Register New User
 
-- (IBAction)signUpButtonPressed:(id)sender {
-    [self registerNewUser];
-}
-
-- (void)registerNewUser {
-    
-    PFUser *user = [PFUser user];
-    user.username = self.userRegisterTextField.text;
-    user.password = self.passwordRegisterTextField.text;
-    user.email = self.emailTextField.text;
-    
-
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            
-            [self performSegueWithIdentifier:@"LoginSuccessful" sender:self];
-        
-        } else {
-            NSString *errorString = [error userInfo][@"error"];
-            NSLog(@"%@", errorString);
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:errorString.uppercaseString preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *action = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                
-            }];
-            
-            [alert addAction:action];
-            [self presentViewController:alert animated:YES completion:nil];
-        }
-    }];
-}
 
 
 

@@ -12,6 +12,7 @@
 #import "CustomTableViewCell.h"
 #import "SVProgressHUD.h"
 #import <CoreLocation/CoreLocation.h>
+#import "SDWebImage/UIImageView+WebCache.m"
 
 
 @interface MainViewController : UIViewController <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UITextFieldDelegate>
@@ -36,6 +37,7 @@
 
 @property NSString *locationType;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *profileButtonImage;
 
 
 

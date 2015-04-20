@@ -8,6 +8,7 @@
 
 #import "SettingsViewController.h"
 #import <Parse/Parse.h>
+#import "SDWebImage/UIImageView+WebCache.m"
 
 @interface SettingsViewController ()
 
@@ -17,8 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.profileImage.image = [UIImage imageNamed:@"profile"];
-    self.usernameLabel.text = [PFUser currentUser].username;
+    
+    
     self.pickerData = @[@"Recreational", @"High School", @"Junior College",@"Division II or III", @"Division I College", @"Professional"];
 
     UIPickerView *pickerView = [[UIPickerView alloc] init];
@@ -53,27 +54,6 @@
     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         NSLog(@"Saved");
     }];
-}
-- (IBAction)logOut:(id)sender {
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-    PFUser *user = [PFUser currentUser];
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (id object in objects) {
-            
-            [object removeObject:user.username forKey:@"players"];
-            [object saveInBackground];
-            [PFUser logOut];
-            
-        }
-    }];
-    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"LogInScreen"];
-    
-    [self presentViewController:vc animated:YES completion:^{
-        
-    }];
-    
 }
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{

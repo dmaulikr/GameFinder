@@ -18,5 +18,6 @@
 @property NSArray *pickerData;
 
 @property (weak, nonatomic) IBOutlet UITextField *experienceTextField;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 
 @end

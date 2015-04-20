@@ -8,8 +8,11 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
-NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsException";
 
 @interface AppDelegate ()
 
@@ -29,6 +32,12 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     [Parse setApplicationId:@"LnUNaEGAGswpuwBrJopys7uC932p5pi6WnlI6SJL"
                   clientKey:@"RnEaAcsjRB6mJ3poGGer7QXHxVYJg1PgJoRlRKhU"];
     
+    // Initialize Facebook
+    [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+    
+    // Initialize Twitter
+    //[PFTwitterUtils initializeWithConsumerKey:@"YOUR CONSUMER KEY"
+                               //consumerSecret:@"YOUR CONSUMER SECRET"];
     
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
@@ -44,6 +53,9 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     
     [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
     
+    [Fabric with:@[CrashlyticsKit]];
+
+    
     return YES;
 }
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
@@ -53,6 +65,19 @@ NSString *const BFTaskMultipleExceptionsException = @"BFMultipleExceptionsExcept
     
 }
 
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [FBSDKAppEvents activateApp];
+}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {

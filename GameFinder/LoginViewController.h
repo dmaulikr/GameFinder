@@ -12,6 +12,8 @@
 
 @interface LoginViewController : UIViewController < UITextFieldDelegate, UIAlertViewDelegate>
 
+//sam.ingle@metaltoad.com
+
 
 #pragma mark textfields
 @property (weak, nonatomic) IBOutlet UITextField *userTextField;
@@ -25,7 +27,9 @@
 @property (weak, nonatomic) IBOutlet UIView *logInView;
 @property (weak, nonatomic) IBOutlet UIView *signUpView;
 
-@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
+@property (weak, nonatomic) IBOutlet UIView *socialLoginView;
+
+
 
 
 @end
