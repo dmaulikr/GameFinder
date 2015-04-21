@@ -18,17 +18,13 @@
 #pragma mark textfields
 @property (weak, nonatomic) IBOutlet UITextField *userTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UITextField *userRegisterTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordRegisterTextField;
-@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIButton *forgotButton;
+@property (weak, nonatomic) IBOutlet UIButton *logInButton;
 
 #pragma mark views
-@property (weak, nonatomic) IBOutlet UIView *logInView;
-@property (weak, nonatomic) IBOutlet UIView *signUpView;
 
-@property (weak, nonatomic) IBOutlet UIView *socialLoginView;
 
+@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 
 
 

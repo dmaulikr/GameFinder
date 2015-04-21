@@ -21,10 +21,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    self.logInButton.layer.cornerRadius = 5.0;
+    self.facebookButton.layer.cornerRadius = 5.0;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tap];
-    self.socialLoginView.hidden = YES;
     
     
 }
@@ -40,12 +42,7 @@
         [textField resignFirstResponder];
         [self.passwordTextField becomeFirstResponder];
     }
-    else if (textField == self.passwordRegisterTextField) {
-        [textField resignFirstResponder];
-        [self.emailTextField becomeFirstResponder];
-        
-    }
-    else if (textField == self.passwordTextField || self.emailTextField){
+    else if (textField == self.passwordTextField){
         [self logIn];
     }
     return YES;
@@ -56,18 +53,11 @@
 -(void)hideKeyboard {
     [self.userTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
-    [self.emailTextField resignFirstResponder];
+    
 }
 
 
-- (IBAction)logInWithFacebookOrTwitterButton:(id)sender {
-    self.socialLoginView.backgroundColor = [UIColor colorWithHue:359.0 saturation:0 brightness:.26 alpha:.90];
-    self.socialLoginView.hidden = NO;
-}
 
-- (IBAction)cancelSocialLoginButton:(id)sender {
-    self.socialLoginView.hidden = YES;
-}
 - (IBAction)facebookLogInButton:(id)sender {
     NSArray *permissions = @[@"public_profile"];
     [PFFacebookUtils logInInBackgroundWithReadPermissions:permissions block:^(PFUser *user, NSError *error) {
@@ -116,31 +106,7 @@
     
 }
 
-/*
- - (IBAction)twitterLogInButton:(id)sender {
- [PFTwitterUtils logInWithBlock:^(PFUser *user, NSError *error) {
- if (!user) {
- NSLog(@"Uh oh. The user cancelled the Twitter login.");
- return;
- } else if (user.isNew) {
- NSURL *verify = [NSURL URLWithString:@"https://api.twitter.com/1.1/account/verify_credentials.json"];
- NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:verify];
- [[PFTwitterUtils twitter] signRequest:request];
- NSURLResponse *response = nil;
- NSData *data = [NSURLConnection sendSynchronousRequest:request
- returningResponse:&response
- error:&error];
- 
- NSError* error;
- // If response JSON starts with {}, it represents dictionary
- NSDictionary *dicData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
- 
- NSLog(@"dicData %@", dicData);
- }
- }];
- 
- }
- */
+
 
 #pragma mark Login User
 - (IBAction)logInPressed:(id)sender {

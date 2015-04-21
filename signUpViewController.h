@@ -24,7 +24,9 @@
 
 @property NSArray *oftenPickerData;
 
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 
 @end

@@ -17,16 +17,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.doneButton.hidden = YES;
     self.registerPasswordTextField.hidden = YES;
     self.registerEmailTextField.hidden = YES;
     self.registerOftenPlayTextField.hidden = YES;
     self.registerExperienceTextField.hidden = YES;
     self.registerBirthdayTextField.hidden = YES;
+    self.signUpButton.layer.cornerRadius = 5.0;
+    self.signUpButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.signUpButton.layer.borderWidth = 3.0;
     self.signUpButton.hidden = YES;
-    
+    self.cancelButton.layer.cornerRadius = 5.0;
+    self.cancelButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.cancelButton.layer.borderWidth = 3.0;
     
     self.experiencePickerData = @[@"Recreational", @"High School", @"Junior College",@"Division II or III", @"Division I College", @"Professional"];
-    self.oftenPickerData = @[@"1",@"2",@"3",@"4",@"5",@"More than 5"];
+    self.oftenPickerData = @[@"0",@"1",@"2",@"3",@"4",@"5",@"More than 5"];
     
     
     UIPickerView *picker = [[UIPickerView alloc]init];
@@ -102,16 +108,13 @@
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
     datePicker.maximumDate = [NSDate date];
     datePicker.datePickerMode = UIDatePickerModeDate;
-    [datePicker addTarget:self action:@selector(handleDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+    [datePicker addTarget:self action:@selector(handleDatePickerValueChanged:)forControlEvents:UIControlEventValueChanged];
+    
+    
     return datePicker;
 }
 
--(void)dismissDatePicker
-{
-    [self.registerBirthdayTextField resignFirstResponder];
-    
-    
-}
+
 
 -(void)handleDatePickerValueChanged:(UIDatePicker *)datePicker
 {
@@ -119,11 +122,8 @@
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
     [dateFormat setDateStyle:NSDateFormatterMediumStyle];
     self.registerBirthdayTextField.text = [dateFormat stringFromDate:date];
-    self.registerExperienceTextField.hidden = NO;
-    [self.registerExperienceTextField becomeFirstResponder];
+    self.doneButton.hidden = NO;
 }
-
-
 
 #pragma mark - UIPicker Delegate Methods
 
@@ -187,22 +187,17 @@
         
     }
     
-    else if (textField == self.registerOftenPlayTextField) {
-        [textField resignFirstResponder];
-        self.registerBirthdayTextField.hidden = NO;
-        [self.registerBirthdayTextField becomeFirstResponder];
-        
-    }
-    else if (textField == self.registerBirthdayTextField) {
-        [textField resignFirstResponder];
-        self.registerExperienceTextField.hidden = NO;
-        [self.registerExperienceTextField becomeFirstResponder];
-        self.signUpButton.hidden = NO;
-    }
     else if (textField == self.registerExperienceTextField){
         [self registerNewUser];
     }
     return YES;
+}
+
+- (IBAction)handleDoneButtonPressed:(id)sender {
+    [self.registerBirthdayTextField resignFirstResponder];
+    self.doneButton.hidden = YES;
+    self.registerExperienceTextField.hidden = NO;
+    [self.registerExperienceTextField becomeFirstResponder];
 }
 
 -(void)dismissKeyboard:(id)sender{
@@ -212,6 +207,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)handleCancelButtonPressed:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*
