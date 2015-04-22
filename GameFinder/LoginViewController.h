@@ -23,6 +23,7 @@
 
 #pragma mark views
 
+@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *facebookButton;
 

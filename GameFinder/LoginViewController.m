@@ -23,7 +23,16 @@
     
     
     self.logInButton.layer.cornerRadius = 5.0;
+   
     self.facebookButton.layer.cornerRadius = 5.0;
+    
+    self.signUpButton.layer.cornerRadius = 5.0;
+    self.signUpButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.signUpButton.layer.borderWidth = 3.0;
+    self.passwordTextField.layer.cornerRadius = 5.0;
+    self.userTextField.layer.cornerRadius = 5.0;
+    self.logInButton.enabled = NO;
+
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
     [self.view addGestureRecognizer:tap];
@@ -48,7 +57,9 @@
     return YES;
 }
 
-
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    self.logInButton.enabled = YES;
+}
 
 -(void)hideKeyboard {
     [self.userTextField resignFirstResponder];

@@ -8,9 +8,11 @@
 
 #import "MainViewController.h"
 
+
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
 #import "AppDelegate.h"
+
 
 
 
@@ -35,6 +37,8 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
     
+    [self userImage];
+    
     [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading"];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
@@ -43,7 +47,8 @@
     tap.numberOfTapsRequired = 1;
     [self.mapView setDelegate:self];
     self.mapView.showsUserLocation = YES;
-    self.navigationTitle.title = [NSString stringWithFormat:@"Hey, %@. Let's ball!", [PFUser currentUser].username];
+    self.navigationTitle.title = [NSString stringWithFormat:@"Hey, %@!", [PFUser currentUser].username];
+    
 
     
 }
@@ -546,25 +551,24 @@
 }
 
 -(void)userImage{
-    PFUser *user = [PFUser currentUser];
-    PFQuery *query = [PFQuery queryWithClassName:@"_User"];
-    [query whereKey:@"username" equalTo:user.username];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error ){
-        
-        for (id userData in objects) {
-            NSString *fbPicString = userData[@"facebookImageUrl"];
-            NSURL *url = [NSURL URLWithString:fbPicString];
-            NSData *data = [NSData dataWithContentsOfURL:url];
-            UIImage *image = [UIImage imageWithData:data];
-            
-            
-            
+    
+    
+    NSString *facebookImageUrl = [[PFUser currentUser]objectForKey:@"facebookImageUrl"];
+    NSURL *url = [NSURL URLWithString:facebookImageUrl];
+    
+    UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    settingsView.layer.cornerRadius = 12.5;
+    settingsView.layer.borderColor = [UIColor blackColor].CGColor;
+    settingsView.layer.borderWidth = 1.0;
+    settingsView.clipsToBounds = YES;
+    
 
-           
-           // NSLog(@"fbPicUrl: %@", fbPicUrl);
-            
-        }
-    }];
+    [settingsView addTarget:self action:@selector(settingsClicked) forControlEvents:UIControlEventTouchUpInside];
+    
+    [settingsView sd_setBackgroundImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"profile"]];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
+    
+    [self.navigationItem setLeftBarButtonItem:settingsButton];
 }
 
 #pragma mark textfield delegate
@@ -580,6 +584,10 @@
     
     self.mapView.centerCoordinate = CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
     [self disableAddLocationButton];
+}
+
+-(void)settingsClicked{
+    [self performSegueWithIdentifier:@"settingsClicked" sender:nil];
 }
 
 
