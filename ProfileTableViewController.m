@@ -19,22 +19,13 @@
     [super viewDidLoad];
     [self performSelector:@selector(queryParse)];
     self.profileImageView.layer.cornerRadius = 50;
-    //UIVisualEffect *blurEffect;
-    //blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     
-    
-    //UIVisualEffectView *visualEffectView;
-    //visualEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    
-    //visualEffectView.frame = self.headerView.bounds;
-    //[self.headerView addSubview:visualEffectView];
-    
-    self.headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"court"]];
+    self.headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"profile-bg"]];
     
     self.profileImageView.clipsToBounds = YES;
     self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.profileImageView.layer.borderWidth = 3;
-    //[self.headerView insertSubview:self.profileImageView aboveSubview:visualEffectView];
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -138,7 +129,7 @@
     NSString *facebookImageUrl = [[PFUser currentUser] objectForKey:@"facebookImageUrl"];
     NSURL *url = [NSURL URLWithString:facebookImageUrl];
     
-    [self.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"profile"]];
+    [self.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"hooper"]];
     self.usernameCell.detailTextLabel.text = username;
     self.emailCell.detailTextLabel.text = email;
     self.birthdayTableViewCell.detailTextLabel.text = birthday;

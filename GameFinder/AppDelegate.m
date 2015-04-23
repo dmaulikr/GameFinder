@@ -12,6 +12,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
 
 
 @interface AppDelegate ()
@@ -23,6 +25,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
  
+    [FBSDKLoginButton class];
+    
     self.locationManager = [[LocationManager alloc]init];
     
     // Crash Reporting
@@ -41,6 +45,7 @@
     
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
     
     
     //NSSet *categories = [NSSet setWithObjects:inviteCategory];

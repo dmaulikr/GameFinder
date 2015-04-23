@@ -19,10 +19,7 @@
 
 
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
-
-@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
 @property (strong, nonatomic) NSTimer *timer;
 
@@ -53,6 +50,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *playersTableView;
 
 @property (weak, nonatomic) IBOutlet UIButton *playHereButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *directionsButton;
 
 @property (nonatomic) BOOL isCheckedIn;
 

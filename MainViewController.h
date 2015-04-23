@@ -37,7 +37,7 @@
 
 @property NSString *locationType;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *profileButtonImage;
+
 
 
 

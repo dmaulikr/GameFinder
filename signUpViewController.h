@@ -12,7 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *registerEmailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *registerUsernameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *registerOftenPlayTextField;
 @property (weak, nonatomic) IBOutlet UITextField *registerBirthdayTextField;
 
 @property (weak, nonatomic) IBOutlet UITextField *registerExperienceTextField;
@@ -22,7 +21,7 @@
 
 @property NSArray *experiencePickerData;
 
-@property NSArray *oftenPickerData;
+
 
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 

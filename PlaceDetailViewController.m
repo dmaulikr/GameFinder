@@ -29,16 +29,12 @@
     
     
     
-    self.nameLabel.text = self.locationNameString;
-    
-    self.typeLabel.text = self.locationTypeString;
-    
-    
+    self.directionsButton.layer.cornerRadius = 30;
     [self performSelector:@selector(isNear)];
     [self performSelector:@selector(retrievePlayers)];
     [self.mapDetailView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.locationCoordinate.latitude, self.locationCoordinate.longitude), MKCoordinateSpanMake(0.0004, 0.0004))];
     self.mapDetailView.userInteractionEnabled = NO;
-    self.mapDetailView.mapType = MKMapTypeSatellite;
+    self.mapDetailView.mapType = MKMapTypeHybrid;
     
 }
 

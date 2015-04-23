@@ -55,6 +55,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [self disableAddLocationButton];
+
     
     
 }
@@ -62,22 +63,11 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     
-    UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LogInScreen"];
     
-    PFUser *currentUser = [PFUser currentUser];
-    if (!currentUser ) {
-        // go straight to the app!
-        [self presentViewController:vc animated:YES completion:^{
-            
-        }];
-        
-    }
     
     
 }
-- (IBAction)profileButton:(id)sender {
-   
-}
+
 
 -(void)pushNotificationReceived{
     
@@ -268,6 +258,15 @@
             UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
             pinView.rightCalloutAccessoryView = rightButton;
             pinView.image = [UIImage imageNamed:@"basketball-pin"];
+            UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            UIImage *car = [UIImage imageNamed:@"car"];
+            UIImageView *carImage = [[UIImageView alloc]initWithImage:car];
+            leftButton.frame = CGRectMake(0,0,25,25);
+            carImage.frame = CGRectMake(0, 0, 25, 25);
+            carImage.layer.backgroundColor = [UIColor greenColor].CGColor;
+            [leftButton addSubview:carImage];
+            pinView.leftCalloutAccessoryView = leftButton;
+            
             
         } else {
             pinView.annotation = annotation;
@@ -276,6 +275,8 @@
     }
     return nil;
 }
+
+
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     
@@ -286,8 +287,20 @@
     NSDictionary *object = [self.gameTimesArray objectAtIndex:ann.index];
     
     //Pass the object
-    [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
+    if (control == view.rightCalloutAccessoryView) {
+        [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
+    }else{
+        CLLocationCoordinate2D placeLocation = CLLocationCoordinate2DMake(ann.coordinate.latitude, ann.coordinate.longitude);
+        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:placeLocation addressDictionary:nil];
+        MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:placemark];
+        item.name = ann.title;
+        [item openInMapsWithLaunchOptions:nil];
+    }
+        
+    
 }
+
+
 
 #pragma mark- TableView datasource methods
 

@@ -17,10 +17,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.doneButton.hidden = YES;
     self.registerPasswordTextField.hidden = YES;
     self.registerEmailTextField.hidden = YES;
-    self.registerOftenPlayTextField.hidden = YES;
+    
     self.registerExperienceTextField.hidden = YES;
     self.registerBirthdayTextField.hidden = YES;
     self.signUpButton.layer.cornerRadius = 5.0;
@@ -31,27 +32,17 @@
     self.cancelButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.cancelButton.layer.borderWidth = 3.0;
     
-    self.experiencePickerData = @[@"Recreational", @"High School", @"Junior College",@"Division II or III", @"Division I College", @"Professional"];
-    self.oftenPickerData = @[@"0",@"1",@"2",@"3",@"4",@"5",@"More than 5"];
-    
-    
-    UIPickerView *picker = [[UIPickerView alloc]init];
-    picker.delegate = self;
-    picker.dataSource = self;
-    
+    self.experiencePickerData = @[@"Choose Experience Level",@"Recreational", @"High School", @"Junior College",@"Division II or III", @"Division I College", @"Professional"];
+
     UIPickerView *picker2 = [[UIPickerView alloc]init];
     picker2.delegate = self;
     picker2.dataSource = self;
     
-    self.registerOftenPlayTextField.inputView = picker;
+    
     self.registerExperienceTextField.inputView = picker2;
     
     self.registerBirthdayTextField.inputView = [self configureDatePicker];
-    
-    
-    
-    
-    
+ 
     UITapGestureRecognizer* tapBackground = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard:)];
     [tapBackground setNumberOfTapsRequired:1];
     [self.view addGestureRecognizer:tapBackground];
@@ -69,10 +60,10 @@
     user.username = self.registerUsernameTextField.text;
     user.password = self.registerPasswordTextField.text;
     user.email = self.registerEmailTextField.text;
-    [user setObject:self.registerOftenPlayTextField.text forKey:@"oftenPlay"];
+    
     [user setObject:self.registerBirthdayTextField.text forKey:@"birthday"];
     [user setObject:self.registerExperienceTextField.text forKey:@"experience"];
-    if (self.registerUsernameTextField.text.length > 3 && self.registerEmailTextField.text.length > 4 && self.registerEmailTextField != nil && self.registerOftenPlayTextField != nil && self.registerBirthdayTextField != nil && self.registerExperienceTextField != nil) {
+    if (self.registerUsernameTextField.text.length > 3 && self.registerEmailTextField.text.length > 4 && self.registerEmailTextField != nil && self.registerBirthdayTextField != nil && self.registerExperienceTextField != nil) {
         
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
@@ -129,16 +120,11 @@
 
 
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    if(pickerView == self.registerOftenPlayTextField.inputView)
-        return self.oftenPickerData.count;
-    else
         return self.experiencePickerData.count;
 }
 
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    if (pickerView == self.registerOftenPlayTextField.inputView) {
-        return self.oftenPickerData[row];
-    }
+  
     return self.experiencePickerData[row];
 }
 
@@ -147,18 +133,21 @@
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    if (self.registerOftenPlayTextField.inputView == pickerView) {
-         self.registerOftenPlayTextField.text = self.oftenPickerData[row];
-        [self.registerExperienceTextField resignFirstResponder];
-        self.registerBirthdayTextField.hidden = NO;
-        [self.registerBirthdayTextField becomeFirstResponder];
-    } if (pickerView == self.registerExperienceTextField.inputView) {
+    
+    
         self.registerExperienceTextField.text = self.experiencePickerData[row];
+    if ([self.registerExperienceTextField.text isEqualToString:@"Choose Experience Level"]) {
+        self.registerExperienceTextField.layer.borderColor = [UIColor greenColor].CGColor;
+        self.registerExperienceTextField.layer.borderWidth = 1;
+       
+    }else{
+        self.registerExperienceTextField.layer.borderColor = [UIColor clearColor].CGColor;
         [self.registerExperienceTextField resignFirstResponder];
         self.signUpButton.hidden = NO;
     }
    
 }
+
 
 
 
@@ -180,11 +169,10 @@
         [self.registerEmailTextField becomeFirstResponder];
         
     }
-    else if (textField == self.registerEmailTextField) {
+    else if (textField == self.registerEmailTextField){
         [textField resignFirstResponder];
-        self.registerOftenPlayTextField.hidden = NO;
-        [self.registerOftenPlayTextField becomeFirstResponder];
-        
+        self.registerBirthdayTextField.hidden = NO;
+        [self.registerBirthdayTextField becomeFirstResponder];
     }
     
     else if (textField == self.registerExperienceTextField){

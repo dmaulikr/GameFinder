@@ -25,6 +25,7 @@
 		27017AB91ADF2EF200A9DF5F /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27017AA91ADF2EF200A9DF5F /* UIView+WebCacheOperation.m */; };
 		27017ABB1ADF451800A9DF5F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27017ABA1ADF451800A9DF5F /* ImageIO.framework */; };
 		27027DF91AAF8D3F002AE723 /* swish.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 27027DF81AAF8D3F002AE723 /* swish.mp3 */; };
+		27030C411AE8DD260005A1A0 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27030C401AE8DD260005A1A0 /* LoadingViewController.m */; };
 		27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */; };
 		27048D1C1A9223A6004E84B5 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27048D181A9223A6004E84B5 /* SVProgressHUD.bundle */; };
 		270495051A9FEA33000D163E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 270495041A9FEA33000D163E /* LocationManager.m */; };
@@ -112,6 +113,8 @@
 		27017AA91ADF2EF200A9DF5F /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		27017ABA1ADF451800A9DF5F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		27027DF81AAF8D3F002AE723 /* swish.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = swish.mp3; sourceTree = "<group>"; };
+		27030C3F1AE8DD260005A1A0 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
+		27030C401AE8DD260005A1A0 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 		27048D0E1A8F615D004E84B5 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
 		27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 		27048D151A9223A6004E84B5 /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
@@ -385,6 +388,8 @@
 			children = (
 				27C1602D1A89DC5100746FC9 /* MainViewController.h */,
 				27D188561A95C97300410B32 /* MainViewController.m */,
+				27030C3F1AE8DD260005A1A0 /* LoadingViewController.h */,
+				27030C401AE8DD260005A1A0 /* LoadingViewController.m */,
 				276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */,
 				276A2E001A7BFF6300BD7600 /* LoginViewController.m */,
 				277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */,
@@ -530,6 +535,7 @@
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
 				27017AB31ADF2EF200A9DF5F /* UIButton+WebCache.m in Sources */,
 				27017AB01ADF2EF200A9DF5F /* SDWebImageDownloaderOperation.m in Sources */,
+				27030C411AE8DD260005A1A0 /* LoadingViewController.m in Sources */,
 				27017AAC1ADF2EF200A9DF5F /* SDImageCache.m in Sources */,
 				275F1BC11AE7766800815B69 /* ProfileTableViewController.m in Sources */,
 				27017AAB1ADF2EF200A9DF5F /* NSData+ImageContentType.m in Sources */,

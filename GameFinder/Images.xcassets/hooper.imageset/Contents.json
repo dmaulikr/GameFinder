@@ -3,16 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "19c978_a71dec70272448b2b7c925c4363f5dcf.jpg_srz_971_592_85_22_0.50_1.20_0.00_jpg_srz-1.jpeg"
+      "filename" : "hooper.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "19c978_a71dec70272448b2b7c925c4363f5dcf.jpg_srz_971_592_85_22_0.50_1.20_0.00_jpg_srz.jpeg"
+      "filename" : "hooper@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "hooper@3x.png"
     }
   ],
   "info" : {
