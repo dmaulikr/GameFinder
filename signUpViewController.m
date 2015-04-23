@@ -139,7 +139,7 @@
     if ([self.registerExperienceTextField.text isEqualToString:@"Choose Experience Level"]) {
         self.registerExperienceTextField.layer.borderColor = [UIColor greenColor].CGColor;
         self.registerExperienceTextField.layer.borderWidth = 1;
-       
+        self.signUpButton.enabled = NO;
     }else{
         self.registerExperienceTextField.layer.borderColor = [UIColor clearColor].CGColor;
         [self.registerExperienceTextField resignFirstResponder];
