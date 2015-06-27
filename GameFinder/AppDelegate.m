@@ -31,6 +31,8 @@
     
     // Crash Reporting
    
+    // Enable Local Datastore
+    [Parse enableLocalDatastore];
     
     // Initialize Parse.
     [Parse setApplicationId:@"LnUNaEGAGswpuwBrJopys7uC932p5pi6WnlI6SJL"

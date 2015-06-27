@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 
 @interface PlaceDetailViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *locationNameLabel;
 
 @end
 
@@ -26,9 +27,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removePlayer) name:@"notPlaying" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
+    self.playHereButton.layer.cornerRadius = 2.0f;
     
-    
-    
+    self.locationNameLabel.text = self.locationNameString;
+    self.locationNameLabel.textColor = [UIColor whiteColor];
+    //self.locationNameLabel.font = [UIFont fontWithName:@"Helvetica" size:20.0];
+    self.locationNameLabel.alpha = 0;
+    [UIView animateWithDuration:3 animations:^{
+        self.locationNameLabel.alpha = 1;
+        self.locationNameLabel.font = [UIFont fontWithName:@"Helvetica" size:40.0];
+    }];
     self.directionsButton.layer.cornerRadius = 30;
     [self performSelector:@selector(isNear)];
     [self performSelector:@selector(retrievePlayers)];

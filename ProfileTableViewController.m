@@ -18,21 +18,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self performSelector:@selector(queryParse)];
-    self.profileImageView.layer.cornerRadius = 50;
+    
     
     self.headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"profile-bg"]];
-    
+    // Style profile image view
+    self.profileImageView.layer.cornerRadius = 50;
     self.profileImageView.clipsToBounds = YES;
     self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.profileImageView.layer.borderWidth = 3;
     
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // Set navigation title
     self.navigationItem.title = @"Profile";
+    
+    self.profileImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageOptions)];
+    tap.numberOfTapsRequired = 1.0f;
+    
+    [self.profileImageView addGestureRecognizer:tap];
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.logOutButton.alpha = 0;
@@ -45,10 +47,7 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 #pragma mark - Table view data source
 
@@ -64,72 +63,26 @@
     return 3;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 -(void)queryParse{
-    
+    PFUser *user = [PFUser currentUser];
     NSString *username = [[PFUser currentUser] objectForKey:@"username"];
     self.usernameCell.detailTextLabel.text = username;
     NSString *email = [[PFUser currentUser] objectForKey:@"email"];
     NSString *oftenPlay = [[PFUser currentUser] objectForKey:@"oftenPlay"];
     NSString *experience = [[PFUser currentUser] objectForKey:@"experience"];
     NSString *birthday = [[PFUser currentUser] objectForKey:@"birthday"];
-    NSString *facebookImageUrl = [[PFUser currentUser] objectForKey:@"facebookImageUrl"];
-    NSURL *url = [NSURL URLWithString:facebookImageUrl];
     
-    [self.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"hooper"]];
+    PFFile *file = [user objectForKey:@"profileImage"];
+    [file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error){
+        if (!error) {
+          
+            UIImage *image = [UIImage imageWithData:imageData];
+            self.profileImageView.image = image;
+        }
+    }];
+
+    self.profileImageView.image = [UIImage imageNamed:@"hooper"];
     self.usernameCell.detailTextLabel.text = username;
     self.emailCell.detailTextLabel.text = email;
     self.birthdayTableViewCell.detailTextLabel.text = birthday;
@@ -153,5 +106,73 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+-(void)imageOptions{
+    UIAlertController *options = [UIAlertController alertControllerWithTitle:@"Choose picture" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *openCameraApp = [UIAlertAction actionWithTitle:@"Take a new photo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self openCameraApp];
+    }];
+    UIAlertAction *chooseFromLibraray = [UIAlertAction actionWithTitle:@"Choose from photo library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self chooseFromPhotoLibrary];
+    }];
+    [options addAction:chooseFromLibraray];
+    [options addAction:openCameraApp];
+    [self presentViewController:options animated:YES completion:nil];
+}
+
+-(void)openCameraApp{
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+        picker.delegate = self;
+        picker.allowsEditing = NO;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        [self presentViewController:picker animated:YES completion:NULL];
+        
+    } else {
+        
+        UIAlertController *noCamera = [UIAlertController alertControllerWithTitle:@"Alert!" message:@"Must have a camera." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }];
+        
+        [noCamera addAction:action];
+        
+        [self presentViewController:noCamera animated:YES completion:nil];
+    }
+
+    
+}
+
+-(void)chooseFromPhotoLibrary{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.delegate = self;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+    
+}
+
+// Image picker controller delegates
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
+    self.profileImageView.image = chosenImage;
+    NSData *imageData = UIImagePNGRepresentation(chosenImage);
+    PFFile *imageFile = [PFFile fileWithData:imageData];
+    [[PFUser currentUser]setObject:imageFile forKey:@"profileImage"];
+    [[PFUser currentUser]saveInBackground];
+    UIImageWriteToSavedPhotosAlbum (chosenImage, nil, nil, nil);
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+
+}
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+}
 
 @end

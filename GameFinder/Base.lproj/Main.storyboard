@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="126-Wp-nyE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="126-Wp-nyE">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -165,7 +165,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-586" y="-1422"/>
+            <point key="canvasLocation" x="-747" y="-2184"/>
         </scene>
         <!--Loading View Controller-->
         <scene sceneID="5u9-sg-lWf">
@@ -183,7 +183,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1SX-0T-keX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1321" y="-1223"/>
+            <point key="canvasLocation" x="-1397" y="-1860"/>
         </scene>
         <!--Game Locator-->
         <scene sceneID="41p-MG-wHA">
@@ -262,7 +262,7 @@
                             <constraint firstItem="MKU-Gn-bkm" firstAttribute="leading" secondItem="x9h-xt-RWr" secondAttribute="leadingMargin" constant="-8" id="Gza-SF-Iab"/>
                             <constraint firstItem="bGj-ku-4G0" firstAttribute="top" secondItem="bZm-Cm-zfu" secondAttribute="bottom" constant="28" id="Ijn-L0-Lhi"/>
                             <constraint firstItem="bGj-ku-4G0" firstAttribute="centerX" secondItem="x9h-xt-RWr" secondAttribute="centerX" id="NUj-9c-8Vd"/>
-                            <constraint firstItem="bGj-ku-4G0" firstAttribute="bottom" secondItem="AST-Gr-HZu" secondAttribute="top" id="Tdo-Pu-l1o"/>
+                            <constraint firstItem="bGj-ku-4G0" firstAttribute="bottom" secondItem="AST-Gr-HZu" secondAttribute="top" constant="-49" id="Tdo-Pu-l1o"/>
                             <constraint firstItem="MKU-Gn-bkm" firstAttribute="top" secondItem="x9h-xt-RWr" secondAttribute="top" id="YKf-MG-Wmu"/>
                             <constraint firstItem="bZm-Cm-zfu" firstAttribute="top" secondItem="YbP-YY-oLX" secondAttribute="bottom" constant="149" id="ZpM-8m-PZq"/>
                             <constraint firstItem="bGj-ku-4G0" firstAttribute="trailing" secondItem="MKU-Gn-bkm" secondAttribute="trailing" id="eis-Jx-930"/>
@@ -281,7 +281,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addGamesButton" destination="RqU-ut-4cv" id="Ncr-0O-Le5"/>
                         <outlet property="gamesTableView" destination="bGj-ku-4G0" id="PQM-sA-WF6"/>
@@ -294,7 +294,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UCE-8b-Sbw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048" y="-1411"/>
+            <point key="canvasLocation" x="-134" y="-1546"/>
         </scene>
         <!--Profile Table View Controller-->
         <scene sceneID="3GE-9v-Y5y">
@@ -499,7 +499,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dCw-ga-MHn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="792" y="-2614"/>
+            <point key="canvasLocation" x="-134" y="-772"/>
         </scene>
         <!--Title-->
         <scene sceneID="Mo9-RV-Kkb">
@@ -514,13 +514,55 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hPR-7F-CeK">
-                                <rect key="frame" x="0.0" y="6" width="600" height="224"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="224"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="224" id="OAb-cu-h2i"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="nc4-cA-m6e" id="sfg-Ch-bXF"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xQj-Qe-MD0">
+                                <rect key="frame" x="517" y="218" width="67" height="60"/>
+                                <color key="backgroundColor" red="0.74509803921568629" green="0.77647058823529413" blue="0.72941176470588232" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Ee5-Kb-0lk"/>
+                                    <constraint firstAttribute="width" constant="67" id="GlN-ch-4rc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <state key="normal" title="Check In" backgroundImage="player">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="disabled" backgroundImage="bball"/>
+                                <connections>
+                                    <action selector="playHereButton:" destination="nc4-cA-m6e" eventType="touchUpInside" id="7yq-iR-MTA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLh-vl-Owf">
+                                <rect key="frame" x="16" y="218" width="60" height="60"/>
+                                <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="0.77000000000000002" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="3XN-wL-Ivo"/>
+                                    <constraint firstAttribute="width" constant="60" id="CZu-WY-TTu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
+                                <inset key="imageEdgeInsets" minX="51" minY="-41" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" backgroundImage="directions">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="openMaps:" destination="nc4-cA-m6e" eventType="touchUpInside" id="Doh-DD-OhT"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZ0-8X-cti">
+                                <rect key="frame" x="279" y="82" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AmS-zS-hX3">
-                                <rect key="frame" x="0.0" y="378" width="600" height="178"/>
+                                <rect key="frame" x="0.0" y="296" width="600" height="294"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="4" indentationWidth="9" reuseIdentifier="TimeCell" textLabel="dZp-1g-dFb" detailTextLabel="JMm-TS-dBt" style="IBUITableViewCellStyleValue1" id="18O-xa-hMR" customClass="PlaceDetailCustomTableViewCell">
@@ -554,54 +596,23 @@
                                     <outlet property="delegate" destination="nc4-cA-m6e" id="t1h-3h-em8"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xQj-Qe-MD0">
-                                <rect key="frame" x="479" y="262" width="105" height="89"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="105" id="bbP-6M-hZe"/>
-                                    <constraint firstAttribute="height" constant="89" id="eT8-1j-qhn"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-3"/>
-                                <state key="normal" title="Check In" backgroundImage="player">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <state key="disabled" backgroundImage="bball"/>
-                                <connections>
-                                    <action selector="playHereButton:" destination="nc4-cA-m6e" eventType="touchUpInside" id="7yq-iR-MTA"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLh-vl-Owf">
-                                <rect key="frame" x="519" y="164" width="60" height="60"/>
-                                <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="0.77000000000000002" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="8CN-EZ-nfw"/>
-                                    <constraint firstAttribute="height" constant="60" id="gDi-Pe-wkw"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
-                                <inset key="imageEdgeInsets" minX="51" minY="-41" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" backgroundImage="directions">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="openMaps:" destination="nc4-cA-m6e" eventType="touchUpInside" id="Doh-DD-OhT"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="hPR-7F-CeK" secondAttribute="trailing" id="6KI-pv-G4M"/>
-                            <constraint firstItem="AmS-zS-hX3" firstAttribute="trailing" secondItem="hPR-7F-CeK" secondAttribute="trailing" id="CWy-wg-58c"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="AmS-zS-hX3" secondAttribute="bottom" constant="44" id="GcR-rk-ZeR"/>
-                            <constraint firstItem="AmS-zS-hX3" firstAttribute="leading" secondItem="X4f-iu-Fck" secondAttribute="leading" id="Gx9-4R-SAF"/>
-                            <constraint firstItem="xQj-Qe-MD0" firstAttribute="trailing" secondItem="X4f-iu-Fck" secondAttribute="trailingMargin" id="MWI-sf-cJ1"/>
-                            <constraint firstItem="xQj-Qe-MD0" firstAttribute="top" secondItem="hPR-7F-CeK" secondAttribute="bottom" constant="32" id="U1Q-fK-S54"/>
-                            <constraint firstItem="xQj-Qe-MD0" firstAttribute="top" secondItem="tLh-vl-Owf" secondAttribute="bottom" constant="38" id="a8r-E3-rTV"/>
-                            <constraint firstItem="tLh-vl-Owf" firstAttribute="top" secondItem="tHT-TG-04g" secondAttribute="bottom" constant="100" id="d2x-ga-1hM"/>
-                            <constraint firstItem="hPR-7F-CeK" firstAttribute="top" secondItem="X4f-iu-Fck" secondAttribute="topMargin" constant="6" id="fiS-Uo-qPC"/>
-                            <constraint firstItem="xQj-Qe-MD0" firstAttribute="trailing" secondItem="tLh-vl-Owf" secondAttribute="trailing" constant="5" id="nHz-z4-3Ca"/>
-                            <constraint firstItem="AmS-zS-hX3" firstAttribute="top" secondItem="xQj-Qe-MD0" secondAttribute="bottom" constant="27" id="qBF-9r-1Sk"/>
-                            <constraint firstItem="AmS-zS-hX3" firstAttribute="leading" secondItem="hPR-7F-CeK" secondAttribute="leading" id="weW-8l-2VQ"/>
+                            <constraint firstItem="tLh-vl-Owf" firstAttribute="leading" secondItem="hPR-7F-CeK" secondAttribute="leading" constant="16" id="0Vu-3z-Yna"/>
+                            <constraint firstItem="lAh-Vk-gMP" firstAttribute="top" secondItem="AmS-zS-hX3" secondAttribute="bottom" constant="10" id="332-oR-JYZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hPR-7F-CeK" secondAttribute="trailing" constant="-16" id="IrK-YD-nVQ"/>
+                            <constraint firstItem="xQj-Qe-MD0" firstAttribute="bottom" secondItem="hPR-7F-CeK" secondAttribute="bottom" constant="-10" id="Orm-UH-Hzg"/>
+                            <constraint firstItem="AmS-zS-hX3" firstAttribute="top" secondItem="hPR-7F-CeK" secondAttribute="bottom" constant="8" id="RaO-ph-bG1"/>
+                            <constraint firstItem="hPR-7F-CeK" firstAttribute="leading" secondItem="X4f-iu-Fck" secondAttribute="leadingMargin" constant="-16" id="VvN-6g-BKt"/>
+                            <constraint firstItem="yZ0-8X-cti" firstAttribute="top" secondItem="hPR-7F-CeK" secondAttribute="top" constant="18" id="d5Y-7D-a6S"/>
+                            <constraint firstItem="xQj-Qe-MD0" firstAttribute="leading" secondItem="hPR-7F-CeK" secondAttribute="trailing" constant="-83" id="d6w-n0-msa"/>
+                            <constraint firstItem="AmS-zS-hX3" firstAttribute="leading" secondItem="X4f-iu-Fck" secondAttribute="leadingMargin" constant="-16" id="dlf-CQ-RPt"/>
+                            <constraint firstItem="hPR-7F-CeK" firstAttribute="top" secondItem="tHT-TG-04g" secondAttribute="bottom" id="kby-Yf-5g2"/>
+                            <constraint firstItem="hPR-7F-CeK" firstAttribute="centerX" secondItem="yZ0-8X-cti" secondAttribute="centerX" id="qEm-PI-u6B"/>
+                            <constraint firstItem="AmS-zS-hX3" firstAttribute="width" secondItem="hPR-7F-CeK" secondAttribute="width" id="s2a-FD-4E2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AmS-zS-hX3" secondAttribute="trailing" constant="-16" id="tlK-hw-fe2"/>
+                            <constraint firstItem="tLh-vl-Owf" firstAttribute="bottom" secondItem="hPR-7F-CeK" secondAttribute="bottom" constant="-10" id="ugq-Hc-FeO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="DfR-3W-qnl">
@@ -614,6 +625,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="directionsButton" destination="tLh-vl-Owf" id="5Nz-oM-Cse"/>
+                        <outlet property="locationNameLabel" destination="yZ0-8X-cti" id="RSb-yW-AwW"/>
                         <outlet property="mapDetailView" destination="hPR-7F-CeK" id="Grx-iB-Kai"/>
                         <outlet property="playHereButton" destination="xQj-Qe-MD0" id="qQt-eT-SPo"/>
                         <outlet property="playersTableView" destination="AmS-zS-hX3" id="oGd-XO-mE2"/>
@@ -621,7 +633,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7VM-u9-BPq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1698" y="-1411"/>
+            <point key="canvasLocation" x="519" y="-1546"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="sr9-XO-XDc">
@@ -813,7 +825,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXB-3a-BnV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="114" y="-1086"/>
+            <point key="canvasLocation" x="-747" y="-1546"/>
         </scene>
     </scenes>
     <resources>

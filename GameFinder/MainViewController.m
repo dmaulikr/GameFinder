@@ -37,7 +37,7 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
     
-    [self userImage];
+    [self performSelectorInBackground:@selector(userImage) withObject:nil];
     
     [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading"];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -55,17 +55,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [self disableAddLocationButton];
-
-    
-    
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    
-    
-    
-    
-    
+   
 }
 
 
@@ -564,21 +554,27 @@
 }
 
 -(void)userImage{
-    
-    
-    NSString *facebookImageUrl = [[PFUser currentUser]objectForKey:@"facebookImageUrl"];
-    NSURL *url = [NSURL URLWithString:facebookImageUrl];
-    
+
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     settingsView.layer.cornerRadius = 12.5;
     settingsView.layer.borderColor = [UIColor blackColor].CGColor;
     settingsView.layer.borderWidth = 1.0;
     settingsView.clipsToBounds = YES;
     
-
+    PFFile *userImageFile = [[PFUser currentUser] objectForKey:@"profileImage"];
+    [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
+        if (!error) {
+            
+            UIImage *image = [UIImage imageWithData:imageData];
+            [settingsView setImage:image forState:UIControlStateNormal];
+        }
+    }];
+    
+    [settingsView setImage:[UIImage imageNamed:@"profile"] forState:UIControlStateNormal];
     [settingsView addTarget:self action:@selector(settingsClicked) forControlEvents:UIControlEventTouchUpInside];
     
-    [settingsView sd_setBackgroundImageWithURL:url forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"profile"]];
+    
+    
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     
     [self.navigationItem setLeftBarButtonItem:settingsButton];
