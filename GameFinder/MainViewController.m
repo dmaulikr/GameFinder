@@ -30,14 +30,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-        //NSLog(@"user: %@", [PFUser currentUser]);
+    //NSLog(@"user: %@", [PFUser currentUser]);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushNotificationReceived) name:@"localNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
-    
-    [self performSelectorInBackground:@selector(userImage) withObject:nil];
+    [self performSelectorInBackground:@selector(profileImageButton) withObject:nil];
     
     [SVProgressHUD showImage:[UIImage imageNamed:@"bball2"] status:@"loading"];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -49,13 +48,13 @@
     self.mapView.showsUserLocation = YES;
     self.navigationTitle.title = [NSString stringWithFormat:@"Hey, %@!", [PFUser currentUser].username];
     
-
+    
     
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [self disableAddLocationButton];
-   
+    
 }
 
 
@@ -113,9 +112,9 @@
                 
                 //Need to store the index of this object from the array so you can send this same object to your next screen
                 annotation.index = x;
-     
+                
                 [self.mapView addAnnotation:annotation];
-
+                
             }
             self.gameTimesArray = [[NSArray alloc]initWithArray:objects];
         } else {
@@ -178,10 +177,10 @@
         NSString *type = [object objectForKey:@"type"];
         
         
-
+        
         PFGeoPoint *location = [object objectForKey:@"location"];
         
-                
+        
         
         PlaceDetailViewController *pdc = [segue destinationViewController];
         
@@ -202,7 +201,7 @@
         pdc.locationCoordinate = location;
         
         
-       
+        
         
     }
 }
@@ -228,7 +227,7 @@
 
 #pragma mark- map annotation view
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id )annotation{
-    
+
     static NSString *identifier = @"MyLocation";
     
     if ([annotation isKindOfClass:[MKUserLocation class]])
@@ -251,11 +250,16 @@
             UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
             UIImage *car = [UIImage imageNamed:@"car"];
             UIImageView *carImage = [[UIImageView alloc]initWithImage:car];
-            leftButton.frame = CGRectMake(0,0,25,25);
-            carImage.frame = CGRectMake(0, 0, 25, 25);
-            carImage.layer.backgroundColor = [UIColor greenColor].CGColor;
+            leftButton.frame = CGRectMake(0,0,28,28);
+            leftButton.layer.cornerRadius = 14.0f;
+            leftButton.layer.borderColor = [UIColor colorWithRed:0.4f green:0.99607843f blue:0.4f alpha:1].CGColor;
+            leftButton.layer.borderWidth = 1.0f;
+            leftButton.layer.masksToBounds = YES;
+            leftButton.showsTouchWhenHighlighted = YES;
+            carImage.frame = CGRectMake(0, 0, leftButton.frame.size.width, leftButton.frame.size.height);
             [leftButton addSubview:carImage];
             pinView.leftCalloutAccessoryView = leftButton;
+            
             
             
         } else {
@@ -265,7 +269,6 @@
     }
     return nil;
 }
-
 
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
@@ -280,13 +283,38 @@
     if (control == view.rightCalloutAccessoryView) {
         [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
     }else{
-        CLLocationCoordinate2D placeLocation = CLLocationCoordinate2DMake(ann.coordinate.latitude, ann.coordinate.longitude);
-        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:placeLocation addressDictionary:nil];
-        MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:placemark];
-        item.name = ann.title;
-        [item openInMapsWithLaunchOptions:nil];
-    }
         
+        
+        if  ([[[UIDevice currentDevice] systemVersion] floatValue]< 8.0){
+            UIActionSheet *uas = [[UIActionSheet alloc] initWithTitle:@"Open in Maps?" delegate:self cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:nil];
+            
+            [uas showInView:self.view];
+            
+        } else {
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Open in Maps" message:@"You will be directed from Game Finder." preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *cancel) {
+                
+            }];
+            
+            UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                CLLocationCoordinate2D placeLocation = CLLocationCoordinate2DMake(ann.coordinate.latitude, ann.coordinate.longitude);
+                MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:placeLocation addressDictionary:nil];
+                MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:placemark];
+                item.name = ann.title;
+                [item openInMapsWithLaunchOptions:nil];
+            }];
+            
+            [alert addAction:cancel];
+            [alert addAction:ok];
+            
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+        
+    }
     
 }
 
@@ -343,7 +371,18 @@
     
 }
 
-
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 40.0f;
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    titleView.backgroundColor = [UIColor whiteColor];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(15, 0, titleView.frame.size.width, 40)];
+    label.text = @"Games Near You";
+    label.textColor = [UIColor darkGrayColor];
+    [titleView addSubview:label];
+    return titleView;
+}
 
 #pragma mark- TableView delegate methods
 
@@ -384,73 +423,75 @@
         
         
     } else {
-               
+        
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         
-        NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Do you want to add this location?"];
+        NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Do you want to add a new place?"];
         
         [attributedTitle addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:15.0] range:NSMakeRange(0, attributedTitle.length)];
         [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:.27 green:.27 blue:.27 alpha:1.0] range:NSMakeRange(0, attributedTitle.length)];
         
         [alert setValue:attributedTitle forKey:@"attributedTitle"];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             
             
             
         }];
         
-        
-        UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *yes) {
+        UIAlertAction *addCurrentLocation = [UIAlertAction actionWithTitle:@"Add Current Location" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                        UIAlertController *addLocationNameandType = [UIAlertController alertControllerWithTitle:@"Name and Type" message:@"Please fill out a name and a type of place." preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             
-            UIAlertController *addLocationNameandType = [UIAlertController alertControllerWithTitle:@"Name and Type" message:@"Please fill out a name and a type of place." preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                
-            }];
+                        }];
             
-            UIAlertAction *add = [UIAlertAction actionWithTitle:@"Add Location" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                UITextField *name = addLocationNameandType.textFields.firstObject;
-                UITextField *type = addLocationNameandType.textFields.lastObject;
-                self.locationName = name.text;
-                self.locationType = type.text;
-                if ((name.text.length >= 3 && [type.text isEqualToString:@"Park"]) || [type.text isEqualToString:@"School"] || [type.text isEqualToString:@"Fitness Center"] || [type.text isEqualToString:@"Other"]) {
-                    [self postToParse];
-                    [self disableAddLocationButton];
-                }else{
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please enter all fields" message:@"Place type must be School, Park, Fitness Center or Other " preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                        UIAlertAction *add = [UIAlertAction actionWithTitle:@"Add Location" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                            UITextField *name = addLocationNameandType.textFields.firstObject;
+                            UITextField *type = addLocationNameandType.textFields.lastObject;
+                            self.locationName = name.text;
+                            self.locationType = type.text;
+                            if ((name.text.length >= 3 && [type.text isEqualToString:@"Park"]) || [type.text isEqualToString:@"School"] || [type.text isEqualToString:@"Fitness Center"] || [type.text isEqualToString:@"Other"]) {
+                                [self postToParse];
+                                [self disableAddLocationButton];
+                            }else{
+                                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please enter all fields" message:@"Place type must be School, Park, Fitness Center or Other " preferredStyle:UIAlertControllerStyleAlert];
+                                UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                                    [self presentViewController:addLocationNameandType animated:YES completion:nil];
+                                }];
+            
+                                [alert addAction:ok];
+                                [self presentViewController:alert animated:YES completion:nil];
+                            }
+            
+                        }];
+            
+            
+                        [addLocationNameandType addAction:cancel];
+                        [addLocationNameandType addAction:add];
+            
+                        [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                            textField.textAlignment = NSTextAlignmentCenter;
+                            textField.placeholder = @"Name this location";
+                            textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+            
+                        }];
+            
+            
+                        [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                            textField.textAlignment = NSTextAlignmentCenter;
+                            textField.placeholder = @"Park, School, Fitness Center";
+                            textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+                        }];
                         [self presentViewController:addLocationNameandType animated:YES completion:nil];
-                    }];
-                    
-                    [alert addAction:ok];
-                    [self presentViewController:alert animated:YES completion:nil];
-                }
-                
-            }];
             
-            
-            [addLocationNameandType addAction:cancel];
-            [addLocationNameandType addAction:add];
-            
-            [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-                textField.textAlignment = NSTextAlignmentCenter;
-                textField.placeholder = @"Name this location";
-                textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-                
-            }];
-            
-            
-            [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-                textField.textAlignment = NSTextAlignmentCenter;
-                textField.placeholder = @"Park, School, Fitness Center";
-                textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-            }];
-            [self presentViewController:addLocationNameandType animated:YES completion:nil];
             
         }];
         
-        
+        UIAlertAction *addDifferentLocation = [UIAlertAction actionWithTitle:@"Add Different Location" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self performSegueWithIdentifier:@"addLocation" sender:nil];
+                }];
         [alert addAction:cancel];
-        [alert addAction:yes];
+        [alert addAction:addDifferentLocation];
+        [alert addAction:addCurrentLocation];
         
         [self presentViewController:alert animated:YES completion:nil];
     };
@@ -526,19 +567,19 @@
 
 -(void)disableAddLocationButton {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
-        PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-        [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.09];
-        [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (objects.count >= 1) {
-                
-                self.addGamesButton.enabled = NO;
-                
-            }if (objects.count < 1) {
-                self.addGamesButton.enabled = YES;
-            }
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
+    PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
+    [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.09];
+    [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (objects.count >= 1) {
             
-       
+            self.addGamesButton.enabled = NO;
+            
+        }if (objects.count < 1) {
+            self.addGamesButton.enabled = YES;
+        }
+        
+        
         
         
     }];
@@ -553,28 +594,15 @@
     
 }
 
--(void)userImage{
-
+-(void)profileImageButton{
+    
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     settingsView.layer.cornerRadius = 12.5;
     settingsView.layer.borderColor = [UIColor blackColor].CGColor;
-    settingsView.layer.borderWidth = 1.0;
+    settingsView.layer.borderWidth = 2.0;
     settingsView.clipsToBounds = YES;
-    
-    PFFile *userImageFile = [[PFUser currentUser] objectForKey:@"profileImage"];
-    [userImageFile getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error) {
-        if (!error) {
-            
-            UIImage *image = [UIImage imageWithData:imageData];
-            [settingsView setImage:image forState:UIControlStateNormal];
-        }
-    }];
-    
     [settingsView setImage:[UIImage imageNamed:@"profile"] forState:UIControlStateNormal];
     [settingsView addTarget:self action:@selector(settingsClicked) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     
     [self.navigationItem setLeftBarButtonItem:settingsButton];

@@ -40,6 +40,8 @@
 		274425621AD605F900FF187E /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274425611AD605F800FF187E /* ParseFacebookUtilsV4.framework */; };
 		274425641AD624FF00FF187E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274425631AD624FF00FF187E /* FBSDKCoreKit.framework */; };
 		274425661AD6254400FF187E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274425651AD6254400FF187E /* FBSDKLoginKit.framework */; };
+		274DF5561B4887F700710D08 /* AddLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274DF5551B4887F700710D08 /* AddLocationViewController.m */; };
+		274DF5591B488C9900710D08 /* GooglePlacesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 274DF5581B488C9900710D08 /* GooglePlacesTableViewCell.m */; };
 		275244081AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */; };
 		275F1BC11AE7766800815B69 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F1BC01AE7766800815B69 /* ProfileTableViewController.m */; };
 		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
@@ -127,8 +129,8 @@
 		270495041A9FEA33000D163E /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		270C5B1E1A746F0A0004A632 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		271632B61AE5408D0060BBC9 /* signUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signUpViewController.h; sourceTree = "<group>"; };
-		271632B71AE5408D0060BBC9 /* signUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signUpViewController.m; sourceTree = "<group>"; };
+		271632B61AE5408D0060BBC9 /* signUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = signUpViewController.h; path = ../signUpViewController.h; sourceTree = "<group>"; };
+		271632B71AE5408D0060BBC9 /* signUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = signUpViewController.m; path = ../signUpViewController.m; sourceTree = "<group>"; };
 		271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		271DAFD11AB6AACB0007BFF8 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		2744255D1AD5F0BB00FF187E /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -136,12 +138,16 @@
 		274425611AD605F800FF187E /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		274425631AD624FF00FF187E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		274425651AD6254400FF187E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		274DF5541B4887F700710D08 /* AddLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLocationViewController.h; sourceTree = "<group>"; };
+		274DF5551B4887F700710D08 /* AddLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLocationViewController.m; sourceTree = "<group>"; };
+		274DF5571B488C9900710D08 /* GooglePlacesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlacesTableViewCell.h; sourceTree = "<group>"; };
+		274DF5581B488C9900710D08 /* GooglePlacesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesTableViewCell.m; sourceTree = "<group>"; };
 		275244061AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailCustomTableViewCell.h; sourceTree = "<group>"; };
 		275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailCustomTableViewCell.m; sourceTree = "<group>"; };
 		275BAFD71A9736F000697533 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		275BAFD91A9736F800697533 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
-		275F1BBF1AE7766800815B69 /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableViewController.h; sourceTree = "<group>"; };
-		275F1BC01AE7766800815B69 /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewController.m; sourceTree = "<group>"; };
+		275F1BBF1AE7766800815B69 /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileTableViewController.h; path = ../ProfileTableViewController.h; sourceTree = "<group>"; };
+		275F1BC01AE7766800815B69 /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileTableViewController.m; path = ../ProfileTableViewController.m; sourceTree = "<group>"; };
 		276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = ../PlaceDetailViewController.h; sourceTree = "<group>"; };
@@ -271,11 +277,7 @@
 		279E2AB01A71A77E0080542E = {
 			isa = PBXGroup;
 			children = (
-				275F1BBF1AE7766800815B69 /* ProfileTableViewController.h */,
-				275F1BC01AE7766800815B69 /* ProfileTableViewController.m */,
 				279E2AC61A71A77F0080542E /* Main.storyboard */,
-				271632B61AE5408D0060BBC9 /* signUpViewController.h */,
-				271632B71AE5408D0060BBC9 /* signUpViewController.m */,
 				27FC60741A7B40C6005AE24C /* View Controllers */,
 				27FC60731A7B40AE005AE24C /* Frameworks */,
 				279E2ABB1A71A77F0080542E /* GameFinder */,
@@ -344,6 +346,8 @@
 				27D188581A95C98D00410B32 /* GamePointAnnotation.h */,
 				27048D0E1A8F615D004E84B5 /* CustomTableViewCell.h */,
 				27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */,
+				274DF5571B488C9900710D08 /* GooglePlacesTableViewCell.h */,
+				274DF5581B488C9900710D08 /* GooglePlacesTableViewCell.m */,
 			);
 			name = Classes;
 			path = ..;
@@ -386,6 +390,10 @@
 		27FC60741A7B40C6005AE24C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				271632B61AE5408D0060BBC9 /* signUpViewController.h */,
+				271632B71AE5408D0060BBC9 /* signUpViewController.m */,
+				275F1BBF1AE7766800815B69 /* ProfileTableViewController.h */,
+				275F1BC01AE7766800815B69 /* ProfileTableViewController.m */,
 				27C1602D1A89DC5100746FC9 /* MainViewController.h */,
 				27D188561A95C97300410B32 /* MainViewController.m */,
 				27030C3F1AE8DD260005A1A0 /* LoadingViewController.h */,
@@ -394,6 +402,8 @@
 				276A2E001A7BFF6300BD7600 /* LoginViewController.m */,
 				277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */,
 				277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */,
+				274DF5541B4887F700710D08 /* AddLocationViewController.h */,
+				274DF5551B4887F700710D08 /* AddLocationViewController.m */,
 			);
 			name = "View Controllers";
 			path = GameFinder;
@@ -534,6 +544,7 @@
 				27017AB61ADF2EF200A9DF5F /* UIImage+WebP.m in Sources */,
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
 				27017AB31ADF2EF200A9DF5F /* UIButton+WebCache.m in Sources */,
+				274DF5561B4887F700710D08 /* AddLocationViewController.m in Sources */,
 				27017AB01ADF2EF200A9DF5F /* SDWebImageDownloaderOperation.m in Sources */,
 				27030C411AE8DD260005A1A0 /* LoadingViewController.m in Sources */,
 				27017AAC1ADF2EF200A9DF5F /* SDImageCache.m in Sources */,
@@ -541,6 +552,7 @@
 				27017AAB1ADF2EF200A9DF5F /* NSData+ImageContentType.m in Sources */,
 				27D188571A95C97300410B32 /* MainViewController.m in Sources */,
 				27017AAE1ADF2EF200A9DF5F /* SDWebImageDecoder.m in Sources */,
+				274DF5591B488C9900710D08 /* GooglePlacesTableViewCell.m in Sources */,
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,
 				27017AB71ADF2EF200A9DF5F /* UIImageView+HighlightedWebCache.m in Sources */,
 				271BBE621ACD2D6900BEC46C /* SVIndefiniteAnimatedView.m in Sources */,
@@ -689,6 +701,7 @@
 					"$(PROJECT_DIR)/SVProgressHUD",
 				);
 				INFOPLIST_FILE = GameFinder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GameFinder;
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -708,6 +721,7 @@
 					"$(PROJECT_DIR)/SVProgressHUD",
 				);
 				INFOPLIST_FILE = GameFinder/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = GameFinder;
 				VALID_ARCHS = "arm64 armv7 armv7s";

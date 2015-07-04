@@ -38,12 +38,12 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.logOutButton.alpha = 0;
-    self.profileImageView.alpha = 0;
+   
 }
 -(void)viewDidAppear:(BOOL)animated{
     [UIView animateWithDuration:1 animations:^{
         self.logOutButton.alpha = 1;
-        self.profileImageView.alpha = 1;
+        
     }];
 }
 
@@ -124,8 +124,9 @@
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         UIImagePickerController *picker = [[UIImagePickerController alloc]init];
         picker.delegate = self;
-        picker.allowsEditing = NO;
+        picker.allowsEditing = YES;
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
         
         [self presentViewController:picker animated:YES completion:NULL];
         
@@ -146,6 +147,7 @@
 
 -(void)chooseFromPhotoLibrary{
     UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.allowsEditing = YES;
     picker.delegate = self;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
@@ -155,13 +157,17 @@
 
 // Image picker controller delegates
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.profileImageView.image = chosenImage;
     NSData *imageData = UIImagePNGRepresentation(chosenImage);
     PFFile *imageFile = [PFFile fileWithData:imageData];
     [[PFUser currentUser]setObject:imageFile forKey:@"profileImage"];
-    [[PFUser currentUser]saveInBackground];
-    UIImageWriteToSavedPhotosAlbum (chosenImage, nil, nil, nil);
+    [[PFUser currentUser]saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+        if (success) {
+            UIImageWriteToSavedPhotosAlbum (chosenImage, nil, nil, nil);
+        }
+    }];
+    
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
 

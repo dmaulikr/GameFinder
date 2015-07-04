@@ -31,13 +31,13 @@
     
     self.locationNameLabel.text = self.locationNameString;
     self.locationNameLabel.textColor = [UIColor whiteColor];
-    //self.locationNameLabel.font = [UIFont fontWithName:@"Helvetica" size:20.0];
     self.locationNameLabel.alpha = 0;
     [UIView animateWithDuration:3 animations:^{
         self.locationNameLabel.alpha = 1;
-        self.locationNameLabel.font = [UIFont fontWithName:@"Helvetica" size:40.0];
+        self.locationNameLabel.font = [UIFont fontWithName:@"Helvetica" size:20.0f];
+        self.locationNameLabel.numberOfLines = 1;
+        self.locationNameLabel.adjustsFontSizeToFitWidth = YES;
     }];
-    self.directionsButton.layer.cornerRadius = 30;
     [self performSelector:@selector(isNear)];
     [self performSelector:@selector(retrievePlayers)];
     [self.mapDetailView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(self.locationCoordinate.latitude, self.locationCoordinate.longitude), MKCoordinateSpanMake(0.0004, 0.0004))];
@@ -81,38 +81,6 @@
     
 }
 
-- (IBAction)openMaps:(id)sender {
-    
-    if  ([[[UIDevice currentDevice] systemVersion] floatValue]< 8.0){
-        UIActionSheet *uas = [[UIActionSheet alloc] initWithTitle:@"Open in Maps?" delegate:self cancelButtonTitle:@"Cancel"
-            destructiveButtonTitle:nil
-            otherButtonTitles:nil];
-        
-        [uas showInView:self.view];
-        
-    } else {
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Open in Maps" message:@"You will be directed from Game Finder." preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *cancel) {
-            
-        }];
-
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            CLLocationCoordinate2D placeLocation = CLLocationCoordinate2DMake(self.locationCoordinate.latitude, self.locationCoordinate.longitude);
-            MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:placeLocation addressDictionary:nil];
-            MKMapItem *item = [[MKMapItem alloc] initWithPlacemark:placemark];
-            item.name = self.locationNameString;
-            [item openInMapsWithLaunchOptions:nil];
-        }];
-    
-        [alert addAction:cancel];
-        [alert addAction:ok];
-        
-        [self presentViewController:alert animated:YES completion:nil];
-    }
-    
-}
 
 - (IBAction)shareLocation:(id)sender {
    
