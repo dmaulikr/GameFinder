@@ -18,8 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self performSelector:@selector(queryParse)];
-    
-    
+  
     self.headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"profile-bg"]];
     // Style profile image view
     self.profileImageView.layer.cornerRadius = 50;
@@ -47,7 +46,9 @@
     }];
 }
 
-
+-(BOOL)prefersStatusBarHidden{
+    return YES;
+}
 
 #pragma mark - Table view data source
 
@@ -82,7 +83,6 @@
         }
     }];
 
-    self.profileImageView.image = [UIImage imageNamed:@"hooper"];
     self.usernameCell.detailTextLabel.text = username;
     self.emailCell.detailTextLabel.text = email;
     self.birthdayTableViewCell.detailTextLabel.text = birthday;
@@ -114,8 +114,10 @@
     UIAlertAction *chooseFromLibraray = [UIAlertAction actionWithTitle:@"Choose from photo library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self chooseFromPhotoLibrary];
     }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     [options addAction:chooseFromLibraray];
     [options addAction:openCameraApp];
+    [options addAction:cancel];
     [self presentViewController:options animated:YES completion:nil];
 }
 
@@ -176,6 +178,10 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }
+- (IBAction)handleCloseButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     

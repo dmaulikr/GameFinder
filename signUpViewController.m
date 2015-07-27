@@ -69,7 +69,7 @@
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             
-            [self performSegueWithIdentifier:@"logInAfterSignUp" sender:nil];
+            [self performSegueWithIdentifier:@"LogInAfterSignUp" sender:nil];
             
         } else {
             NSString *errorString = [error userInfo][@"error"];

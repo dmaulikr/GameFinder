@@ -2,18 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "1425631283_Basketball-32.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "noun_basketball-hoop@2x.png"
+      "filename" : "noun_add-picture@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "noun_basketball-hoop_66548.png"
+      "filename" : "noun_add-picture_104062.png"
     }
   ],
   "info" : {

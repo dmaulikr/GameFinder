@@ -40,11 +40,13 @@
 		274425621AD605F900FF187E /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274425611AD605F800FF187E /* ParseFacebookUtilsV4.framework */; };
 		274425641AD624FF00FF187E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274425631AD624FF00FF187E /* FBSDKCoreKit.framework */; };
 		274425661AD6254400FF187E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274425651AD6254400FF187E /* FBSDKLoginKit.framework */; };
-		274DF5561B4887F700710D08 /* AddLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274DF5551B4887F700710D08 /* AddLocationViewController.m */; };
-		274DF5591B488C9900710D08 /* GooglePlacesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 274DF5581B488C9900710D08 /* GooglePlacesTableViewCell.m */; };
 		275244081AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */; };
 		275F1BC11AE7766800815B69 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F1BC01AE7766800815B69 /* ProfileTableViewController.m */; };
+		27618D1D1B655FA800ED4931 /* AddLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27618D1C1B655FA800ED4931 /* AddLocationTableViewController.m */; };
+		27618D201B669D3200ED4931 /* GameLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27618D1F1B669D3200ED4931 /* GameLocationTableViewController.m */; };
+		27618D231B66ABF100ED4931 /* GameLocationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27618D221B66ABF100ED4931 /* GameLocationTableViewCell.m */; };
 		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
+		2770EBE71B66EAAD00CE3F1D /* AddLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2770EBE61B66EAAD00CE3F1D /* AddLocationViewController.m */; };
 		277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
 		279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC11A71A77F0080542E /* AppDelegate.m */; };
@@ -138,18 +140,22 @@
 		274425611AD605F800FF187E /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		274425631AD624FF00FF187E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		274425651AD6254400FF187E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		274DF5541B4887F700710D08 /* AddLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLocationViewController.h; sourceTree = "<group>"; };
-		274DF5551B4887F700710D08 /* AddLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLocationViewController.m; sourceTree = "<group>"; };
-		274DF5571B488C9900710D08 /* GooglePlacesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlacesTableViewCell.h; sourceTree = "<group>"; };
-		274DF5581B488C9900710D08 /* GooglePlacesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlacesTableViewCell.m; sourceTree = "<group>"; };
 		275244061AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailCustomTableViewCell.h; sourceTree = "<group>"; };
 		275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailCustomTableViewCell.m; sourceTree = "<group>"; };
 		275BAFD71A9736F000697533 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		275BAFD91A9736F800697533 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		275F1BBF1AE7766800815B69 /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileTableViewController.h; path = ../ProfileTableViewController.h; sourceTree = "<group>"; };
 		275F1BC01AE7766800815B69 /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileTableViewController.m; path = ../ProfileTableViewController.m; sourceTree = "<group>"; };
+		27618D1B1B655FA800ED4931 /* AddLocationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLocationTableViewController.h; sourceTree = "<group>"; };
+		27618D1C1B655FA800ED4931 /* AddLocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLocationTableViewController.m; sourceTree = "<group>"; };
+		27618D1E1B669D3200ED4931 /* GameLocationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLocationTableViewController.h; sourceTree = "<group>"; };
+		27618D1F1B669D3200ED4931 /* GameLocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLocationTableViewController.m; sourceTree = "<group>"; };
+		27618D211B66ABF100ED4931 /* GameLocationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLocationTableViewCell.h; sourceTree = "<group>"; };
+		27618D221B66ABF100ED4931 /* GameLocationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLocationTableViewCell.m; sourceTree = "<group>"; };
 		276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		2770EBE51B66EAAD00CE3F1D /* AddLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLocationViewController.h; sourceTree = "<group>"; };
+		2770EBE61B66EAAD00CE3F1D /* AddLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLocationViewController.m; sourceTree = "<group>"; };
 		277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = ../PlaceDetailViewController.h; sourceTree = "<group>"; };
 		277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceDetailViewController.m; path = ../PlaceDetailViewController.m; sourceTree = "<group>"; };
 		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -339,6 +345,8 @@
 			isa = PBXGroup;
 			children = (
 				275244061AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.h */,
+				27618D211B66ABF100ED4931 /* GameLocationTableViewCell.h */,
+				27618D221B66ABF100ED4931 /* GameLocationTableViewCell.m */,
 				275244071AA28AC00065DB10 /* PlaceDetailCustomTableViewCell.m */,
 				270495031A9FEA33000D163E /* LocationManager.h */,
 				270495041A9FEA33000D163E /* LocationManager.m */,
@@ -346,8 +354,6 @@
 				27D188581A95C98D00410B32 /* GamePointAnnotation.h */,
 				27048D0E1A8F615D004E84B5 /* CustomTableViewCell.h */,
 				27048D0F1A8F615D004E84B5 /* CustomTableViewCell.m */,
-				274DF5571B488C9900710D08 /* GooglePlacesTableViewCell.h */,
-				274DF5581B488C9900710D08 /* GooglePlacesTableViewCell.m */,
 			);
 			name = Classes;
 			path = ..;
@@ -402,8 +408,12 @@
 				276A2E001A7BFF6300BD7600 /* LoginViewController.m */,
 				277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */,
 				277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */,
-				274DF5541B4887F700710D08 /* AddLocationViewController.h */,
-				274DF5551B4887F700710D08 /* AddLocationViewController.m */,
+				27618D1B1B655FA800ED4931 /* AddLocationTableViewController.h */,
+				27618D1C1B655FA800ED4931 /* AddLocationTableViewController.m */,
+				27618D1E1B669D3200ED4931 /* GameLocationTableViewController.h */,
+				27618D1F1B669D3200ED4931 /* GameLocationTableViewController.m */,
+				2770EBE51B66EAAD00CE3F1D /* AddLocationViewController.h */,
+				2770EBE61B66EAAD00CE3F1D /* AddLocationViewController.m */,
 			);
 			name = "View Controllers";
 			path = GameFinder;
@@ -539,20 +549,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				271632B81AE5408D0060BBC9 /* signUpViewController.m in Sources */,
+				27618D231B66ABF100ED4931 /* GameLocationTableViewCell.m in Sources */,
 				27D1885A1A95C99900410B32 /* GamePointAnnotation.m in Sources */,
+				27618D201B669D3200ED4931 /* GameLocationTableViewController.m in Sources */,
 				276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */,
 				27017AB61ADF2EF200A9DF5F /* UIImage+WebP.m in Sources */,
 				279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */,
 				27017AB31ADF2EF200A9DF5F /* UIButton+WebCache.m in Sources */,
-				274DF5561B4887F700710D08 /* AddLocationViewController.m in Sources */,
 				27017AB01ADF2EF200A9DF5F /* SDWebImageDownloaderOperation.m in Sources */,
 				27030C411AE8DD260005A1A0 /* LoadingViewController.m in Sources */,
 				27017AAC1ADF2EF200A9DF5F /* SDImageCache.m in Sources */,
+				2770EBE71B66EAAD00CE3F1D /* AddLocationViewController.m in Sources */,
 				275F1BC11AE7766800815B69 /* ProfileTableViewController.m in Sources */,
 				27017AAB1ADF2EF200A9DF5F /* NSData+ImageContentType.m in Sources */,
 				27D188571A95C97300410B32 /* MainViewController.m in Sources */,
 				27017AAE1ADF2EF200A9DF5F /* SDWebImageDecoder.m in Sources */,
-				274DF5591B488C9900710D08 /* GooglePlacesTableViewCell.m in Sources */,
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,
 				27017AB71ADF2EF200A9DF5F /* UIImageView+HighlightedWebCache.m in Sources */,
 				271BBE621ACD2D6900BEC46C /* SVIndefiniteAnimatedView.m in Sources */,
@@ -570,6 +581,7 @@
 				27017AB11ADF2EF200A9DF5F /* SDWebImageManager.m in Sources */,
 				27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,
+				27618D1D1B655FA800ED4931 /* AddLocationTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,21 +7,11 @@
 //
 
 #import "MainViewController.h"
-
-
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
 #import "AppDelegate.h"
 
-
-
-
-
-
-
 @interface MainViewController ()
-
-
 
 @end
 
@@ -154,12 +144,12 @@
 #pragma mark - segue methods
 -(void)showPlaceDetail:(NSDictionary *)object {
     
-    [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
+    [self performSegueWithIdentifier:@"ShowPlaceDetail" sender:object];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([[segue identifier] isEqualToString:@"showPlaceDetail"]) {
+    if ([[segue identifier] isEqualToString:@"ShowPlaceDetail"]) {
         NSDictionary *object = (NSDictionary *)sender;
         
         
@@ -281,7 +271,7 @@
     
     //Pass the object
     if (control == view.rightCalloutAccessoryView) {
-        [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
+        [self performSegueWithIdentifier:@"ShowPlaceDetail" sender:object];
     }else{
         
         
@@ -393,7 +383,7 @@
     NSDictionary *object = [self.gameTimesArray objectAtIndex:indexPath.row];
     
     //Send that object along to the segue
-    [self performSegueWithIdentifier:@"showPlaceDetail" sender:object];
+    [self performSegueWithIdentifier:@"ShowPlaceDetail" sender:object];
     
     tableView.scrollsToTop = NO;
     
@@ -412,157 +402,7 @@
     [self disableAddLocationButton];
 }
 
-- (IBAction)addLocation:(id)sender {
-    
-    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0) {
-        
-        UIAlertView *uav = [[UIAlertView alloc] initWithTitle:@"Alert with iOS 7" message:@"" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
-        
-        [uav show];
-        
-        
-    } else {
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        
-        NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:@"Do you want to add a new place?"];
-        
-        [attributedTitle addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:15.0] range:NSMakeRange(0, attributedTitle.length)];
-        [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:.27 green:.27 blue:.27 alpha:1.0] range:NSMakeRange(0, attributedTitle.length)];
-        
-        [alert setValue:attributedTitle forKey:@"attributedTitle"];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            
-            
-            
-        }];
-        
-        UIAlertAction *addCurrentLocation = [UIAlertAction actionWithTitle:@"Add Current Location" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                        UIAlertController *addLocationNameandType = [UIAlertController alertControllerWithTitle:@"Name and Type" message:@"Please fill out a name and a type of place." preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            
-                        }];
-            
-                        UIAlertAction *add = [UIAlertAction actionWithTitle:@"Add Location" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                            UITextField *name = addLocationNameandType.textFields.firstObject;
-                            UITextField *type = addLocationNameandType.textFields.lastObject;
-                            self.locationName = name.text;
-                            self.locationType = type.text;
-                            if ((name.text.length >= 3 && [type.text isEqualToString:@"Park"]) || [type.text isEqualToString:@"School"] || [type.text isEqualToString:@"Fitness Center"] || [type.text isEqualToString:@"Other"]) {
-                                [self postToParse];
-                                [self disableAddLocationButton];
-                            }else{
-                                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please enter all fields" message:@"Place type must be School, Park, Fitness Center or Other " preferredStyle:UIAlertControllerStyleAlert];
-                                UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                                    [self presentViewController:addLocationNameandType animated:YES completion:nil];
-                                }];
-            
-                                [alert addAction:ok];
-                                [self presentViewController:alert animated:YES completion:nil];
-                            }
-            
-                        }];
-            
-            
-                        [addLocationNameandType addAction:cancel];
-                        [addLocationNameandType addAction:add];
-            
-                        [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-                            textField.textAlignment = NSTextAlignmentCenter;
-                            textField.placeholder = @"Name this location";
-                            textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-            
-                        }];
-            
-            
-                        [addLocationNameandType addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-                            textField.textAlignment = NSTextAlignmentCenter;
-                            textField.placeholder = @"Park, School, Fitness Center";
-                            textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-                        }];
-                        [self presentViewController:addLocationNameandType animated:YES completion:nil];
-            
-            
-        }];
-        
-        UIAlertAction *addDifferentLocation = [UIAlertAction actionWithTitle:@"Add Different Location" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [self performSegueWithIdentifier:@"addLocation" sender:nil];
-                }];
-        [alert addAction:cancel];
-        [alert addAction:addDifferentLocation];
-        [alert addAction:addCurrentLocation];
-        
-        [self presentViewController:alert animated:YES completion:nil];
-    };
-    
-    
-}
-- (void)postToParse {
-    
-    CLLocation *currentLocation = [[CLLocation alloc]initWithLatitude:self.mapView.userLocation.coordinate.latitude longitude:self.mapView.userLocation.coordinate.longitude];
-    NSLog(@"currentLocation = %@", currentLocation);
-    
-    
-    CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
-    [geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-        CLPlacemark *place = [placemarks lastObject];
-        
-        [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error) {
-            
-            PFObject *postObject = [PFObject objectWithClassName:@"Games"];
-            
-            
-            postObject[@"name"] = self.locationName;
-            postObject[@"location"] = geoPoint;
-            postObject[@"address"] = place.name;
-            postObject[@"city"] = place.locality;
-            postObject[@"state"] = place.administrativeArea;
-            postObject[@"zip"] = place.postalCode;
-            postObject[@"type"] = self.locationType;
-            
-            
-            
-            [postObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (error) {  // Failed to save, show an alert view with the error message
-                    
-                    
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to save location" message:@"Location already exists. Check in instead." preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    
-                    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                        NSLog(@"AlertView Cancelled");
-                        
-                    }];
-                    
-                    
-                    [alert addAction:cancel];
-                    [self presentViewController:alert animated:YES completion:nil];
-                    
-                    
-                    return;
-                }
-                if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
-                    
-                    [SVProgressHUD showSuccessWithStatus:@"Saved!"];
-                    [self retrieveFromParse];
-                    [self disableAddLocationButton];
-                    
-                    
-                    
-                } else {
-                    NSLog(@"Failed to save.");
-                }
-                
-                
-            }];
-            
-            
-        }];
-        
-    }];
-    
-}
+
 
 
 -(void)disableAddLocationButton {
@@ -590,7 +430,12 @@
 
 
 -(void)hideKeyboard{
+    [self.view endEditing:YES];
     
+}
+
+- (IBAction)addGameButton:(id)sender {
+    [self performSegueWithIdentifier:@"AddLocation" sender:nil];
     
 }
 
