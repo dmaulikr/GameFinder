@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddLocationViewController : UIViewController
+@interface AddLocationViewController : UIViewController <UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UITextField *locationNameTextField;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+
+@property (weak, nonatomic) IBOutlet UISwitch *outdoorSwitch;
+
+@property (weak, nonatomic) IBOutlet UISwitch *lightSwitch;
+
+@property (weak, nonatomic) IBOutlet UISwitch *coveredSwitch;
+
+@property (weak, nonatomic) IBOutlet UISwitch *publicSwitch;
+
+@property (nonatomic) BOOL courtIsOutside;
+@property (nonatomic) BOOL courtHasLights;
+@property (nonatomic) BOOL courtIsCovered;
+@property (nonatomic) BOOL courtIsOpenToPublic;
+@property (nonatomic) BOOL didPressSave;
 @end

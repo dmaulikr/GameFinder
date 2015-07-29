@@ -21,6 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshView) name:@"addedLocation" object:nil];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
@@ -31,6 +35,9 @@
     
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [self disableAddLocationButton];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -276,5 +283,53 @@
 -(void)settingsClicked{
     [self performSegueWithIdentifier:@"SettingsClicked" sender:nil];
 }
+
+//Check for location to prevent duplicate locations being added to db
+-(void)disableAddLocationButton {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
+    PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
+    [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.09];
+    [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (objects.count >= 1) {
+            
+            self.addGamesButton.enabled = NO;
+            
+        }if (objects.count < 1) {
+            self.addGamesButton.enabled = YES;
+        }
+        
+        
+        
+        
+    }];
+    
+    
+    
+}
+
+// Location Manager delegates
+-(void)updateLocation:(NSNotification *)notif{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    
+    self.mapView.centerCoordinate = CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
+    [self disableAddLocationButton];
+}
+
+-(void)initialLocation:(NSNotification *)notif{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
+    
+    
+    [self disableAddLocationButton];
+    
+}
+
+-(void)refreshView{
+    [self queryParseForGameLocations];
+}
+
 
 @end
