@@ -197,14 +197,14 @@
                             <rect key="frame" x="0.0" y="0.0" width="600" height="255"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXO-Qj-Yxv">
+                                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.94999999999999996" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXO-Qj-Yxv">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="255"/>
                                     <color key="tintColor" red="0.40000000000000002" green="0.99607843139999996" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <connections>
                                         <outlet property="delegate" destination="SKU-Hj-Vkj" id="Q52-Zf-i7E"/>
                                     </connections>
                                 </mapView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AW-Rq-tqY">
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3AW-Rq-tqY" userLabel="contractmap">
                                     <rect key="frame" x="8" y="8" width="30" height="30"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" image="contract">
@@ -214,17 +214,28 @@
                                         <action selector="handleContractMapButtonPressed:" destination="SKU-Hj-Vkj" eventType="touchUpInside" id="K6M-pP-wCM"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cwo-UV-TnF" userLabel="centermap">
+                                    <rect key="frame" x="554" y="209" width="38" height="38"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="38" id="kPz-AY-U8M"/>
+                                        <constraint firstAttribute="height" constant="38" id="z25-tD-KW5"/>
+                                    </constraints>
+                                    <state key="normal" image="center-map">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="handleCenterMapButtonPressed:" destination="SKU-Hj-Vkj" eventType="touchUpInside" id="mCS-Jw-Efe"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="bXO-Qj-Yxv" secondAttribute="trailing" id="70M-0E-vjg"/>
-                                <constraint firstItem="3AW-Rq-tqY" firstAttribute="leading" secondItem="UPP-b4-40U" secondAttribute="leading" constant="8" id="CyH-fz-kOu"/>
-                                <constraint firstAttribute="bottom" secondItem="bXO-Qj-Yxv" secondAttribute="bottom" id="EAb-Cb-Mho"/>
-                                <constraint firstAttribute="centerX" secondItem="bXO-Qj-Yxv" secondAttribute="centerX" id="m5I-3d-8rd"/>
-                                <constraint firstItem="bXO-Qj-Yxv" firstAttribute="top" secondItem="UPP-b4-40U" secondAttribute="top" id="phA-4e-S1b"/>
-                                <constraint firstItem="3AW-Rq-tqY" firstAttribute="top" secondItem="UPP-b4-40U" secondAttribute="top" constant="8" id="qOW-zR-TF9"/>
-                                <constraint firstAttribute="centerY" secondItem="bXO-Qj-Yxv" secondAttribute="centerY" id="zel-U4-rSZ"/>
-                                <constraint firstItem="bXO-Qj-Yxv" firstAttribute="leading" secondItem="UPP-b4-40U" secondAttribute="leading" id="zkq-cm-Wqy"/>
+                                <constraint firstItem="bXO-Qj-Yxv" firstAttribute="trailing" secondItem="Cwo-UV-TnF" secondAttribute="trailing" constant="8" id="GDS-7C-vav"/>
+                                <constraint firstAttribute="trailing" secondItem="bXO-Qj-Yxv" secondAttribute="trailing" id="O7V-PG-QuO"/>
+                                <constraint firstItem="bXO-Qj-Yxv" firstAttribute="top" secondItem="UPP-b4-40U" secondAttribute="top" id="gKH-0M-fQh"/>
+                                <constraint firstAttribute="bottom" secondItem="bXO-Qj-Yxv" secondAttribute="bottom" id="sAz-9C-zx4"/>
+                                <constraint firstItem="bXO-Qj-Yxv" firstAttribute="bottom" secondItem="Cwo-UV-TnF" secondAttribute="bottom" constant="8" id="vBG-V4-kFo"/>
+                                <constraint firstItem="bXO-Qj-Yxv" firstAttribute="leading" secondItem="UPP-b4-40U" secondAttribute="leading" id="x5U-V3-d3o"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -269,6 +280,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="addGamesButton" destination="tDa-n5-WHy" id="WBt-sB-3BE"/>
+                        <outlet property="centerMapButton" destination="Cwo-UV-TnF" id="XoS-RB-utk"/>
                         <outlet property="contractMapButton" destination="3AW-Rq-tqY" id="8u3-Gu-kMr"/>
                         <outlet property="mapView" destination="bXO-Qj-Yxv" id="iPj-S5-VAT"/>
                         <outlet property="upperView" destination="UPP-b4-40U" id="IVn-hd-UjI"/>
@@ -1047,6 +1059,7 @@
     <resources>
         <image name="add-picture" width="75" height="75"/>
         <image name="bball" width="128" height="128"/>
+        <image name="center-map" width="38" height="38"/>
         <image name="contract" width="30" height="30"/>
         <image name="player" width="128" height="128"/>
         <image name="x" width="37" height="37"/>

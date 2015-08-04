@@ -8,11 +8,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "center map.png"
+      "filename" : "centermap@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "centermap.png"
     }
   ],
   "info" : {

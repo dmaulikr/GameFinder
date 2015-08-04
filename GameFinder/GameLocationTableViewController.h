@@ -14,6 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGamesButton;
 @property (weak, nonatomic) IBOutlet UIView *upperView;
 @property (weak, nonatomic) IBOutlet UIButton *contractMapButton;
-
+@property (weak, nonatomic) IBOutlet UIButton *centerMapButton;
 @property NSArray *gameLocationsArray;
 @end
