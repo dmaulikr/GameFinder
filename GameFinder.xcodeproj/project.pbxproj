@@ -54,7 +54,6 @@
 		279E2ACA1A71A77F0080542E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AC91A71A77F0080542E /* Images.xcassets */; };
 		279E2ACD1A71A77F0080542E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E2ACB1A71A77F0080542E /* LaunchScreen.xib */; };
 		279E2AD91A71A7800080542E /* GameFinderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AD81A71A7800080542E /* GameFinderTests.m */; };
-		27D188571A95C97300410B32 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D188561A95C97300410B32 /* MainViewController.m */; };
 		27D1885A1A95C99900410B32 /* GamePointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D188591A95C99900410B32 /* GamePointAnnotation.m */; };
 		27E395101AE18EA8000E82FA /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27E3950E1AE18EA8000E82FA /* Crashlytics.framework */; };
 		27E395111AE18EA8000E82FA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27E3950F1AE18EA8000E82FA /* Fabric.framework */; };
@@ -169,8 +168,6 @@
 		279E2AD21A71A7800080542E /* GameFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2AD71A71A7800080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2AD81A71A7800080542E /* GameFinderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GameFinderTests.m; sourceTree = "<group>"; };
-		27C1602D1A89DC5100746FC9 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
-		27D188561A95C97300410B32 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		27D188581A95C98D00410B32 /* GamePointAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GamePointAnnotation.h; path = GameFinder/GamePointAnnotation.h; sourceTree = "<group>"; };
 		27D188591A95C99900410B32 /* GamePointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePointAnnotation.m; path = GameFinder/GamePointAnnotation.m; sourceTree = "<group>"; };
 		27E3950E1AE18EA8000E82FA /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -400,8 +397,6 @@
 				271632B71AE5408D0060BBC9 /* signUpViewController.m */,
 				275F1BBF1AE7766800815B69 /* ProfileTableViewController.h */,
 				275F1BC01AE7766800815B69 /* ProfileTableViewController.m */,
-				27C1602D1A89DC5100746FC9 /* MainViewController.h */,
-				27D188561A95C97300410B32 /* MainViewController.m */,
 				27030C3F1AE8DD260005A1A0 /* LoadingViewController.h */,
 				27030C401AE8DD260005A1A0 /* LoadingViewController.m */,
 				276A2DFF1A7BFF6300BD7600 /* LoginViewController.h */,
@@ -562,7 +557,6 @@
 				2770EBE71B66EAAD00CE3F1D /* AddLocationViewController.m in Sources */,
 				275F1BC11AE7766800815B69 /* ProfileTableViewController.m in Sources */,
 				27017AAB1ADF2EF200A9DF5F /* NSData+ImageContentType.m in Sources */,
-				27D188571A95C97300410B32 /* MainViewController.m in Sources */,
 				27017AAE1ADF2EF200A9DF5F /* SDWebImageDecoder.m in Sources */,
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,
 				27017AB71ADF2EF200A9DF5F /* UIImageView+HighlightedWebCache.m in Sources */,

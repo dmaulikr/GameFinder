@@ -21,15 +21,20 @@
     //Show keyboard when view first appears
     [self.locationNameTextField becomeFirstResponder];
     self.didPressSave = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
-    tap.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:tap];
-
-    
+        //Style and set up image view for user adding picture
+    self.addLocationPictureImageView.layer.cornerRadius = 4.0f;
+    self.addLocationPictureImageView.clipsToBounds = YES;
+    self.addLocationPictureImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapImageView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openCamera)];
+    tapImageView.numberOfTapsRequired = 1.0f;
+    [self.addLocationPictureImageView addGestureRecognizer:tapImageView];
     
 
 }
 
+-(BOOL)prefersStatusBarHidden{
+    return YES;
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     self.view.superview.bounds = CGRectMake(0, 0, self.view.frame.size.width-10, self.view.frame.size.height-10);
@@ -45,6 +50,12 @@
     }
     
    #pragma mark UITextField delegates
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
+    tap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tap];
+}
+
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     self.saveButton.hidden = NO;
     self.didPressSave = NO;
@@ -107,8 +118,13 @@
                 location[@"openToPublic"] = @NO;
             }
             if (self.locationNameTextField.text.length >= 1) {
+            
+                NSData *data = UIImagePNGRepresentation(self.addLocationPictureImageView.image);
+                PFFile *file = [PFFile fileWithData:data];
+                [location setObject:file forKey:@"locationImage"];
                 
             [location saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                [SVProgressHUD showWithStatus:@"Saving location..."];
                 if (error) {  // Failed to save, show an alert view with the error message
                     
                     
@@ -177,6 +193,43 @@
          }];
 
 }
+
+#pragma mark -camera methods
+-(void)openCamera{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+        
+        [self presentViewController:picker animated:YES completion:NULL];
+        
+    } else {
+        
+        UIAlertController *noCamera = [UIAlertController alertControllerWithTitle:@"Alert!" message:@"Must have a camera." preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        }];
+        
+        [noCamera addAction:action];
+        
+        [self presentViewController:noCamera animated:YES completion:nil];
+    }
+
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    self.addLocationPictureImageView.image = chosenImage;
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+}
+
 
 #pragma mark -UISwitch methods
 - (IBAction)outdoorSwitch:(id)sender {

@@ -21,6 +21,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.contractMapButton.hidden = YES;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
@@ -33,7 +35,12 @@
     [self.mapView removeAnnotations:self.mapView.annotations];
     [self queryParseForGameLocations];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(makeMapFullScreen)];
+    tap.numberOfTapsRequired = 1.0f;
+    [self.mapView addGestureRecognizer:tap];
+    
 }
+
 
 -(void)viewDidAppear:(BOOL)animated{
     [self disableAddLocationButton];
@@ -325,6 +332,16 @@
     
     [self disableAddLocationButton];
     
+}
+
+-(void)makeMapFullScreen{
+    self.upperView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    self.contractMapButton.hidden = NO;
+
+}
+- (IBAction)handleContractMapButtonPressed:(id)sender {
+    self.upperView.frame = CGRectMake(0, 0, self.view.frame.size.width, 255);
+    self.contractMapButton.hidden = YES;
 }
 
 -(void)refreshView{

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddLocationViewController : UIViewController <UITextFieldDelegate>
+@interface AddLocationViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *locationNameTextField;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
@@ -20,6 +20,10 @@
 @property (weak, nonatomic) IBOutlet UISwitch *coveredSwitch;
 
 @property (weak, nonatomic) IBOutlet UISwitch *publicSwitch;
+
+@property (weak, nonatomic) IBOutlet UIImageView *addLocationPictureImageView;
+@property (strong, nonatomic) IBOutlet UIView *backgroundView;
+
 
 @property (nonatomic) BOOL courtIsOutside;
 @property (nonatomic) BOOL courtHasLights;

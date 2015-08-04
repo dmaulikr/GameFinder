@@ -9,6 +9,7 @@
 #import "ProfileTableViewController.h"
 #import <Parse/Parse.h>
 #import "SDWebImage/UIImageView+WebCache.h"
+#import "SVProgressHUD.h"
 @interface ProfileTableViewController ()
 
 @end
@@ -17,31 +18,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self performSelector:@selector(queryParse)];
-  
-    self.headerView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"profile-bg"]];
+    
+    
+   
+    
+    self.navigationController.navigationBar.hidden = YES;
+    
     // Style profile image view
     self.profileImageView.layer.cornerRadius = 50;
     self.profileImageView.clipsToBounds = YES;
     self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.profileImageView.layer.borderWidth = 3;
     
-    // Set navigation title
-    self.navigationItem.title = @"Profile";
+
+    // Style header view in order to set it apart from table view
+    self.headerView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.headerView.layer.borderWidth = 2.0f;
     
     self.profileImageView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageOptions)];
     tap.numberOfTapsRequired = 1.0f;
+    self.saveEmailButton.hidden = YES;
+    self.saveUserNameButton.hidden = YES;
+    
     
     [self.profileImageView addGestureRecognizer:tap];
 }
 -(void)viewWillAppear:(BOOL)animated{
-    self.logOutButton.alpha = 0;
+    [self performSelector:@selector(queryParse)];
+
+    self.usernameLabel.text = self.usernameTextField.text;
+    
    
 }
 -(void)viewDidAppear:(BOOL)animated{
     [UIView animateWithDuration:1 animations:^{
-        self.logOutButton.alpha = 1;
+        [self.logOutButton setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"Futura-CondensedMedium" size:23.0]} forState:UIControlStateNormal];
+
+        self.navigationController.toolbar.barTintColor = [UIColor colorWithRed:0.60f green:0.60f blue:0.60f alpha:1.0f];
+        self.navigationController.toolbarHidden = NO;
         
     }];
 }
@@ -49,6 +64,68 @@
 -(BOOL)prefersStatusBarHidden{
     return YES;
 }
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField == self.usernameTextField) {
+        self.saveUserNameButton.hidden = NO;
+        self.saveEmailButton.hidden = YES;
+    }else if (textField == self.emailTextField){
+        self.saveEmailButton.hidden = NO;
+        self.saveUserNameButton.hidden = YES;
+    }
+    return YES;
+}
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    }
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self.view endEditing:YES];
+    return YES;
+}
+
+#pragma mark - save button methds
+
+- (IBAction)handleSaveUsernameButtonPressed:(id)sender {
+    if (self.usernameTextField.text.length >= 1) {
+        [PFUser currentUser].username = self.usernameTextField.text;
+        [[PFUser currentUser]saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+            if (!error) {
+                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Hello, %@", self.usernameTextField.text] maskType:SVProgressHUDMaskTypeClear];
+                self.usernameLabel.text = self.usernameTextField.text;
+                self.saveUserNameButton.hidden = YES;
+            }else{
+                
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:[error userInfo][@"error"] preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil];
+                [alert addAction:dismiss];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        }];
+
+    }
+    }
+
+- (IBAction)handleSaveEmailButtonPressed:(id)sender {
+    if (self.emailTextField.text.length >= 6) {
+    
+    [PFUser currentUser].email = self.emailTextField.text;
+    [[PFUser currentUser]saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+        if (!error) {
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"We'll send an email to %@", self.emailTextField.text] maskType:SVProgressHUDMaskTypeGradient];
+            self.emailTextField.text = self.emailTextField.text;
+            self.saveEmailButton.hidden = YES;
+            
+        }else{
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:[error userInfo][@"error"] preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil];
+            [alert addAction:dismiss];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
+    }];
+  
+    }
+}
+
 
 #pragma mark - Table view data source
 
@@ -59,35 +136,39 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    // Return the number of rows in the section.
-    return 3;
+    if (section == 0) {
+        return 3;
+    }else{
+        return 2.0;
+    }
+    
+    
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 25.0f;
+}
 
 -(void)queryParse{
     PFUser *user = [PFUser currentUser];
-    NSString *username = [[PFUser currentUser] objectForKey:@"username"];
-    self.usernameCell.detailTextLabel.text = username;
-    NSString *email = [[PFUser currentUser] objectForKey:@"email"];
-    NSString *oftenPlay = [[PFUser currentUser] objectForKey:@"oftenPlay"];
-    NSString *experience = [[PFUser currentUser] objectForKey:@"experience"];
-    NSString *birthday = [[PFUser currentUser] objectForKey:@"birthday"];
+    
+    self.usernameTextField.text = [PFUser currentUser].username;
+    self.emailTextField.text = [[PFUser currentUser] objectForKey:@"email"];
+   self.oftenPlayCell.detailTextLabel.text = [[PFUser currentUser] objectForKey:@"oftenPlay"];
+    self.experienceCell.detailTextLabel.text = [[PFUser currentUser] objectForKey:@"experience"];
+    self.birthdayTableViewCell.detailTextLabel.text = [[PFUser currentUser] objectForKey:@"birthday"];
     
     PFFile *file = [user objectForKey:@"profileImage"];
     [file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error){
-        if (!error) {
+        if (imageData) {
           
             UIImage *image = [UIImage imageWithData:imageData];
             self.profileImageView.image = image;
+        }else{
+            self.profileImageView.image = [UIImage imageNamed:@"hooper"];
         }
     }];
 
-    self.usernameCell.detailTextLabel.text = username;
-    self.emailCell.detailTextLabel.text = email;
-    self.birthdayTableViewCell.detailTextLabel.text = birthday;
-    self.oftenPlayCell.detailTextLabel.text = oftenPlay;
-    self.experienceCell.detailTextLabel.text = experience;
 }
 
 - (IBAction)logOutButton:(id)sender {

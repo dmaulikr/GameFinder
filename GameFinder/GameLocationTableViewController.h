@@ -12,6 +12,8 @@
 @interface GameLocationTableViewController : UITableViewController <UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addGamesButton;
+@property (weak, nonatomic) IBOutlet UIView *upperView;
+@property (weak, nonatomic) IBOutlet UIButton *contractMapButton;
 
 @property NSArray *gameLocationsArray;
 @end
