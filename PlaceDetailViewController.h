@@ -10,49 +10,30 @@
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
 #import <CoreLocation/CoreLocation.h>
-#import "PlaceDetailCustomTableViewCell.h"
+#import "PlaceDetailCollectionViewCell.h"
 
 
-@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, UITableViewDataSource, UITableViewDelegate, UIApplicationDelegate>
+@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate,UICollectionViewDataSource,UICollectionViewDelegate, UIApplicationDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapDetailView;
-
-
-
-
-
-@property (strong, nonatomic) NSTimer *timer;
+@property NSDictionary *placeObject;
+@property (weak, nonatomic) IBOutlet UITextField *scheduleGameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *addNumberOfPlayersTextField;
 
 @property PFGeoPoint *locationCoordinate;
 
-@property CLLocation *locationLocation;
-
-@property NSString *address;
-
-@property NSString *locationNameString;
-
-@property NSString *locationCityString;
-
-@property NSString *locationStateString;
-
-@property NSString *locationZipString;
-
-@property NSString *locationTypeString;
-
-@property NSString *locationPlayerString;
-
-@property NSDate *locationDateString;
-
-@property NSString *objectIDString;
 
 @property NSArray *playersArray;
+@property (weak, nonatomic) IBOutlet UILabel *takePictureLabel;
 
-@property (weak, nonatomic) IBOutlet UITableView *playersTableView;
+@property (weak, nonatomic) IBOutlet UICollectionView *playerCollectionView;
+@property (weak, nonatomic) IBOutlet UIImageView *placeImageView;
 
-@property (weak, nonatomic) IBOutlet UIButton *playHereButton;
-
-@property (weak, nonatomic) IBOutlet UIButton *directionsButton;
-
-@property (nonatomic) BOOL isCheckedIn;
+@property NSArray *numberPickerArray;
+@property (weak, nonatomic) IBOutlet UIButton *saveScheduleButton;
+@property (weak, nonatomic) IBOutlet UIButton *saveAddPlayersButton;
+@property (weak, nonatomic) IBOutlet UILabel *scheduleGameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addPlayersLabel;
+@property NSMutableArray *scheduledGamesArray;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

@@ -1,14 +1,14 @@
 //
-//  PlaceDetailCustomTableViewCell.m
+//  ScheduledGamesTableViewCell.m
 //  GameFinder
 //
-//  Created by Nick Reeder on 2/28/15.
+//  Created by Nick Reeder on 8/6/15.
 //  Copyright (c) 2015 Nick Reeder. All rights reserved.
 //
 
-#import "PlaceDetailCustomTableViewCell.h"
+#import "ScheduledGamesTableViewCell.h"
 
-@implementation PlaceDetailCustomTableViewCell
+@implementation ScheduledGamesTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
+#import "SVProgressHUD.h"
 
 @interface GameLocationTableViewController ()
 
@@ -21,30 +22,53 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.contractMapButton.hidden = YES;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
+
+    
+
+    
+    
+    self.centerMapButton.alpha = 0.0f;
+    
+    self.contractMapButton.layer.cornerRadius = 15.0f;
+    self.contractMapButton.layer.borderWidth = 1.0f;
+    self.contractMapButton.layer.borderColor = [UIColor blackColor].CGColor;
+    self.contractMapButton.clipsToBounds = YES;
+    self.contractMapButton.hidden = YES;
+   
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshView) name:@"addedLocation" object:nil];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
     
     
+    
     [self.mapView removeAnnotations:self.mapView.annotations];
-    [self queryParseForGameLocations];
+    
     
     UILongPressGestureRecognizer *hold = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(makeMapFullScreen)];
     hold.numberOfTouchesRequired = 1.0f;
     hold.minimumPressDuration = 0.25f;
     [self.mapView addGestureRecognizer:hold];
     
+    
 }
-
-
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.hidesBarsOnSwipe = YES;
+}
 -(void)viewDidAppear:(BOOL)animated{
-    [self disableAddLocationButton];
+    [UIView animateWithDuration:15.0 animations:^{
+        
+        self.centerMapButton.alpha = 1.0;
+        self.centerMapButton.layer.cornerRadius = 12.0f;
+        self.centerMapButton.layer.borderWidth = 1.0f;
+        self.centerMapButton.layer.borderColor = [UIColor blackColor].CGColor;
+        self.centerMapButton.clipsToBounds = YES;
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -89,9 +113,10 @@
     
     cell.title.text = dict[@"name"];
     cell.subtitle.text = dict[@"address"];
-    
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
+    cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"info"]];
+    if (!cell.accessoryView) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
     cell.title.font = [UIFont fontWithName:@"optima-bold" size:17.0];
     cell.title.textColor = [UIColor darkGrayColor];
     cell.subtitle.textColor = [UIColor lightGrayColor];
@@ -101,6 +126,7 @@
 
 #pragma mark -Parse Query
 -(void)queryParseForGameLocations{
+    [SVProgressHUD showWithStatus:@"Loading" maskType:SVProgressHUDMaskTypeClear];
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *currentLocation, NSError *error){
         PFQuery *query = [PFQuery queryWithClassName:@"Games"];
         [query whereKey:@"location" nearGeoPoint:currentLocation withinMiles:50.0];
@@ -126,7 +152,7 @@
                 }
                 
                 self.gameLocationsArray = [[NSArray arrayWithArray:games]mutableCopy];
-                
+                [SVProgressHUD dismiss];
                 [self.tableView reloadData];
             }
         }];
@@ -134,6 +160,8 @@
         
     }];
     [self profileImageButton];
+    
+   
 }
 
 #pragma mark - Navigation
@@ -148,47 +176,28 @@
     
     if ([[segue identifier] isEqualToString:@"ShowPlaceDetail"]) {
         NSDictionary *object = (NSDictionary *)sender;
-        
-        
-        
+
         NSString *name = [object objectForKey:@"name"];
-        
-        NSString *address = [object objectForKey:@"address"];
-        
-        NSString *city = [object objectForKey:@"city"];
-        
-        NSString *state = [object objectForKey:@"state"];
-        
-        NSString *zip = [object objectForKey:@"zip"];
-        
-        NSString *type = [object objectForKey:@"type"];
-        
-        
-        
         PFGeoPoint *location = [object objectForKey:@"location"];
-        
-        
+        PFFile *file = object[@"locationImage"];
         
         PlaceDetailViewController *pdc = [segue destinationViewController];
         
+        pdc.placeObject = object;
+        
+        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+            if (data) {
+                UIImage *image = [UIImage imageWithData:data];
+                pdc.placeImageView.image = image;
+            
+            }
+        }];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@" " style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.navigationItem.backBarButtonItem = backButton;
+        pdc.placeImageView.clipsToBounds = YES;
         pdc.title = name;
-        
-        pdc.address = address;
-        
-        pdc.locationStateString = state;
-        
-        pdc.locationCityString = [city stringByAppendingString:@","];
-        
-        pdc.locationNameString = name;
-        
-        pdc.locationZipString = zip;
-        
-        pdc.locationTypeString = type;
-        
         pdc.locationCoordinate = location;
-        
-        
-        
+
         
     }
 }
@@ -273,7 +282,7 @@
     
 }
 
-
+#pragma mark -profile button
 -(void)profileImageButton{
     
     UIButton *settingsView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
@@ -297,31 +306,49 @@
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
     PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-    [getGames whereKey:@"location" nearGeoPoint:geoPoint withinMiles:0.09];
-    [getGames  findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (objects.count >= 1) {
+    [getGames whereKey:@"location" nearGeoPoint:geoPoint withinKilometers:0.8];
+    [getGames  getFirstObjectInBackgroundWithBlock:^(PFObject *closestGame, NSError *error) {
+        if (closestGame) {
             
+            [closestGame addUniqueObject:[PFUser currentUser] forKey:@"players"];
+            [closestGame saveInBackground];
             self.addGamesButton.enabled = NO;
             
-        }if (objects.count < 1) {
+        }if (!closestGame) {
             self.addGamesButton.enabled = YES;
+            [self performSelector:@selector(removePlayer) withObject:nil];
+        }
+
+    }];
+    [self queryParseForGameLocations];
+ 
+}
+-(void)removePlayer{
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
+    [query whereKey:@"players" equalTo:[PFUser currentUser]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
+        if (!error) {
+            PFObject *players = [objects lastObject];
+            
+            [players removeObject:[PFUser currentUser] forKey:@"players"];
+            [players saveInBackground];
+  
         }
         
         
-        
-        
     }];
-    
-    
-    
 }
 
-// Location Manager delegates
+#pragma mark -location manage delegates
 -(void)updateLocation:(NSNotification *)notif{
+   
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     
     self.mapView.centerCoordinate = CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
+    [self.tableView reloadData];
     [self disableAddLocationButton];
 }
 
@@ -330,27 +357,15 @@
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
     
-    
+    [self.tableView reloadData];
     [self disableAddLocationButton];
     
 }
-
-- (IBAction)handleCenterMapButtonPressed:(id)sender {
-   
-    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
-}
-
-
+#pragma mark - map methods
 -(void)makeMapFullScreen{
     self.mapView.clipsToBounds = YES;
     self.upperView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.contractMapButton.hidden = NO;
-
-}
-- (IBAction)handleContractMapButtonPressed:(id)sender {
-    
-    self.upperView.frame = CGRectMake(0, 0, self.view.frame.size.width, 255);
-    self.contractMapButton.hidden = YES;
     
 }
 
@@ -358,5 +373,18 @@
     [self queryParseForGameLocations];
 }
 
+#pragma mark - button methods
+- (IBAction)handleCenterMapButtonPressed:(id)sender {
+   
+    [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
+}
+
+
+- (IBAction)handleContractMapButtonPressed:(id)sender {
+    
+    self.upperView.frame = CGRectMake(0, 0, self.view.frame.size.width, 255);
+    self.contractMapButton.hidden = YES;
+    
+}
 
 @end

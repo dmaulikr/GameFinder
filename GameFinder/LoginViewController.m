@@ -96,7 +96,7 @@
                              NSString *fbId = result[@"id"];
                              NSRange range = [email rangeOfString:@"@"];
                              NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", fbId]];
-                             NSString *bday = result[@"birthday"];
+                            
                              
                              NSString *facebookPic = [pictureURL absoluteString];
                              
@@ -106,7 +106,7 @@
                                  [user setObject:username forKey:@"username"];
                                  [user setObject:fbId forKey:@"facebookId"];
                                  [user setObject:facebookPic forKey:@"facebookImageUrl"];
-                                 [user setObject:bday forKey:@"birthday"];
+                                 
                                  [user setObject:email forKey:@"email"];
                                  [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
                                      if (succeeded) {

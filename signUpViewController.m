@@ -60,8 +60,8 @@
     user.username = self.registerUsernameTextField.text;
     user.password = self.registerPasswordTextField.text;
     user.email = self.registerEmailTextField.text;
-    
-    [user setObject:self.registerBirthdayTextField.text forKey:@"birthday"];
+    UIDatePicker *datePicker = (UIDatePicker *)self.registerBirthdayTextField.inputView;
+    [user setObject:datePicker forKey:@"birthDate"];
     [user setObject:self.registerExperienceTextField.text forKey:@"experience"];
     if (self.registerUsernameTextField.text.length > 3 && self.registerEmailTextField.text.length > 4 && self.registerEmailTextField != nil && self.registerBirthdayTextField != nil && self.registerExperienceTextField != nil) {
         

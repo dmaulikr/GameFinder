@@ -27,7 +27,7 @@
     // Style profile image view
     self.profileImageView.layer.cornerRadius = 50;
     self.profileImageView.clipsToBounds = YES;
-    self.profileImageView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.profileImageView.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
     self.profileImageView.layer.borderWidth = 3;
     
 
@@ -59,6 +59,7 @@
         self.navigationController.toolbarHidden = NO;
         
     }];
+    [super viewDidAppear:animated];
 }
 
 -(BOOL)prefersStatusBarHidden{
@@ -156,7 +157,12 @@
     self.emailTextField.text = [[PFUser currentUser] objectForKey:@"email"];
    self.oftenPlayCell.detailTextLabel.text = [[PFUser currentUser] objectForKey:@"oftenPlay"];
     self.experienceCell.detailTextLabel.text = [[PFUser currentUser] objectForKey:@"experience"];
-    self.birthdayTableViewCell.detailTextLabel.text = [[PFUser currentUser] objectForKey:@"birthday"];
+    NSDate *date = [[PFUser currentUser]objectForKey:@"birthdate"];
+    NSDateFormatter *df = [[NSDateFormatter alloc]init];
+    [df setDateFormat:@"MM-dd-yyyy"];
+    
+    
+    self.birthdayTableViewCell.detailTextLabel.text = [df stringFromDate:date];
     
     PFFile *file = [user objectForKey:@"profileImage"];
     [file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error){
