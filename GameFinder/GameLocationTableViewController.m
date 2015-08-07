@@ -22,13 +22,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self disableAddLocationButton];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
 
     
 
-    
+    [self profileImageButton];
+    [self queryParseForGameLocations];
     
     self.centerMapButton.alpha = 0.0f;
     
@@ -56,9 +58,7 @@
     
     
 }
--(void)viewWillAppear:(BOOL)animated{
-    self.navigationController.hidesBarsOnSwipe = YES;
-}
+
 -(void)viewDidAppear:(BOOL)animated{
     [UIView animateWithDuration:15.0 animations:^{
         
@@ -126,6 +126,7 @@
 
 #pragma mark -Parse Query
 -(void)queryParseForGameLocations{
+    
     [SVProgressHUD showWithStatus:@"Loading" maskType:SVProgressHUDMaskTypeClear];
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *currentLocation, NSError *error){
         PFQuery *query = [PFQuery queryWithClassName:@"Games"];
@@ -154,12 +155,13 @@
                 self.gameLocationsArray = [[NSArray arrayWithArray:games]mutableCopy];
                 [SVProgressHUD dismiss];
                 [self.tableView reloadData];
+                
             }
         }];
         
         
     }];
-    [self profileImageButton];
+    
     
    
 }
@@ -295,6 +297,7 @@
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithCustomView:settingsView];
     
     [self.navigationItem setLeftBarButtonItem:settingsButton];
+    
 }
 
 -(void)settingsClicked{
@@ -303,6 +306,7 @@
 
 //Check for location to prevent duplicate locations being added to db
 -(void)disableAddLocationButton {
+    
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
     PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
@@ -320,7 +324,7 @@
         }
 
     }];
-    [self queryParseForGameLocations];
+    
  
 }
 -(void)removePlayer{
@@ -348,17 +352,22 @@
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     
     self.mapView.centerCoordinate = CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
-    [self.tableView reloadData];
     [self disableAddLocationButton];
+    [self.tableView reloadData];
+    [self refreshView];
+    
+    
 }
 
 -(void)initialLocation:(NSNotification *)notif{
+    
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
-    
+      [self disableAddLocationButton];
     [self.tableView reloadData];
-    [self disableAddLocationButton];
+  
+    
     
 }
 #pragma mark - map methods

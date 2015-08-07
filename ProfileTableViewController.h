@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ProfileTableViewController : UITableViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
+@interface ProfileTableViewController : UITableViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *birthdayTableViewCell;
 @property (weak, nonatomic) IBOutlet UIButton *saveUserNameButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveEmailButton;
+@property (weak, nonatomic) IBOutlet UIButton *saveTimesPlayedButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 
@@ -28,4 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+
+@property (weak, nonatomic) IBOutlet UITextField *timesPlayedTexField;
+@property NSArray *timesArray;
 @end

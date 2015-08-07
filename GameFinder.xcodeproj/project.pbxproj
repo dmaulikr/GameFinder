@@ -144,8 +144,8 @@
 		274425651AD6254400FF187E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		274B49E31B7357EF0037BF5A /* ScheduledGamesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduledGamesTableViewCell.h; sourceTree = "<group>"; };
 		274B49E41B7357EF0037BF5A /* ScheduledGamesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduledGamesTableViewCell.m; sourceTree = "<group>"; };
-		274B49E61B7371CC0037BF5A /* UserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailViewController.h; sourceTree = "<group>"; };
-		274B49E71B7371CC0037BF5A /* UserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailViewController.m; sourceTree = "<group>"; };
+		274B49E61B7371CC0037BF5A /* UserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDetailViewController.h; path = ../UserDetailViewController.h; sourceTree = "<group>"; };
+		274B49E71B7371CC0037BF5A /* UserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserDetailViewController.m; path = ../UserDetailViewController.m; sourceTree = "<group>"; };
 		275BAFD71A9736F000697533 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		275BAFD91A9736F800697533 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		275F1BBF1AE7766800815B69 /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileTableViewController.h; path = ../ProfileTableViewController.h; sourceTree = "<group>"; };
@@ -364,8 +364,6 @@
 				27C0E3281B729C3400A6D084 /* PlayersHeaderCollectionReusableView.m */,
 				274B49E31B7357EF0037BF5A /* ScheduledGamesTableViewCell.h */,
 				274B49E41B7357EF0037BF5A /* ScheduledGamesTableViewCell.m */,
-				274B49E61B7371CC0037BF5A /* UserDetailViewController.h */,
-				274B49E71B7371CC0037BF5A /* UserDetailViewController.m */,
 			);
 			name = Classes;
 			path = ..;
@@ -424,6 +422,8 @@
 				27618D1F1B669D3200ED4931 /* GameLocationTableViewController.m */,
 				2770EBE51B66EAAD00CE3F1D /* AddLocationViewController.h */,
 				2770EBE61B66EAAD00CE3F1D /* AddLocationViewController.m */,
+				274B49E61B7371CC0037BF5A /* UserDetailViewController.h */,
+				274B49E71B7371CC0037BF5A /* UserDetailViewController.m */,
 			);
 			name = "View Controllers";
 			path = GameFinder;

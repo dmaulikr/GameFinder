@@ -23,8 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.playersArray = self.placeObject[@"players"];
-   self.navigationController.hidesBarsOnSwipe = NO;
+    [self queryParse];
     self.scheduledGamesArray = self.placeObject[@"scheduledGames"];
     if (self.scheduledGamesArray.count == 0) {
         self.tableView.hidden = YES;
@@ -38,12 +37,12 @@
     self.placeImageView.layer.borderColor = [UIColor darkGrayColor].CGColor;
     self.placeImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.placeImageView.clipsToBounds = YES;
-    if (![self.playersArray containsObject:[PFUser currentUser]]) {
-        self.addNumberOfPlayersTextField.hidden = YES;
-        self.addPlayersLabel.hidden = YES;
-    }
+    
     self.saveAddPlayersButton.hidden = YES;
     self.saveScheduleButton.hidden = YES;
+    self.addNumberOfPlayersTextField.hidden = YES;
+    self.addPlayersLabel.hidden = YES;
+
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
@@ -56,7 +55,12 @@
     self.numberPickerArray = @[@"< 5", @"5-15", @"15-25", @"> 25"];
     self.scheduleGameTextField.inputView = [self configureDatePicker];
 }
+-(void)viewWillAppear:(BOOL)animated{
+    
+    
+}
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     if (!self.placeImageView.image) {
         self.placeImageView.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(isNear)];
@@ -77,10 +81,12 @@
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
     static NSString *CellIdentifier = @"PlayersCollectionViewCell";
-    NSDictionary *player = [self.playersArray objectAtIndex:indexPath.row];
-    PFFile *file = player[@"profileImage"];
+    NSDictionary *player = self.playersArray[indexPath.row];
+    
     
     PlaceDetailCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.playerProfileImageView.image = [UIImage imageNamed:@"hooper"];
+    PFFile *file = player[@"profileImage"];
     [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
         if (data) {
             UIImage *image = [UIImage imageWithData:data];
@@ -108,7 +114,11 @@
         PlayersHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
         
         NSString *title = [NSString stringWithFormat:@"There are %@ more players here", self.placeObject[@"numberOfExtraPlayers"]];
-        headerView.title.text = title;
+        if (!self.placeObject[@"numberOfExtraPlayers"]) {
+            headerView.title.text = @"Players at this court";
+        }else{
+            headerView.title.text = title;
+        }
         headerView.layer.borderColor = [UIColor darkGrayColor].CGColor;
         headerView.layer.borderWidth = 1.0f;
         
@@ -271,7 +281,7 @@
 {
     NSDate *date = datePicker.date;
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
-    [dateFormat setDateFormat:@"MMM dd, yyyy hh:mm a"];
+    [dateFormat setDateFormat:@"MMM dd @ hh:mm a"];
     self.scheduleGameTextField.text = [dateFormat stringFromDate:date];
     
 }
@@ -363,8 +373,8 @@
     NSString *username = self.placeObject[@"userWhoScheduledGame"];
     cell.title.text = [NSString stringWithFormat:@"%@ set up a game for %@", username, string];
     
-        return cell;
- 
+    return cell;
+    
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -385,7 +395,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.scheduledGamesArray removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-       //This needs to be a cloud call to delete scheduled time and user name
+        //This needs to be a cloud call to delete scheduled time and user name
     }
 }
 
@@ -397,8 +407,16 @@
         NSDictionary *user = (NSDictionary *)sender;
         NSString *username = user[@"username"];
         NSString *experience = user[@"experience"];
+        NSString *oftenPlay = user[@"oftenPlay"];
         PFFile *file = user[@"profileImage"];
-        //NSDate *date = user[@"birthDate"];
+        NSDate *date = user[@"birthDate"];
+        NSDate* now = [NSDate date];
+        NSDateComponents* ageComponents = [[NSCalendar currentCalendar]
+                                           components:NSCalendarUnitYear
+                                           fromDate:date
+                                           toDate:now
+                                           options:0];
+        NSInteger age = [ageComponents year];
         
         UserDetailViewController *dvc = [segue destinationViewController];
         
@@ -414,9 +432,28 @@
         self.navigationItem.backBarButtonItem = backButton;
         dvc.username = username;
         dvc.experience = experience;
+        dvc.oftenPlay = oftenPlay;
+        dvc.years = age;
+        
         
         
     }
+    
+}
 
+#pragma mark -query parse for collection view
+-(void)queryParse{
+    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
+    [query whereKey:@"name" equalTo:self.navigationItem.title];
+    [query includeKey:@"players"];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *results, NSError *error){
+        NSMutableArray *array = results[@"players"];
+        self.playersArray = [[NSArray arrayWithArray:array]mutableCopy];
+        [self.playerCollectionView reloadData];
+        if ([self.playersArray containsObject:[PFUser currentUser]]) {
+            self.addNumberOfPlayersTextField.hidden = NO;
+            self.addPlayersLabel.hidden = NO;
+        }
+    }];
 }
 @end

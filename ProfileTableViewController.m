@@ -20,7 +20,7 @@
     [super viewDidLoad];
     
     
-   
+    
     
     self.navigationController.navigationBar.hidden = YES;
     
@@ -30,7 +30,7 @@
     self.profileImageView.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
     self.profileImageView.layer.borderWidth = 3;
     
-
+    
     // Style header view in order to set it apart from table view
     self.headerView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.headerView.layer.borderWidth = 2.0f;
@@ -38,23 +38,29 @@
     self.profileImageView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(imageOptions)];
     tap.numberOfTapsRequired = 1.0f;
+    // hide save buttons unless editing
     self.saveEmailButton.hidden = YES;
     self.saveUserNameButton.hidden = YES;
-    
-    
+    self.saveTimesPlayedButton.hidden = YES;
+    self.timesArray = @[@"1-3",@"3-5",@"5-7",@"More than 7"];
+    UIPickerView *picker = [[UIPickerView alloc]init];
+    picker.delegate = self;
+    picker.dataSource = self;
+    self.timesPlayedTexField.inputView = picker;
     [self.profileImageView addGestureRecognizer:tap];
 }
 -(void)viewWillAppear:(BOOL)animated{
+    self.profileImageView.image = [UIImage imageNamed:@"add-picture"];
     [self performSelector:@selector(queryParse)];
-
-    self.usernameLabel.text = self.usernameTextField.text;
     
-   
+    self.usernameLabel.text = self.usernameTextField.text;
+    [super viewWillAppear:animated];
+    
 }
 -(void)viewDidAppear:(BOOL)animated{
     [UIView animateWithDuration:1 animations:^{
         [self.logOutButton setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"Futura-CondensedMedium" size:23.0]} forState:UIControlStateNormal];
-
+        
         self.navigationController.toolbar.barTintColor = [UIColor colorWithRed:0.60f green:0.60f blue:0.60f alpha:1.0f];
         self.navigationController.toolbarHidden = NO;
         
@@ -65,19 +71,20 @@
 -(BOOL)prefersStatusBarHidden{
     return YES;
 }
-
+#pragma mark -textField delegate
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if (textField == self.usernameTextField) {
         self.saveUserNameButton.hidden = NO;
         self.saveEmailButton.hidden = YES;
+        self.saveTimesPlayedButton.hidden = YES;
     }else if (textField == self.emailTextField){
         self.saveEmailButton.hidden = NO;
         self.saveUserNameButton.hidden = YES;
+        self.saveTimesPlayedButton.hidden = YES;
     }
     return YES;
 }
--(void)textFieldDidBeginEditing:(UITextField *)textField{
-    }
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [self.view endEditing:YES];
     return YES;
@@ -101,20 +108,39 @@
                 [self presentViewController:alert animated:YES completion:nil];
             }
         }];
-
+        
     }
-    }
+}
 
 - (IBAction)handleSaveEmailButtonPressed:(id)sender {
     if (self.emailTextField.text.length >= 6) {
+        
+        [PFUser currentUser].email = self.emailTextField.text;
+        [[PFUser currentUser]saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+            if (!error) {
+                [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"We'll send an email to %@", self.emailTextField.text] maskType:SVProgressHUDMaskTypeGradient];
+                self.emailTextField.text = self.emailTextField.text;
+                self.saveEmailButton.hidden = YES;
+                
+            }else{
+                
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:[error userInfo][@"error"] preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil];
+                [alert addAction:dismiss];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        }];
+        
+    }
+}
+- (IBAction)handleSaveNumberOfTimesPlayedButtonPressed:(id)sender {
     
-    [PFUser currentUser].email = self.emailTextField.text;
+    [PFUser currentUser][@"oftenPlay"] = self.timesPlayedTexField.text;
     [[PFUser currentUser]saveInBackgroundWithBlock:^(BOOL success, NSError *error){
         if (!error) {
-            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"We'll send an email to %@", self.emailTextField.text] maskType:SVProgressHUDMaskTypeGradient];
-            self.emailTextField.text = self.emailTextField.text;
-            self.saveEmailButton.hidden = YES;
+            [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"Ballin!"] maskType:SVProgressHUDMaskTypeClear];
             
+            self.saveTimesPlayedButton.hidden = YES;
         }else{
             
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Oops!" message:[error userInfo][@"error"] preferredStyle:UIAlertControllerStyleAlert];
@@ -123,15 +149,15 @@
             [self presentViewController:alert animated:YES completion:nil];
         }
     }];
-  
-    }
+    
+    
 }
 
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
+    
     // Return the number of sections.
     return 2;
 }
@@ -155,11 +181,11 @@
     
     self.usernameTextField.text = [PFUser currentUser].username;
     self.emailTextField.text = [[PFUser currentUser] objectForKey:@"email"];
-   self.oftenPlayCell.detailTextLabel.text = [[PFUser currentUser] objectForKey:@"oftenPlay"];
+    self.timesPlayedTexField.text = [[PFUser currentUser] objectForKey:@"oftenPlay"];
     self.experienceCell.detailTextLabel.text = [[PFUser currentUser] objectForKey:@"experience"];
-    NSDate *date = [[PFUser currentUser]objectForKey:@"birthdate"];
+    NSDate *date = [[PFUser currentUser]objectForKey:@"birthDate"];
     NSDateFormatter *df = [[NSDateFormatter alloc]init];
-    [df setDateFormat:@"MM-dd-yyyy"];
+    [df setDateStyle:NSDateFormatterMediumStyle];
     
     
     self.birthdayTableViewCell.detailTextLabel.text = [df stringFromDate:date];
@@ -167,14 +193,12 @@
     PFFile *file = [user objectForKey:@"profileImage"];
     [file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error){
         if (imageData) {
-          
+            
             UIImage *image = [UIImage imageWithData:imageData];
             self.profileImageView.image = image;
-        }else{
-            self.profileImageView.image = [UIImage imageNamed:@"hooper"];
         }
     }];
-
+    
 }
 
 - (IBAction)logOutButton:(id)sender {
@@ -230,7 +254,7 @@
         
         [self presentViewController:noCamera animated:YES completion:nil];
     }
-
+    
     
 }
 
@@ -259,11 +283,31 @@
     
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
-
+    
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
+}
+
+#pragma mark -UIPicker delegates
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return self.timesArray.count;
+}
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    return self.timesArray[row];
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    self.timesPlayedTexField.text = self.timesArray[row];
+    self.saveTimesPlayedButton.hidden = NO;
+    self.saveEmailButton.hidden = YES;
+    self.saveUserNameButton.hidden = YES;
+    [self.view endEditing:YES];
+    
+}
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
 }
 - (IBAction)handleCloseButtonPressed:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
