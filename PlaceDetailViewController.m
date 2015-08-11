@@ -13,6 +13,7 @@
 #import "ScheduledGamesTableViewCell.h"
 #import "SVProgressHUD.h"
 #import "UserDetailViewController.h"
+#import "EditLocationViewController.h"
 
 @interface PlaceDetailViewController ()
 
@@ -23,26 +24,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self queryParse];
+    self.navigationItem.title = self.titleString;
+    
     self.scheduledGamesArray = self.placeObject[@"scheduledGames"];
     if (self.scheduledGamesArray.count == 0) {
         self.tableView.hidden = YES;
     }
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
-    
-    
-    self.takePictureLabel.hidden = YES;
-    self.placeImageView.layer.borderWidth = 1.0f;
-    self.placeImageView.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    self.placeImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.placeImageView.clipsToBounds = YES;
-    
-    self.saveAddPlayersButton.hidden = YES;
+        self.saveAddPlayersButton.hidden = YES;
     self.saveScheduleButton.hidden = YES;
     self.addNumberOfPlayersTextField.hidden = YES;
     self.addPlayersLabel.hidden = YES;
 
+    
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
@@ -55,12 +50,9 @@
     self.numberPickerArray = @[@"< 5", @"5-15", @"15-25", @"> 25"];
     self.scheduleGameTextField.inputView = [self configureDatePicker];
 }
--(void)viewWillAppear:(BOOL)animated{
-    
-    
-}
+
 -(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+    [self queryParse];
     if (!self.placeImageView.image) {
         self.placeImageView.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(isNear)];
@@ -71,10 +63,18 @@
         self.placeImageView.backgroundColor = [UIColor colorWithWhite:.9 alpha:1.0];
         self.placeImageView.contentMode = UIViewContentModeScaleAspectFit;
         self.placeImageView.clipsToBounds = YES;
+    }else{
+        self.takePictureLabel.hidden = YES;
+        self.placeImageView.layer.borderWidth = 1.0f;
+        self.placeImageView.layer.borderColor = [UIColor darkGrayColor].CGColor;
+        self.placeImageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.placeImageView.clipsToBounds = YES;
+        
+
     }
     
-}
 
+}
 #pragma mark
 #pragma CollectionView DataSources
 
@@ -166,11 +166,12 @@
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     CLLocation *placeLocation = [[CLLocation alloc]initWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
-    if (distance <= 160.01) {
+    if (distance <= 160) {
         [self openCameraApp];
+        self.isCloseEnough = YES;
         
-        
-    }else if (distance >= 160.05){
+    }else if (distance >= 161){
+        self.isCloseEnough = NO;
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Sorry!" message:@"you need to be at the court to take a picture" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil];
         [alert addAction:dismiss];
@@ -437,6 +438,27 @@
         
         
         
+    }else if ([[segue identifier]isEqualToString:@"EditLocation"]){
+        NSDictionary *place = (NSDictionary *)sender;
+        NSString *name = place[@"name"];
+        PFFile *file = place[@"locationImage"];
+        NSNumber *coveredBool = place[@"covered"];
+        NSNumber *indoorBool = place[@"indoor"];
+        NSNumber *lightsBool = place[@"lights"];
+        NSNumber *publicBool = place[@"openToPublic"];
+        
+        
+        EditLocationViewController *editLocationViewController = [segue destinationViewController];
+        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+            UIImage *image = [UIImage imageWithData:data];
+            editLocationViewController.placeImageView.image = image;
+        }];
+        editLocationViewController.nameString = name;
+        editLocationViewController.originalName = name;
+        editLocationViewController.coveredBool = coveredBool;
+        editLocationViewController.lightBool = lightsBool;
+        editLocationViewController.publicBool = publicBool;
+        editLocationViewController.indoorBool = indoorBool;
     }
     
 }
@@ -456,4 +478,16 @@
         }
     }];
 }
+
+-(void)passObject:(NSDictionary *)object{
+    
+    [self performSegueWithIdentifier:@"EditLocation" sender:object];
+}
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (UIEventSubtypeMotionShake) {
+        
+        [self performSelector:@selector(passObject:) withObject:self.placeObject];
+    }
+}
+
 @end

@@ -22,16 +22,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self disableAddLocationButton];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
-
     
-
-    [self profileImageButton];
     [self queryParseForGameLocations];
-    
+    [self queryParseForPlayerLocation];
+    [self profileImageButton];
     self.centerMapButton.alpha = 0.0f;
     
     self.contractMapButton.layer.cornerRadius = 15.0f;
@@ -56,7 +54,8 @@
     hold.minimumPressDuration = 0.25f;
     [self.mapView addGestureRecognizer:hold];
     
-    
+
+
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -197,7 +196,7 @@
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@" " style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backButton;
         pdc.placeImageView.clipsToBounds = YES;
-        pdc.title = name;
+        pdc.titleString = name;
         pdc.locationCoordinate = location;
 
         
@@ -305,24 +304,20 @@
 }
 
 //Check for location to prevent duplicate locations being added to db
--(void)disableAddLocationButton {
+-(void)queryParseForPlayerLocation {
     
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
     PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-    [getGames whereKey:@"location" nearGeoPoint:geoPoint withinKilometers:0.8];
+    [getGames whereKey:@"location" nearGeoPoint:geoPoint withinKilometers:0.15];
     [getGames  getFirstObjectInBackgroundWithBlock:^(PFObject *closestGame, NSError *error) {
         if (closestGame) {
-            
             [closestGame addUniqueObject:[PFUser currentUser] forKey:@"players"];
             [closestGame saveInBackground];
-            self.addGamesButton.enabled = NO;
-            
         }if (!closestGame) {
-            self.addGamesButton.enabled = YES;
             [self performSelector:@selector(removePlayer) withObject:nil];
         }
-
+        [self performSelector:@selector(enableAddGameButton:) withObject:closestGame];
     }];
     
  
@@ -352,9 +347,9 @@
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     
     self.mapView.centerCoordinate = CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
-    [self disableAddLocationButton];
+    [self queryParseForPlayerLocation];
     [self.tableView reloadData];
-    [self refreshView];
+    
     
     
 }
@@ -364,7 +359,7 @@
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
-      [self disableAddLocationButton];
+    
     [self.tableView reloadData];
   
     
@@ -380,6 +375,7 @@
 
 -(void)refreshView{
     [self queryParseForGameLocations];
+    [self queryParseForPlayerLocation];
 }
 
 #pragma mark - button methods
@@ -394,6 +390,38 @@
     self.upperView.frame = CGRectMake(0, 0, self.view.frame.size.width, 255);
     self.contractMapButton.hidden = YES;
     
+}
+
+- (IBAction)handleFindGameButtonPressed:(id)sender {
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.delegate = self;
+    
+    self.definesPresentationContext = YES;
+    [UIView animateWithDuration:1.0f animations:^{
+        
+        self.navigationItem.titleView = self.searchController.searchBar;
+        [self.navigationItem.titleView becomeFirstResponder];
+    }];
+}
+
+-(void)updateSearchResultsForSearchController:(UISearchController *)searchController{
+    
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [searchBar removeFromSuperview];
+}
+-(void)enableAddGameButton:(NSDictionary *)closestGame{
+    if (closestGame) {
+        self.addGamesButton.enabled = NO;
+    }else{
+        self.addGamesButton.enabled = YES;
+    }
+}
+- (IBAction)handleAddGameButtonPressed:(id)sender {
+    [self performSegueWithIdentifier:@"AddLocation" sender:nil];
 }
 
 @end

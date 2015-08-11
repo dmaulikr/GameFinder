@@ -276,7 +276,9 @@
     PFFile *imageFile = [PFFile fileWithData:imageData];
     [[PFUser currentUser]setObject:imageFile forKey:@"profileImage"];
     [[PFUser currentUser]saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+        [SVProgressHUD showSuccessWithStatus:@"saving image"];
         if (success) {
+            [SVProgressHUD dismiss];
             UIImageWriteToSavedPhotosAlbum (chosenImage, nil, nil, nil);
         }
     }];

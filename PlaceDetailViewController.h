@@ -21,6 +21,7 @@
 
 @property PFGeoPoint *locationCoordinate;
 
+@property BOOL isCloseEnough;
 
 @property NSArray *playersArray;
 @property (weak, nonatomic) IBOutlet UILabel *takePictureLabel;
@@ -36,4 +37,5 @@
 @property NSMutableArray *scheduledGamesArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property NSString *titleString;
 @end

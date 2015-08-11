@@ -70,6 +70,7 @@
         if (!error) {
             
             [self performSegueWithIdentifier:@"LogInAfterSignUp" sender:nil];
+           
             
         } else {
             NSString *errorString = [error userInfo][@"error"];

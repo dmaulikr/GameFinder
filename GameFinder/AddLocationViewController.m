@@ -222,6 +222,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.addLocationPictureImageView.image = chosenImage;
+    self.saveButton.hidden = NO;
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }

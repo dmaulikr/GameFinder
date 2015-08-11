@@ -21,8 +21,13 @@
     self.oftenPlaysLabel.alpha = 0.0f;
     self.experienceLabel.alpha = 0.0f;
     self.ageLabel.alpha = 0.0f;
-    self.ageLabel.text = [NSString stringWithFormat:@"%@ is %lu years old", self.username,(unsigned long)self.years];
+    if (!self.oftenPlay) {
+       self.oftenPlaysLabel.text = @"Not sure how many times a week they play";
+    }else{
     self.oftenPlaysLabel.text = [NSString stringWithFormat:@"%@ plays %@ x's a week", self.username, self.oftenPlay];
+    }
+    self.ageLabel.text = [NSString stringWithFormat:@"%@ is %lu years old", self.username,(unsigned long)self.years];
+    
     self.experienceLabel.text = [NSString stringWithFormat:@"Experience level is %@", self.experience];
     self.navigationItem.title = self.username;
 }

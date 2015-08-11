@@ -48,6 +48,7 @@
 		27618D231B66ABF100ED4931 /* GameLocationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27618D221B66ABF100ED4931 /* GameLocationTableViewCell.m */; };
 		276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A2E001A7BFF6300BD7600 /* LoginViewController.m */; };
 		2770EBE71B66EAAD00CE3F1D /* AddLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2770EBE61B66EAAD00CE3F1D /* AddLocationViewController.m */; };
+		27710DC31B79BEF90003E621 /* EditLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27710DC21B79BEF90003E621 /* EditLocationViewController.m */; };
 		277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
 		279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC11A71A77F0080542E /* AppDelegate.m */; };
@@ -160,6 +161,8 @@
 		276A2E001A7BFF6300BD7600 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		2770EBE51B66EAAD00CE3F1D /* AddLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLocationViewController.h; sourceTree = "<group>"; };
 		2770EBE61B66EAAD00CE3F1D /* AddLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLocationViewController.m; sourceTree = "<group>"; };
+		27710DC11B79BEF90003E621 /* EditLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditLocationViewController.h; sourceTree = "<group>"; };
+		27710DC21B79BEF90003E621 /* EditLocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditLocationViewController.m; sourceTree = "<group>"; };
 		277A3EA81A8CC779000C17ED /* PlaceDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceDetailViewController.h; path = ../PlaceDetailViewController.h; sourceTree = "<group>"; };
 		277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceDetailViewController.m; path = ../PlaceDetailViewController.m; sourceTree = "<group>"; };
 		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -424,6 +427,8 @@
 				2770EBE61B66EAAD00CE3F1D /* AddLocationViewController.m */,
 				274B49E61B7371CC0037BF5A /* UserDetailViewController.h */,
 				274B49E71B7371CC0037BF5A /* UserDetailViewController.m */,
+				27710DC11B79BEF90003E621 /* EditLocationViewController.h */,
+				27710DC21B79BEF90003E621 /* EditLocationViewController.m */,
 			);
 			name = "View Controllers";
 			path = GameFinder;
@@ -561,6 +566,7 @@
 				271632B81AE5408D0060BBC9 /* signUpViewController.m in Sources */,
 				27618D231B66ABF100ED4931 /* GameLocationTableViewCell.m in Sources */,
 				27D1885A1A95C99900410B32 /* GamePointAnnotation.m in Sources */,
+				27710DC31B79BEF90003E621 /* EditLocationViewController.m in Sources */,
 				27618D201B669D3200ED4931 /* GameLocationTableViewController.m in Sources */,
 				276A2E011A7BFF6300BD7600 /* LoginViewController.m in Sources */,
 				27017AB61ADF2EF200A9DF5F /* UIImage+WebP.m in Sources */,
