@@ -32,11 +32,11 @@
     }
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
-        self.saveAddPlayersButton.hidden = YES;
+    self.saveAddPlayersButton.hidden = YES;
     self.saveScheduleButton.hidden = YES;
     self.addNumberOfPlayersTextField.hidden = YES;
     self.addPlayersLabel.hidden = YES;
-
+    
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
@@ -70,10 +70,27 @@
         self.placeImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.placeImageView.clipsToBounds = YES;
         
-
+        
     }
     
-
+    if ([self.indoorString isEqual:@(1)]) {
+        self.indoorImageView.image = [UIImage imageNamed:@"indoor"];
+    }else{
+        self.indoorImageView.image = [UIImage imageNamed:@"outdoor"];
+    }if ([self.coveredString isEqual:@(1)]) {
+        self.coveredImageView.image = [UIImage imageNamed:@"covered"];
+    }else{
+        self.coveredImageView.image = [UIImage imageNamed:@"not-covered"];
+    }if ([self.publicString isEqual:@(1)]) {
+        self.publicImageView.image = [UIImage imageNamed:@"public"];
+    }else{
+        self.publicImageView.image = [UIImage imageNamed:@"private"];
+    }if ([self.lightString isEqual:@(1)]) {
+        self.lightImageView.image = [UIImage imageNamed:@"lights"];
+    }else{
+        self.lightImageView.image = [UIImage imageNamed:@"no-lights"];
+    }
+    
 }
 #pragma mark
 #pragma CollectionView DataSources

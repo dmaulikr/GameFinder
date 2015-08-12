@@ -37,5 +37,16 @@
 @property NSMutableArray *scheduledGamesArray;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UIImageView *lightImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *coveredImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *indoorImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *publicImageView;
+
+
+
+@property NSNumber *indoorString;
+@property NSNumber *lightString;
+@property NSNumber *publicString;
+@property NSNumber *coveredString;
 @property NSString *titleString;
 @end

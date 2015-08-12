@@ -28,7 +28,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
     
     [self queryParseForGameLocations];
-    [self queryParseForPlayerLocation];
+    
     [self profileImageButton];
     self.centerMapButton.alpha = 0.0f;
     
@@ -154,6 +154,7 @@
                 self.gameLocationsArray = [[NSArray arrayWithArray:games]mutableCopy];
                 [SVProgressHUD dismiss];
                 [self.tableView reloadData];
+                [self performSelectorOnMainThread:@selector(queryParseForPlayerLocation) withObject:nil waitUntilDone:YES];
                 
             }
         }];
@@ -183,7 +184,10 @@
         PFFile *file = object[@"locationImage"];
         
         PlaceDetailViewController *pdc = [segue destinationViewController];
-        
+        NSNumber *lightString = object[@"lights"];
+        NSNumber *publicString = object[@"openToPublic"];
+        NSNumber *coveredString = object[@"covered"];
+        NSNumber *indoorString = object[@"indoor"];
         pdc.placeObject = object;
         
         [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
@@ -198,6 +202,10 @@
         pdc.placeImageView.clipsToBounds = YES;
         pdc.titleString = name;
         pdc.locationCoordinate = location;
+        pdc.lightString = lightString;
+        pdc.publicString = publicString;
+        pdc.coveredString = coveredString;
+        pdc.indoorString = indoorString;
 
         
     }

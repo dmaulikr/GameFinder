@@ -21,15 +21,23 @@
     self.placeNameTextField.text = self.nameString;
     if ([self.indoorBool  isEqual: @(1)]) {
         [self.outdoorSwitch setOn:false];
+    }else{
+        [self.outdoorSwitch setOn:true];
     }
     if ([self.lightBool isEqual:@(1)]) {
         [self.lightSwitch setOn:true];
+    }else{
+        [self.lightSwitch setOn:false];
     }
     if ([self.coveredBool isEqual:@(1)]) {
         [self.coveredSwitch setOn:true];
+    }else{
+        [self.coveredSwitch setOn:false];
     }
     if ([self.publicBool isEqual:@(1)]) {
         [self.publicSwitch setOn:true];
+    }else{
+        [self.publicSwitch setOn:false];
     }
     
     [self.eraseSwitch setOn:false];
@@ -65,6 +73,8 @@
         }
         if (self.eraseSwitch.isOn) {
             [object incrementKey:@"shouldEraseLocation" byAmount:@1];
+        }else{
+            [object incrementKey:@"shouldEraeLocation" byAmount:@0];
         }
 
         [object saveInBackgroundWithBlock:^(BOOL success, NSError *error){
