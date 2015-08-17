@@ -30,4 +30,5 @@
 @property (nonatomic) BOOL courtIsCovered;
 @property (nonatomic) BOOL courtIsOpenToPublic;
 @property (nonatomic) BOOL didPressSave;
+@property (nonatomic) BOOL didTakePicture;
 @end

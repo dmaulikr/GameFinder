@@ -18,11 +18,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.editLocationButton.layer.cornerRadius = 4.0f;
     self.placeNameTextField.text = self.nameString;
-    if ([self.indoorBool  isEqual: @(1)]) {
-        [self.outdoorSwitch setOn:false];
-    }else{
+    if ([self.outdoorBool  isEqual: @(1)]) {
         [self.outdoorSwitch setOn:true];
+        
+    }else{
+        
+        [self.outdoorSwitch setOn:false];
     }
     if ([self.lightBool isEqual:@(1)]) {
         [self.lightSwitch setOn:true];
@@ -42,8 +45,9 @@
     
     [self.eraseSwitch setOn:false];
     self.editLocationButton.hidden = YES;
-    
+    self.placeImageView.clipsToBounds = YES;
     // Do any additional setup after loading the view.
+    
 }
 
 - (IBAction)handleEditButtonPressed:(id)sender {
@@ -52,9 +56,9 @@
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error){
         object[@"name"] = self.placeNameTextField.text;
         if (self.outdoorSwitch.on) {
-            object[@"indoor"] = @NO;
+            object[@"outdoor"] = @YES;
         }else{
-            object[@"indoor"] = @YES;
+            object[@"outdoor"] = @NO;
         }
         if (self.lightSwitch.on) {
             object[@"lights"] = @YES;
@@ -74,18 +78,29 @@
         if (self.eraseSwitch.isOn) {
             [object incrementKey:@"shouldEraseLocation" byAmount:@1];
         }else{
-            [object incrementKey:@"shouldEraeLocation" byAmount:@0];
+            [object incrementKey:@"shouldEraseLocation" byAmount:@0];
         }
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"@ChangeLocationInformation" object:object];
+        
+        
 
         [object saveInBackgroundWithBlock:^(BOOL success, NSError *error){
             [SVProgressHUD showWithStatus:@"Saving" maskType:SVProgressHUDMaskTypeClear];
             if (!error) {
                 [SVProgressHUD showSuccessWithStatus:@"Saved changes"];
-                [self performSegueWithIdentifier:@"NewLocationInformation" sender:object];
-            }
-            
-        }];
+                
+                
+                [self dismissViewControllerAnimated:YES completion:^{
+                    
+                }];            }
+                   }];
+        
     }];
+    
+}
+
+-(BOOL)prefersStatusBarHidden{
+    return YES;
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{

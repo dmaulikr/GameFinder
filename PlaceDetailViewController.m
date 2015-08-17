@@ -25,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.titleString;
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeIconImages:) name:@"ChangeLocationInformation" object:nil];
     self.scheduledGamesArray = self.placeObject[@"scheduledGames"];
     if (self.scheduledGamesArray.count == 0) {
         self.tableView.hidden = YES;
@@ -38,6 +38,11 @@
     self.addPlayersLabel.hidden = YES;
     
     
+    //style court info view
+    self.courtInformationView.layer.borderWidth = 1.0f;
+    self.courtInformationView.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
+    self.tableView.layer.borderWidth = 0.5f;
+    self.tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
@@ -50,9 +55,16 @@
     self.numberPickerArray = @[@"< 5", @"5-15", @"15-25", @"> 25"];
     self.scheduleGameTextField.inputView = [self configureDatePicker];
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [self checkForIconImages];
+    
+    
+}
+
 
 -(void)viewDidAppear:(BOOL)animated{
     [self queryParse];
+    
     if (!self.placeImageView.image) {
         self.placeImageView.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(isNear)];
@@ -65,33 +77,17 @@
         self.placeImageView.clipsToBounds = YES;
     }else{
         self.takePictureLabel.hidden = YES;
-        self.placeImageView.layer.borderWidth = 1.0f;
-        self.placeImageView.layer.borderColor = [UIColor darkGrayColor].CGColor;
+        self.placeImageView.layer.borderWidth = 2.0f;
+        self.placeImageView.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
         self.placeImageView.contentMode = UIViewContentModeScaleAspectFill;
         self.placeImageView.clipsToBounds = YES;
         
         
     }
     
-    if ([self.indoorString isEqual:@(1)]) {
-        self.indoorImageView.image = [UIImage imageNamed:@"indoor"];
-    }else{
-        self.indoorImageView.image = [UIImage imageNamed:@"outdoor"];
-    }if ([self.coveredString isEqual:@(1)]) {
-        self.coveredImageView.image = [UIImage imageNamed:@"covered"];
-    }else{
-        self.coveredImageView.image = [UIImage imageNamed:@"not-covered"];
-    }if ([self.publicString isEqual:@(1)]) {
-        self.publicImageView.image = [UIImage imageNamed:@"public"];
-    }else{
-        self.publicImageView.image = [UIImage imageNamed:@"private"];
-    }if ([self.lightString isEqual:@(1)]) {
-        self.lightImageView.image = [UIImage imageNamed:@"lights"];
-    }else{
-        self.lightImageView.image = [UIImage imageNamed:@"no-lights"];
-    }
     
 }
+
 #pragma mark
 #pragma CollectionView DataSources
 
@@ -108,11 +104,12 @@
         if (data) {
             UIImage *image = [UIImage imageWithData:data];
             cell.playerProfileImageView.image = image;
+            cell.playerUsernameLabel.textColor = [UIColor whiteColor];
         }
     }];
     cell.layer.cornerRadius = 40;
     cell.playerProfileImageView.clipsToBounds = YES;
-    cell.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    cell.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
     cell.layer.borderWidth = 2.0f;
     
     cell.playerUsernameLabel.text = player[@"username"];
@@ -460,7 +457,7 @@
         NSString *name = place[@"name"];
         PFFile *file = place[@"locationImage"];
         NSNumber *coveredBool = place[@"covered"];
-        NSNumber *indoorBool = place[@"indoor"];
+        NSNumber *outdoorBool = place[@"outdoor"];
         NSNumber *lightsBool = place[@"lights"];
         NSNumber *publicBool = place[@"openToPublic"];
         
@@ -475,7 +472,8 @@
         editLocationViewController.coveredBool = coveredBool;
         editLocationViewController.lightBool = lightsBool;
         editLocationViewController.publicBool = publicBool;
-        editLocationViewController.indoorBool = indoorBool;
+        editLocationViewController.outdoorBool = outdoorBool;
+        
     }
     
 }
@@ -494,17 +492,51 @@
             self.addPlayersLabel.hidden = NO;
         }
     }];
+    
 }
 
 -(void)passObject:(NSDictionary *)object{
     
     [self performSegueWithIdentifier:@"EditLocation" sender:object];
+    
 }
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
     if (UIEventSubtypeMotionShake) {
         
         [self performSelector:@selector(passObject:) withObject:self.placeObject];
+        
     }
+}
+
+-(void) changeIconImages:(NSNotification*)notification
+{
+    if ([notification.name isEqualToString:@"ChangeLocationInformation"])
+    {
+        
+        NSDictionary* userInfo = notification.object;
+        NSNumber* total = (NSNumber*)userInfo[@"total"];
+        NSLog (@"Successfully received test notification! %i", total.intValue);
+    }
+}
+-(void)checkForIconImages{
+    if ([self.outdoorString isEqual:@(1)]) {
+        self.indoorImageView.image = [UIImage imageNamed:@"outdoor"];
+    }else{
+        self.indoorImageView.image = [UIImage imageNamed:@"indoor"];
+    }if ([self.coveredString isEqual:@(1)]) {
+        self.coveredImageView.image = [UIImage imageNamed:@"covered"];
+    }else{
+        self.coveredImageView.image = [UIImage imageNamed:@"not-covered"];
+    }if ([self.publicString isEqual:@(1)]) {
+        self.publicImageView.image = [UIImage imageNamed:@"public"];
+    }else{
+        self.publicImageView.image = [UIImage imageNamed:@"private"];
+    }if ([self.lightString isEqual:@(1)]) {
+        self.lightImageView.image = [UIImage imageNamed:@"lights"];
+    }else{
+        self.lightImageView.image = [UIImage imageNamed:@"no-lights"];
+    }
+
 }
 
 @end

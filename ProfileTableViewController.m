@@ -204,9 +204,22 @@
 - (IBAction)logOutButton:(id)sender {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Log Out" message:@"Are you sure you want to log out?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [PFUser logOutInBackground];
-        
         //* take user out of "checked in" games *//
+        PFQuery *games = [PFQuery queryWithClassName:@"Games"];
+        [games whereKey:@"players" equalTo:[PFUser currentUser]];
+        [games findObjectsInBackgroundWithBlock:^(NSArray *games, NSError *error){
+            if (!error) {
+                for (PFObject *players in games) {
+                    [players removeObject:[PFUser currentUser] forKey:@"players"];
+                    [players saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+                        if (!error) {
+                            [PFUser logOutInBackground];
+                        }
+                    }];
+                    
+                }
+            }
+        }];
         
         UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"LogInScreen"];
         [self presentViewController:vc animated:YES completion:nil];

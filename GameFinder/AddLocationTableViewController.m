@@ -70,7 +70,7 @@
 -(void)saveLocationToParse{
     PFObject *gameObject = [PFObject objectWithClassName:@"Games"];
     gameObject[@"name"] = self.nameLocationTextField.text;
-    gameObject[@"indoor"] = self.indoorTextField.text;
+    gameObject[@"outdoor"] = self.indoorTextField.text;
     gameObject[@"openToPublic"] = self.openToPublicTextField.text;
     gameObject[@"bestTimeToPlay"] = self.timeToPlayTextField.text;
     gameObject[@"lights"] = self.lightsTextField.text;

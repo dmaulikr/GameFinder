@@ -27,7 +27,7 @@
 @property NSNumber *lightBool;
 @property NSNumber *coveredBool;
 @property NSNumber *publicBool;
-@property NSNumber *indoorBool;
+@property NSNumber *outdoor;
 
 @property BOOL shouldErase;
 

@@ -14,7 +14,14 @@
 #import "GamePointAnnotation.h"
 #import "SVProgressHUD.h"
 
+
 @interface GameLocationTableViewController ()
+
+
+
+// For state restoration
+@property BOOL searchControllerWasActive;
+@property BOOL searchControllerSearchFieldWasFirstResponder;
 
 @end
 
@@ -26,6 +33,21 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
+    self.searchResultsTableView = [[SearchResultsTableViewController alloc]init];
+    UIView *headerView = [[UIView alloc]initWithFrame:self.tableView.tableHeaderView.frame];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsTableView];
+    self.searchResultsTableView.tableView.delegate = self;
+    
+    self.searchController.searchBar.delegate = self;
+    self.searchController.delegate = self;
+    [self.searchController.searchBar sizeToFit];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.definesPresentationContext = YES;
+    headerView = self.searchController.searchBar;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    [self.tableView.tableHeaderView addSubview:headerView];
+    
     
     [self queryParseForGameLocations];
     
@@ -37,13 +59,12 @@
     self.contractMapButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.contractMapButton.clipsToBounds = YES;
     self.contractMapButton.hidden = YES;
-   
+    
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshView) name:@"addedLocation" object:nil];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
-    
     
     
     [self.mapView removeAnnotations:self.mapView.annotations];
@@ -54,11 +75,20 @@
     hold.minimumPressDuration = 0.25f;
     [self.mapView addGestureRecognizer:hold];
     
-
-
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    self.searchResultsTableView.tableView.hidden = YES;
+    self.searchController.searchBar.placeholder = @"Find a location";
+    if (self.searchControllerWasActive) {
+        self.searchController.active = self.searchControllerWasActive;
+        _searchControllerWasActive = NO;
+        
+        if (self.searchControllerSearchFieldWasFirstResponder) {
+            [self.searchController.searchBar becomeFirstResponder];
+            _searchControllerSearchFieldWasFirstResponder = NO;
+        }
+    }
     [UIView animateWithDuration:15.0 animations:^{
         
         self.centerMapButton.alpha = 1.0;
@@ -84,19 +114,29 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.gameLocationsArray.count;
     
 }
 
+#pragma mark - Table view delegates
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (tableView == self.tableView) {
+        //Get the object at the same index in the array
+        NSDictionary *object = [self.gameLocationsArray objectAtIndex:indexPath.row];
+        
+        //Send that object along to the segue
+        [self performSegueWithIdentifier:@"ShowPlaceDetail" sender:object];
+    }else{
+        
+        NSMutableDictionary *object = [self.searchResultsTableView.searchResults objectAtIndex:indexPath.row];
+        [self performSegueWithIdentifier:@"ShowPlaceDetail" sender:object];
+        self.searchController.searchBar.text = @"";
+        
+    }
     
-    //Get the object at the same index in the array
-    NSDictionary *object = [self.gameLocationsArray objectAtIndex:indexPath.row];
-    
-    //Send that object along to the segue
-    [self performSegueWithIdentifier:@"ShowPlaceDetail" sender:object];
     
     tableView.scrollsToTop = NO;
     
@@ -108,7 +148,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GameLocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GameLocationCell"];
     
+    
     NSDictionary *dict = [self.gameLocationsArray objectAtIndex:indexPath.row];
+    
     
     cell.title.text = dict[@"name"];
     cell.subtitle.text = dict[@"address"];
@@ -152,9 +194,10 @@
                 }
                 
                 self.gameLocationsArray = [[NSArray arrayWithArray:games]mutableCopy];
+                
                 [SVProgressHUD dismiss];
+                [self performSelectorOnMainThread:@selector(queryParseForPlayerLocation:) withObject:games waitUntilDone:YES];
                 [self.tableView reloadData];
-                [self performSelectorOnMainThread:@selector(queryParseForPlayerLocation) withObject:nil waitUntilDone:YES];
                 
             }
         }];
@@ -163,7 +206,7 @@
     }];
     
     
-   
+    
 }
 
 #pragma mark - Navigation
@@ -177,8 +220,9 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([[segue identifier] isEqualToString:@"ShowPlaceDetail"]) {
+        [self.searchResultsTableView.searchResults removeAllObjects];
         NSDictionary *object = (NSDictionary *)sender;
-
+        
         NSString *name = [object objectForKey:@"name"];
         PFGeoPoint *location = [object objectForKey:@"location"];
         PFFile *file = object[@"locationImage"];
@@ -187,14 +231,14 @@
         NSNumber *lightString = object[@"lights"];
         NSNumber *publicString = object[@"openToPublic"];
         NSNumber *coveredString = object[@"covered"];
-        NSNumber *indoorString = object[@"indoor"];
+        NSNumber *outdoorString = object[@"outdoor"];
         pdc.placeObject = object;
         
         [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
             if (data) {
                 UIImage *image = [UIImage imageWithData:data];
                 pdc.placeImageView.image = image;
-            
+                
             }
         }];
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@" " style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -205,8 +249,8 @@
         pdc.lightString = lightString;
         pdc.publicString = publicString;
         pdc.coveredString = coveredString;
-        pdc.indoorString = indoorString;
-
+        pdc.outdoorString = outdoorString;
+        
         
     }
 }
@@ -312,24 +356,48 @@
 }
 
 //Check for location to prevent duplicate locations being added to db
--(void)queryParseForPlayerLocation {
-    
+-(void)queryParseForPlayerLocation:(NSArray *)games {
+    NSDictionary *gameDict = [games objectAtIndex:0];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLocation:appDelegate.locationManager.currentLocation];
-    PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-    [getGames whereKey:@"location" nearGeoPoint:geoPoint withinKilometers:0.15];
-    [getGames  getFirstObjectInBackgroundWithBlock:^(PFObject *closestGame, NSError *error) {
-        if (closestGame) {
-            [closestGame addUniqueObject:[PFUser currentUser] forKey:@"players"];
-            [closestGame saveInBackground];
-        }if (!closestGame) {
-            [self performSelector:@selector(removePlayer) withObject:nil];
-        }
-        [self performSelector:@selector(enableAddGameButton:) withObject:closestGame];
-    }];
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    PFGeoPoint *gameGeoPoint = gameDict[@"location"];
+    CLLocation *gameLocation = [[CLLocation alloc]initWithLatitude:gameGeoPoint.latitude longitude:gameGeoPoint.longitude];
+    CLLocationDistance distance = [currentLocation distanceFromLocation:gameLocation];
+    if (distance > 160) {
+        self.addGamesButton.enabled = YES;
+    }
+    if (distance <= 160) {
+        PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
+        [getGames whereKey:@"address" equalTo:gameDict[@"address"]];
+        [getGames  getFirstObjectInBackgroundWithBlock:^(PFObject *closestGame, NSError *error) {
+            if (closestGame) {
+                self.addGamesButton.enabled = NO;
+                [closestGame addUniqueObject:[PFUser currentUser] forKey:@"players"];
+                [closestGame saveInBackground];
+            }
+        }];
+        
+        
+    }else if (distance >160 && [gameDict[@"players"]containsObject:[PFUser currentUser]]){
+        
+        PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
+        [getGames whereKey:@"address" equalTo:gameDict[@"address"]];
+        [getGames  getFirstObjectInBackgroundWithBlock:^(PFObject *closestGame, NSError *error) {
+            if (closestGame) {
+                self.addGamesButton.enabled = YES;
+                [closestGame removeObject:[PFUser currentUser] forKey:@"players"];
+                [closestGame saveInBackground];
+            }
+        }];
+        
+        
+        
+    }
     
- 
 }
+
+
+
 -(void)removePlayer{
     
     PFQuery *query = [PFQuery queryWithClassName:@"Games"];
@@ -341,7 +409,7 @@
             
             [players removeObject:[PFUser currentUser] forKey:@"players"];
             [players saveInBackground];
-  
+            
         }
         
         
@@ -350,12 +418,12 @@
 
 #pragma mark -location manage delegates
 -(void)updateLocation:(NSNotification *)notif{
-   
+    
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     
     self.mapView.centerCoordinate = CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude);
-    [self queryParseForPlayerLocation];
+    [self queryParseForGameLocations];
     [self.tableView reloadData];
     
     
@@ -367,9 +435,9 @@
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
-    
+    [self queryParseForGameLocations];
     [self.tableView reloadData];
-  
+    
     
     
 }
@@ -383,12 +451,12 @@
 
 -(void)refreshView{
     [self queryParseForGameLocations];
-    [self queryParseForPlayerLocation];
+    //[self queryParseForPlayerLocation];
 }
 
 #pragma mark - button methods
 - (IBAction)handleCenterMapButtonPressed:(id)sender {
-   
+    
     [self.mapView setCenterCoordinate:self.mapView.userLocation.coordinate animated:YES];
 }
 
@@ -400,34 +468,40 @@
     
 }
 
-- (IBAction)handleFindGameButtonPressed:(id)sender {
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
     
-    self.definesPresentationContext = YES;
-    [UIView animateWithDuration:1.0f animations:^{
+    
+    NSString *searchString = searchController.searchBar.text;
+    NSArray *searchResults = [self.gameLocationsArray filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(PFObject *evaluatedObject,
+                                                                                                                        NSDictionary *bindings) {
+        BOOL result = NO;
         
-        self.navigationItem.titleView = self.searchController.searchBar;
-        [self.navigationItem.titleView becomeFirstResponder];
-    }];
+        if ([(NSString *)evaluatedObject[@"name"] containsString:searchString]) {
+            result = YES;
+        }
+        return result;
+    }]];
+    
+    SearchResultsTableViewController *tableController = (SearchResultsTableViewController *)self.searchController.searchResultsController;
+    //tableController.searchResults = nil;
+    tableController.searchResults = [[NSArray arrayWithArray:searchResults]mutableCopy];
+    [tableController.tableView reloadData];
+    
+    
 }
 
--(void)updateSearchResultsForSearchController:(UISearchController *)searchController{
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     
+    [searchBar resignFirstResponder];
 }
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [searchBar removeFromSuperview];
+    
+    [searchBar resignFirstResponder];
 }
--(void)enableAddGameButton:(NSDictionary *)closestGame{
-    if (closestGame) {
-        self.addGamesButton.enabled = NO;
-    }else{
-        self.addGamesButton.enabled = YES;
-    }
-}
+
+
 - (IBAction)handleAddGameButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"AddLocation" sender:nil];
 }

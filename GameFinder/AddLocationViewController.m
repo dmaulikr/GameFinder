@@ -28,6 +28,7 @@
     UITapGestureRecognizer *tapImageView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openCamera)];
     tapImageView.numberOfTapsRequired = 1.0f;
     [self.addLocationPictureImageView addGestureRecognizer:tapImageView];
+    self.didTakePicture = NO;
     
 
 }
@@ -98,9 +99,9 @@
             location[@"state"] = place.administrativeArea;
             location[@"zip"] = place.postalCode;
             if (self.outdoorSwitch.on) {
-                location[@"indoor"] = @NO;
+                location[@"outdoor"] = @YES;
             }else{
-                location[@"indoor"] = @YES;
+                location[@"outdoor"] = @NO;
             }
             if (self.lightSwitch.on) {
                 location[@"lights"] = @YES;
@@ -117,11 +118,14 @@
             }else{
                 location[@"openToPublic"] = @NO;
             }
+            NSData *data = UIImagePNGRepresentation(self.addLocationPictureImageView.image);
+            PFFile *file = [PFFile fileWithData:data];
             if (self.locationNameTextField.text.length >= 1) {
-            
-                NSData *data = UIImagePNGRepresentation(self.addLocationPictureImageView.image);
-                PFFile *file = [PFFile fileWithData:data];
-                [location setObject:file forKey:@"locationImage"];
+                if (self.didTakePicture == YES) {
+                    [location setObject:file forKey:@"locationImage"];
+                }
+                
+                
                 
             [location saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 [SVProgressHUD showWithStatus:@"Saving location..."];
@@ -186,11 +190,11 @@
 
 -(void)closeViewController{
         [self hideKeyboard];
-         [UIView animateWithDuration:1.0f animations:^{
-             self.view.center = CGPointMake(self.view.center.x, self.view.center.y +800);
-         } completion:^(BOOL finished) {
-             [self dismissViewControllerAnimated:NO completion:nil];
-         }];
+    [UIView animateWithDuration:0.5f animations:^{
+        self.view.superview.bounds = CGRectMake(0, self.view.superview.frame.origin.y-800, self.view.frame.size.width, self.view.frame.size.height);
+    } completion:^(BOOL finished) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];
 
 }
 
@@ -223,6 +227,7 @@
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.addLocationPictureImageView.image = chosenImage;
     self.saveButton.hidden = NO;
+    self.didTakePicture = YES;
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }

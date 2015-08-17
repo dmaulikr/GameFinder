@@ -42,9 +42,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *indoorImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *publicImageView;
 
+@property (weak, nonatomic) IBOutlet UIView *courtInformationView;
 
 
-@property NSNumber *indoorString;
+@property NSNumber *outdoorString;
 @property NSNumber *lightString;
 @property NSNumber *publicString;
 @property NSNumber *coveredString;
