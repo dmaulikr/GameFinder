@@ -53,6 +53,7 @@
 		277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A3EA91A8CC779000C17ED /* PlaceDetailViewController.m */; };
 		278A64501B7FCACF002F4A26 /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 278A644F1B7FCACF002F4A26 /* SearchResultsTableViewController.m */; };
 		278A64531B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 278A64521B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.m */; };
+		278B82A21B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 278B82A11B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
 		279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC11A71A77F0080542E /* AppDelegate.m */; };
 		279E2AC81A71A77F0080542E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AC61A71A77F0080542E /* Main.storyboard */; };
@@ -174,6 +175,8 @@
 		278A644F1B7FCACF002F4A26 /* SearchResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsTableViewController.m; sourceTree = "<group>"; };
 		278A64511B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationSearchResultsTableViewCell.h; sourceTree = "<group>"; };
 		278A64521B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationSearchResultsTableViewCell.m; sourceTree = "<group>"; };
+		278B82A01B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacePictureCustomCollectionViewCell.h; sourceTree = "<group>"; };
+		278B82A11B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacePictureCustomCollectionViewCell.m; sourceTree = "<group>"; };
 		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2ABD1A71A77F0080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2ABE1A71A77F0080542E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -363,6 +366,8 @@
 			isa = PBXGroup;
 			children = (
 				27618D211B66ABF100ED4931 /* GameLocationTableViewCell.h */,
+				278B82A01B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.h */,
+				278B82A11B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m */,
 				27618D221B66ABF100ED4931 /* GameLocationTableViewCell.m */,
 				270495031A9FEA33000D163E /* LocationManager.h */,
 				270495041A9FEA33000D163E /* LocationManager.m */,
@@ -594,6 +599,7 @@
 				27017AAC1ADF2EF200A9DF5F /* SDImageCache.m in Sources */,
 				2770EBE71B66EAAD00CE3F1D /* AddLocationViewController.m in Sources */,
 				275F1BC11AE7766800815B69 /* ProfileTableViewController.m in Sources */,
+				278B82A21B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m in Sources */,
 				27017AAB1ADF2EF200A9DF5F /* NSData+ImageContentType.m in Sources */,
 				27017AAE1ADF2EF200A9DF5F /* SDWebImageDecoder.m in Sources */,
 				277A3EAA1A8CC779000C17ED /* PlaceDetailViewController.m in Sources */,

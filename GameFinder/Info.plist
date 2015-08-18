@@ -64,7 +64,7 @@
 	<string>Court finder uses your location to help you find games closest to you, and to let other hoopers find where you&apos;re playing. Don&apos;t worry, we won&apos;t use all of your batter, we only check location if you travel long distances.</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>fetch</string>
+		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

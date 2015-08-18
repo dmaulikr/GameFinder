@@ -225,7 +225,6 @@
         
         NSString *name = [object objectForKey:@"name"];
         PFGeoPoint *location = [object objectForKey:@"location"];
-        PFFile *file = object[@"locationImage"];
         
         PlaceDetailViewController *pdc = [segue destinationViewController];
         NSNumber *lightString = object[@"lights"];
@@ -234,16 +233,10 @@
         NSNumber *outdoorString = object[@"outdoor"];
         pdc.placeObject = object;
         
-        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
-            if (data) {
-                UIImage *image = [UIImage imageWithData:data];
-                pdc.placeImageView.image = image;
-                
-            }
-        }];
+        
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@" " style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backButton;
-        pdc.placeImageView.clipsToBounds = YES;
+        
         pdc.titleString = name;
         pdc.locationCoordinate = location;
         pdc.lightString = lightString;

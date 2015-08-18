@@ -24,10 +24,11 @@
 @property BOOL isCloseEnough;
 
 @property NSArray *playersArray;
-@property (weak, nonatomic) IBOutlet UILabel *takePictureLabel;
+@property NSArray *locationPictures;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *playerCollectionView;
-@property (weak, nonatomic) IBOutlet UIImageView *placeImageView;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *pictureCollectionView;
 
 @property NSArray *numberPickerArray;
 @property (weak, nonatomic) IBOutlet UIButton *saveScheduleButton;
@@ -44,6 +45,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *courtInformationView;
 
+@property (weak, nonatomic) IBOutlet UIButton *takePictureButton;
 
 @property NSNumber *outdoorString;
 @property NSNumber *lightString;

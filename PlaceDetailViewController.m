@@ -14,6 +14,7 @@
 #import "SVProgressHUD.h"
 #import "UserDetailViewController.h"
 #import "EditLocationViewController.h"
+#import "PlacePictureCustomCollectionViewCell.h"
 
 @interface PlaceDetailViewController ()
 
@@ -25,7 +26,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = self.titleString;
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeIconImages:) name:@"ChangeLocationInformation" object:nil];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.takePictureButton.layer.cornerRadius = 4.0;
+    self.takePictureButton.layer.borderWidth = 1.0;
+    self.takePictureButton.layer.borderColor = [UIColor blackColor].CGColor;
+    self.takePictureButton.clipsToBounds = YES;
     self.scheduledGamesArray = self.placeObject[@"scheduledGames"];
     if (self.scheduledGamesArray.count == 0) {
         self.tableView.hidden = YES;
@@ -64,28 +69,6 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [self queryParse];
-    
-    if (!self.placeImageView.image) {
-        self.placeImageView.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(isNear)];
-        tap.numberOfTapsRequired = 1.0;
-        self.placeImageView.image = [UIImage imageNamed:@"take-picture"];
-        [self.placeImageView addGestureRecognizer:tap];
-        self.takePictureLabel.hidden = NO;
-        self.placeImageView.backgroundColor = [UIColor colorWithWhite:.9 alpha:1.0];
-        self.placeImageView.contentMode = UIViewContentModeScaleAspectFit;
-        self.placeImageView.clipsToBounds = YES;
-    }else{
-        self.takePictureLabel.hidden = YES;
-        self.placeImageView.layer.borderWidth = 2.0f;
-        self.placeImageView.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
-        self.placeImageView.contentMode = UIViewContentModeScaleAspectFill;
-        self.placeImageView.clipsToBounds = YES;
-        
-        
-    }
-    
-    
 }
 
 #pragma mark
@@ -93,32 +76,61 @@
 
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    static NSString *CellIdentifier = @"PlayersCollectionViewCell";
-    NSDictionary *player = self.playersArray[indexPath.row];
-    
-    
-    PlaceDetailCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.playerProfileImageView.image = [UIImage imageNamed:@"hooper"];
-    PFFile *file = player[@"profileImage"];
-    [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
-        if (data) {
-            UIImage *image = [UIImage imageWithData:data];
-            cell.playerProfileImageView.image = image;
-            cell.playerUsernameLabel.textColor = [UIColor whiteColor];
+    UICollectionViewCell *cell = nil;
+    if (collectionView == self.playerCollectionView) {
+        static NSString *CellIdentifier = @"PlayersCollectionViewCell";
+        NSDictionary *player = self.playersArray[indexPath.row];
+        
+        
+        PlaceDetailCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.playerProfileImageView.image = [UIImage imageNamed:@"hooper"];
+        PFFile *file = player[@"profileImage"];
+        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+            if (data) {
+                UIImage *image = [UIImage imageWithData:data];
+                cell.playerProfileImageView.image = image;
+                cell.playerUsernameLabel.textColor = [UIColor whiteColor];
+            }
+        }];
+        cell.layer.cornerRadius = 40;
+        cell.playerProfileImageView.clipsToBounds = YES;
+        cell.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
+        cell.layer.borderWidth = 2.0f;
+        
+        cell.playerUsernameLabel.text = player[@"username"];
+        return cell;
+
+    }if (collectionView == self.pictureCollectionView){
+        static NSString *CellIdentifier = @"PlacePicturesCollectionViewCell";
+         PFFile *file = self.locationPictures[indexPath.row];
+        
+        PlacePictureCustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
+            if (!error) {
+                UIImage *image = [UIImage imageWithData:data];
+                cell.placePictureImageView.image = image;
+            }
+        }];
+        cell.placePictureImageView.clipsToBounds = YES;
+        cell.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
+        cell.layer.borderWidth = 2.0;
+
+        return cell;
         }
-    }];
-    cell.layer.cornerRadius = 40;
-    cell.playerProfileImageView.clipsToBounds = YES;
-    cell.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
-    cell.layer.borderWidth = 2.0f;
-    
-    cell.playerUsernameLabel.text = player[@"username"];
+
     return cell;
 }
 
+
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
 {
-    return self.playersArray.count;
+    if (collectionView == self.playerCollectionView) {
+        return self.playersArray.count;
+    }
+    else {
+        
+        return self.locationPictures.count;
+    }
 }
 
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
@@ -133,9 +145,10 @@
         }else{
             headerView.title.text = title;
         }
+        headerView.clipsToBounds = YES;
         headerView.layer.borderColor = [UIColor darkGrayColor].CGColor;
         headerView.layer.borderWidth = 1.0f;
-        
+       
         reusableview = headerView;
     }
     
@@ -147,10 +160,12 @@
 
 -(void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSDictionary *object = [self.playersArray objectAtIndex:indexPath.row];
     
-    //Send that object along to the segue
-    [self performSegueWithIdentifier:@"ShowUserDetail" sender:object];
+    if (collectionView == self.playerCollectionView) {
+        NSDictionary *object = [self.playersArray objectAtIndex:indexPath.row];
+         //Send that object along to the segue
+        [self performSegueWithIdentifier:@"ShowUserDetail" sender:object];
+    }
 }
 
 
@@ -232,15 +247,13 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.placeImageView.image = chosenImage;
-    self.takePictureLabel.hidden = YES;
-    NSData *imageData = UIImagePNGRepresentation(self.placeImageView.image);
+    NSData *imageData = UIImagePNGRepresentation(chosenImage);
     PFFile *imageFile = [PFFile fileWithData:imageData];
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Games"];
     [query whereKey:@"name" equalTo:self.navigationItem.title];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error){
-        self.placeImageView.userInteractionEnabled = NO;
-        [object setObject:imageFile forKey:@"locationImage"];
+        [object addUniqueObject:imageFile forKey:@"pictureArray"];
         [object saveInBackground];
     }];
     
@@ -482,10 +495,14 @@
 -(void)queryParse{
     PFQuery *query = [PFQuery queryWithClassName:@"Games"];
     [query whereKey:@"name" equalTo:self.navigationItem.title];
+    [query includeKey:@"pictureArray"];
     [query includeKey:@"players"];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *results, NSError *error){
         NSMutableArray *array = results[@"players"];
+        NSMutableArray *pictureArray = results[@"pictureArray"];
+        self.locationPictures = [[NSArray arrayWithArray:pictureArray]mutableCopy];
         self.playersArray = [[NSArray arrayWithArray:array]mutableCopy];
+        [self.pictureCollectionView reloadData];
         [self.playerCollectionView reloadData];
         if ([self.playersArray containsObject:[PFUser currentUser]]) {
             self.addNumberOfPlayersTextField.hidden = NO;
@@ -507,17 +524,11 @@
         
     }
 }
-
--(void) changeIconImages:(NSNotification*)notification
-{
-    if ([notification.name isEqualToString:@"ChangeLocationInformation"])
-    {
-        
-        NSDictionary* userInfo = notification.object;
-        NSNumber* total = (NSNumber*)userInfo[@"total"];
-        NSLog (@"Successfully received test notification! %i", total.intValue);
-    }
+- (IBAction)handleTakePictureButtonPressed:(id)sender {
+    [self performSelector:@selector(isNear)];
 }
+
+
 -(void)checkForIconImages{
     if ([self.outdoorString isEqual:@(1)]) {
         self.indoorImageView.image = [UIImage imageNamed:@"outdoor"];
