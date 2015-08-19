@@ -13,30 +13,23 @@
 #import "PlaceDetailCollectionViewCell.h"
 
 
-@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate,UICollectionViewDataSource,UICollectionViewDelegate, UIApplicationDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate,UICollectionViewDataSource,UICollectionViewDelegate, UIApplicationDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property NSDictionary *placeObject;
-@property (weak, nonatomic) IBOutlet UITextField *scheduleGameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *addNumberOfPlayersTextField;
+;
 
 @property PFGeoPoint *locationCoordinate;
 
 @property BOOL isCloseEnough;
 
 @property NSArray *playersArray;
-@property NSArray *locationPictures;
+@property NSArray *picturesArray;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *playerCollectionView;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *pictureCollectionView;
 
-@property NSArray *numberPickerArray;
-@property (weak, nonatomic) IBOutlet UIButton *saveScheduleButton;
-@property (weak, nonatomic) IBOutlet UIButton *saveAddPlayersButton;
-@property (weak, nonatomic) IBOutlet UILabel *scheduleGameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *addPlayersLabel;
-@property NSMutableArray *scheduledGamesArray;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 
 @property (weak, nonatomic) IBOutlet UIImageView *lightImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *coveredImageView;

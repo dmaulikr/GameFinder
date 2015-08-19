@@ -10,7 +10,6 @@
 
 @interface EditLocationViewController : UIViewController<UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UIImageView *placeImageView;
 
 @property (weak, nonatomic) IBOutlet UITextField *placeNameTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *outdoorSwitch;

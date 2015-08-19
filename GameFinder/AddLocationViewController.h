@@ -21,9 +21,12 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *publicSwitch;
 
-@property (weak, nonatomic) IBOutlet UIImageView *addLocationPictureImageView;
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
 
+@property (weak, nonatomic) IBOutlet UIButton *takePictureButton;
+@property (weak, nonatomic) IBOutlet UIImageView *pictureImageView;
+@property (weak, nonatomic) IBOutlet UIButton *thumbsDownButton;
+@property (weak, nonatomic) IBOutlet UIButton *thumbsUpButton;
 
 @property (nonatomic) BOOL courtIsOutside;
 @property (nonatomic) BOOL courtHasLights;

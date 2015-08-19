@@ -21,15 +21,12 @@
     //Show keyboard when view first appears
     [self.locationNameTextField becomeFirstResponder];
     self.didPressSave = YES;
-        //Style and set up image view for user adding picture
-    self.addLocationPictureImageView.layer.cornerRadius = 4.0f;
-    self.addLocationPictureImageView.clipsToBounds = YES;
-    self.addLocationPictureImageView.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapImageView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openCamera)];
-    tapImageView.numberOfTapsRequired = 1.0f;
-    [self.addLocationPictureImageView addGestureRecognizer:tapImageView];
-    self.didTakePicture = NO;
-    
+    self.pictureImageView.alpha = 0;
+    self.thumbsDownButton.alpha = 0;
+    self.thumbsUpButton.alpha = 0;
+    //Style save buttton
+    self.saveButton.layer.cornerRadius = 4.0f;
+    self.saveButton.hidden = YES;
 
 }
 
@@ -42,12 +39,21 @@
     self.view.layer.cornerRadius = 4.0f;
     self.view.layer.borderColor = [UIColor whiteColor].CGColor;
     self.view.layer.borderWidth = 6.0f;
-    
+    if (self.pictureImageView.image == nil) {
+        self.pictureImageView.alpha = 0;
+        self.thumbsUpButton.alpha = 0;
+        self.thumbsDownButton.alpha = 0;
+        self.takePictureButton.alpha = 1;
+    }else{
+        self.pictureImageView.alpha = 1;
+        self.thumbsUpButton.alpha = 1;
+        self.thumbsDownButton.alpha = 1;
+        self.takePictureButton.alpha = 0;
+    }
+
     
 
-    //Style save buttton
-    self.saveButton.layer.cornerRadius = 4.0f;
-    self.saveButton.hidden = YES;
+    
     }
     
    #pragma mark UITextField delegates
@@ -118,11 +124,13 @@
             }else{
                 location[@"openToPublic"] = @NO;
             }
-            NSData *data = UIImagePNGRepresentation(self.addLocationPictureImageView.image);
-            PFFile *file = [PFFile fileWithData:data];
+            
+            
+            NSData *imageData = UIImagePNGRepresentation(self.pictureImageView.image);
+            PFFile *imageFile = [PFFile fileWithData:imageData];
             if (self.locationNameTextField.text.length >= 1) {
                 if (self.didTakePicture == YES) {
-                    [location setObject:file forKey:@"locationImage"];
+                    [location addUniqueObject:imageFile forKey:@"pictureArray"];
                 }
                 
                 
@@ -198,6 +206,10 @@
 
 }
 
+- (IBAction)handleTakePictureButtonPressed:(id)sender {
+   
+    [self openCamera];
+}
 #pragma mark -camera methods
 -(void)openCamera{
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -225,16 +237,38 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.addLocationPictureImageView.image = chosenImage;
+    self.pictureImageView.image = chosenImage;
+    [UIView animateWithDuration:2.0 animations:^{
+        self.pictureImageView.alpha = 1.0f;
+        self.thumbsUpButton.alpha = 1.0;
+        self.thumbsDownButton.alpha = 1.0;
+    }];
+    
     self.saveButton.hidden = NO;
-    self.didTakePicture = YES;
+    
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+        [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }
+#pragma mark - picture button methods
+- (IBAction)handlThumbsUpButtonPressed:(id)sender {
+    self.didTakePicture = YES;
+    self.thumbsUpButton.alpha = 0;
+    self.saveButton.hidden = NO;
+}
+
+- (IBAction)handleThumbsDownButtonPressed:(id)sender {
+    self.pictureImageView.image = nil;
+    self.thumbsDownButton.alpha = 0;
+    self.thumbsUpButton.alpha = 0;
+    self.didTakePicture = NO;
+    self.pictureImageView.alpha = 0;
+    self.takePictureButton.alpha = 1;
+}
+
 
 
 #pragma mark -UISwitch methods

@@ -60,6 +60,8 @@
     self.contractMapButton.clipsToBounds = YES;
     self.contractMapButton.hidden = YES;
     
+    self.mapView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.mapView.layer.borderWidth = 2.0f;
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshView) name:@"addedLocation" object:nil];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -162,8 +164,10 @@
     cell.title.textColor = [UIColor darkGrayColor];
     cell.subtitle.textColor = [UIColor lightGrayColor];
     cell.subtitle.font = [UIFont fontWithName:@"american typewriter" size:10.0];
+    
     return cell;
 }
+
 
 #pragma mark -Parse Query
 -(void)queryParseForGameLocations{
@@ -235,6 +239,7 @@
         
         
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc]initWithTitle:@" " style:UIBarButtonItemStylePlain target:nil action:nil];
+        
         self.navigationItem.backBarButtonItem = backButton;
         
         pdc.titleString = name;
@@ -243,7 +248,7 @@
         pdc.publicString = publicString;
         pdc.coveredString = coveredString;
         pdc.outdoorString = outdoorString;
-        
+       
         
     }
 }
@@ -350,16 +355,19 @@
 
 //Check for location to prevent duplicate locations being added to db
 -(void)queryParseForPlayerLocation:(NSArray *)games {
+    if (games.count == 0) {
+        self.addGamesButton.enabled = YES;
+    }else{
     NSDictionary *gameDict = [games objectAtIndex:0];
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     PFGeoPoint *gameGeoPoint = gameDict[@"location"];
     CLLocation *gameLocation = [[CLLocation alloc]initWithLatitude:gameGeoPoint.latitude longitude:gameGeoPoint.longitude];
     CLLocationDistance distance = [currentLocation distanceFromLocation:gameLocation];
-    if (distance > 160) {
+    if (distance > 200) {
         self.addGamesButton.enabled = YES;
     }
-    if (distance <= 160) {
+    if (distance <= 200) {
         PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
         [getGames whereKey:@"address" equalTo:gameDict[@"address"]];
         [getGames  getFirstObjectInBackgroundWithBlock:^(PFObject *closestGame, NSError *error) {
@@ -371,7 +379,7 @@
         }];
         
         
-    }else if (distance >160 && [gameDict[@"players"]containsObject:[PFUser currentUser]]){
+    }else if (distance >200 && [gameDict[@"players"]containsObject:[PFUser currentUser]]){
         
         PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
         [getGames whereKey:@"address" equalTo:gameDict[@"address"]];
@@ -385,6 +393,7 @@
         
         
         
+    }
     }
     
 }

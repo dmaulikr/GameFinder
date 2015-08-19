@@ -25,45 +25,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self isNear];
     self.navigationItem.title = self.titleString;
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.takePictureButton.layer.cornerRadius = 4.0;
     self.takePictureButton.layer.borderWidth = 1.0;
     self.takePictureButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.takePictureButton.clipsToBounds = YES;
-    self.scheduledGamesArray = self.placeObject[@"scheduledGames"];
-    if (self.scheduledGamesArray.count == 0) {
-        self.tableView.hidden = YES;
-    }
-    self.tableView.allowsMultipleSelectionDuringEditing = NO;
-    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
-    self.saveAddPlayersButton.hidden = YES;
-    self.saveScheduleButton.hidden = YES;
-    self.addNumberOfPlayersTextField.hidden = YES;
-    self.addPlayersLabel.hidden = YES;
-    
-    
-    //style court info view
+        //style court info view
     self.courtInformationView.layer.borderWidth = 1.0f;
     self.courtInformationView.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
-    self.tableView.layer.borderWidth = 0.5f;
-    self.tableView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    //Style collection views
+    self.pictureCollectionView.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.pictureCollectionView.layer.borderWidth = 1.0f;
+    self.playerCollectionView.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.playerCollectionView.layer.borderWidth = 1.0f;
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
-    
-    
-    UIPickerView *pickerView = [[UIPickerView alloc]init];
-    pickerView.delegate = self;
-    pickerView.dataSource = self;
-    
-    self.addNumberOfPlayersTextField.inputView = pickerView;
-    self.numberPickerArray = @[@"< 5", @"5-15", @"15-25", @"> 25"];
-    self.scheduleGameTextField.inputView = [self configureDatePicker];
+
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self checkForIconImages];
-    
-    
 }
 
 
@@ -102,7 +85,7 @@
 
     }if (collectionView == self.pictureCollectionView){
         static NSString *CellIdentifier = @"PlacePicturesCollectionViewCell";
-         PFFile *file = self.locationPictures[indexPath.row];
+         PFFile *file = self.picturesArray[indexPath.row];
         
         PlacePictureCustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
         [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
@@ -129,7 +112,7 @@
     }
     else {
         
-        return self.locationPictures.count;
+        return self.picturesArray.count;
     }
 }
 
@@ -139,13 +122,8 @@
     if (kind == UICollectionElementKindSectionHeader) {
         PlayersHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
         
-        NSString *title = [NSString stringWithFormat:@"There are %@ more players here", self.placeObject[@"numberOfExtraPlayers"]];
-        if (!self.placeObject[@"numberOfExtraPlayers"]) {
-            headerView.title.text = @"Players at this court";
-        }else{
-            headerView.title.text = title;
-        }
-        headerView.clipsToBounds = YES;
+        headerView.title.text = @"People playing here right now";
+        headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 50);
         headerView.layer.borderColor = [UIColor darkGrayColor].CGColor;
         headerView.layer.borderWidth = 1.0f;
        
@@ -195,16 +173,14 @@
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     CLLocation *placeLocation = [[CLLocation alloc]initWithLatitude:self.locationCoordinate.latitude longitude:self.locationCoordinate.longitude];
     CLLocationDistance distance = [currentLocation distanceFromLocation:placeLocation];
-    if (distance <= 160) {
-        [self openCameraApp];
+    if (distance <= 500) {
+        self.takePictureButton.hidden = NO;
+        
         self.isCloseEnough = YES;
         
-    }else if (distance >= 161){
+    }else if (distance >= 500){
         self.isCloseEnough = NO;
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Sorry!" message:@"you need to be at the court to take a picture" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *dismiss = [UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:dismiss];
-        [self presentViewController:alert animated:YES completion:nil];
+        self.takePictureButton.hidden = YES;
     }
     
 }
@@ -266,165 +242,9 @@
     
 }
 
-#pragma mark -uitextfield delegates
--(void)textFieldDidBeginEditing:(UITextField *)textField{
-    if (textField == self.scheduleGameTextField) {
-        self.saveAddPlayersButton.hidden = YES;
-        self.saveScheduleButton.hidden = NO;
-        
-    }else{
-        self.saveScheduleButton.hidden = YES;
-        self.saveAddPlayersButton.hidden = NO;
-    }
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
-    tap.numberOfTapsRequired = 1.0;
-    [self.view addGestureRecognizer:tap];
-}
-
--(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
-    if (textField.text.length < 1) {
-        self.saveScheduleButton.hidden = YES;
-        self.saveAddPlayersButton.hidden = YES;
-    }
-    
-    return YES;
-}
-
-- (UIDatePicker *)configureDatePicker
-{
-    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-    datePicker.minimumDate = [NSDate date];
-    datePicker.minuteInterval = 15;
-    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    [datePicker addTarget:self action:@selector(handleDatePickerValueChanged:)forControlEvents:UIControlEventValueChanged];
-    
-    
-    return datePicker;
-}
-
-
-
--(void)handleDatePickerValueChanged:(UIDatePicker *)datePicker
-{
-    NSDate *date = datePicker.date;
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
-    [dateFormat setDateFormat:@"MMM dd @ hh:mm a"];
-    self.scheduleGameTextField.text = [dateFormat stringFromDate:date];
-    
-}
-
-
-#pragma mark - uipickerview delegates and data methods
-
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return self.numberPickerArray.count;
-}
-
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    
-    return self.numberPickerArray[row];
-}
-
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 1;
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    
-    self.addNumberOfPlayersTextField.text = self.numberPickerArray[row];
-    
-}
 
 -(void)hideKeyboard{
     [self.view endEditing:YES];
-}
-#pragma mark - save button methods
-- (IBAction)handleSaveScheduledGamePressed:(id)sender {
-    UIDatePicker *datePicker = (UIDatePicker *)self.scheduleGameTextField.inputView;
-    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-    [query whereKey:@"name" equalTo:self.navigationItem.title];
-    self.saveScheduleButton.enabled = NO;
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error){
-        [object setObject:[PFUser currentUser].username forKey:@"userWhoScheduledGame"];
-        [object addUniqueObject:datePicker.date forKey:@"scheduledGames"];
-        [object saveInBackgroundWithBlock:^(BOOL success, NSError *error){
-            if (success) {
-                self.saveScheduleButton.hidden = YES;
-                [self hideKeyboard];
-                self.scheduleGameTextField.text = @"Got it, thanks.";
-                [self.tableView reloadData];
-                //Need this to be a cloud call to delete scheduled game after the time has passed.
-            }else{
-                NSLog(@"%@", error);
-            }
-        }];
-    }];
-}
-
-- (IBAction)handleAddNumberOfPlayersButtonPressed:(id)sender {
-    
-    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-    [query whereKey:@"name" equalTo:self.navigationItem.title];
-    self.saveAddPlayersButton.enabled = NO;
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error){
-        object[@"numberOfExtraPlayers"] = self.addNumberOfPlayersTextField.text;
-        [object saveInBackgroundWithBlock:^(BOOL success, NSError *error){
-            if (success) {
-                self.saveAddPlayersButton.hidden = YES;
-                [self hideKeyboard];
-                self.addNumberOfPlayersTextField.text = @"Got it!" ;
-                [self.tableView reloadData];
-            }else{
-                NSLog(@"%@", error);
-            }
-        }];
-    }];
-}
-
-#pragma mark - tableview delgates and methods
-
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.scheduledGamesArray.count;
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ScheduledGamesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ScheduledGamesTableView"];
-    NSDate *date = self.scheduledGamesArray[indexPath.row];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
-    [dateFormat setDateFormat:@"MMM dd, yyyy hh:mm a"];
-    NSString *string = [dateFormat stringFromDate:date];
-    NSString *username = self.placeObject[@"userWhoScheduledGame"];
-    cell.title.text = [NSString stringWithFormat:@"%@ set up a game for %@", username, string];
-    
-    return cell;
-    
-}
-
--(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([[PFUser currentUser].username isEqualToString:self.placeObject[@"userWhoScheduledGame"]]) {
-        return YES;
-    }else{
-        return NO;
-    }
-    
-}
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 20.0f;
-}
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @"Scheduled games at this locations";
-}
--(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.scheduledGamesArray removeObjectAtIndex:indexPath.row];
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        //This needs to be a cloud call to delete scheduled time and user name
-    }
 }
 
 #pragma mark - navigation
@@ -468,7 +288,7 @@
     }else if ([[segue identifier]isEqualToString:@"EditLocation"]){
         NSDictionary *place = (NSDictionary *)sender;
         NSString *name = place[@"name"];
-        PFFile *file = place[@"locationImage"];
+        
         NSNumber *coveredBool = place[@"covered"];
         NSNumber *outdoorBool = place[@"outdoor"];
         NSNumber *lightsBool = place[@"lights"];
@@ -476,10 +296,7 @@
         
         
         EditLocationViewController *editLocationViewController = [segue destinationViewController];
-        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
-            UIImage *image = [UIImage imageWithData:data];
-            editLocationViewController.placeImageView.image = image;
-        }];
+       
         editLocationViewController.nameString = name;
         editLocationViewController.originalName = name;
         editLocationViewController.coveredBool = coveredBool;
@@ -500,14 +317,11 @@
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *results, NSError *error){
         NSMutableArray *array = results[@"players"];
         NSMutableArray *pictureArray = results[@"pictureArray"];
-        self.locationPictures = [[NSArray arrayWithArray:pictureArray]mutableCopy];
+        self.picturesArray = [[NSArray arrayWithArray:pictureArray]mutableCopy];
         self.playersArray = [[NSArray arrayWithArray:array]mutableCopy];
         [self.pictureCollectionView reloadData];
         [self.playerCollectionView reloadData];
-        if ([self.playersArray containsObject:[PFUser currentUser]]) {
-            self.addNumberOfPlayersTextField.hidden = NO;
-            self.addPlayersLabel.hidden = NO;
-        }
+        
     }];
     
 }
@@ -525,7 +339,7 @@
     }
 }
 - (IBAction)handleTakePictureButtonPressed:(id)sender {
-    [self performSelector:@selector(isNear)];
+    [self openCameraApp];
 }
 
 

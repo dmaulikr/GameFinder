@@ -45,7 +45,7 @@
     
     [self.eraseSwitch setOn:false];
     self.editLocationButton.hidden = YES;
-    self.placeImageView.clipsToBounds = YES;
+    
     // Do any additional setup after loading the view.
     
 }
