@@ -10,6 +10,8 @@
 #import <Parse/Parse.h>
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "SVProgressHUD.h"
+#import "AppDelegate.h"
+#import "GameLocationTableViewController.h"
 @interface ProfileTableViewController ()
 
 @end
@@ -191,19 +193,20 @@
     self.birthdayTableViewCell.detailTextLabel.text = [df stringFromDate:date];
     
     PFFile *file = [user objectForKey:@"profileImage"];
-    [file getDataInBackgroundWithBlock:^(NSData *imageData, NSError *error){
-        if (imageData) {
-            
-            UIImage *image = [UIImage imageWithData:imageData];
-            self.profileImageView.image = image;
-        }
-    }];
+    NSURL *url = [NSURL URLWithString:file.url];
+    [self.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"Hooper"] options:SDWebImageRefreshCached];
     
 }
 
 - (IBAction)logOutButton:(id)sender {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Log Out" message:@"Are you sure you want to log out?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        GameLocationTableViewController *gltvc = [[GameLocationTableViewController alloc]init];
+        gltvc.mapView.showsUserLocation = NO;
+        
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        [appDelegate.locationManager.locationManager stopUpdatingLocation];
+
         //* take user out of "checked in" games *//
         PFQuery *games = [PFQuery queryWithClassName:@"Games"];
         [games whereKey:@"players" equalTo:[PFUser currentUser]];
@@ -213,7 +216,8 @@
                     [players removeObject:[PFUser currentUser] forKey:@"players"];
                     [players saveInBackgroundWithBlock:^(BOOL success, NSError *error){
                         if (!error) {
-                            [PFUser logOutInBackground];
+                                                        [PFUser logOutInBackground];
+                            
                         }
                     }];
                     

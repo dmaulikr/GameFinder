@@ -82,11 +82,10 @@
         }
         [[NSNotificationCenter defaultCenter]postNotificationName:@"@ChangeLocationInformation" object:object];
         
-        
-
         [object saveInBackgroundWithBlock:^(BOOL success, NSError *error){
             [SVProgressHUD showWithStatus:@"Saving" maskType:SVProgressHUDMaskTypeClear];
             if (!error) {
+                
                 [SVProgressHUD showSuccessWithStatus:@"Saved changes"];
                 
                 

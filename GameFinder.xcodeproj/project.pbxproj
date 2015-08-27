@@ -34,6 +34,7 @@
 		271632B81AE5408D0060BBC9 /* signUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 271632B71AE5408D0060BBC9 /* signUpViewController.m */; };
 		271BBE611ACD2D6600BEC46C /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D1A1A9223A6004E84B5 /* SVProgressHUD.m */; };
 		271BBE621ACD2D6900BEC46C /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D161A9223A6004E84B5 /* SVIndefiniteAnimatedView.m */; };
+		271CBC9F1B883B9E00D3FEC9 /* CustomCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 271CBC9E1B883B9E00D3FEC9 /* CustomCollectionViewLayout.m */; };
 		271DAFD31AB6AAD90007BFF8 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */; };
 		2744255E1AD5F0BB00FF187E /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2744255D1AD5F0BB00FF187E /* Bolts.framework */; };
 		274425601AD5F0C500FF187E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2744255F1AD5F0C500FF187E /* Parse.framework */; };
@@ -140,6 +141,8 @@
 		270C5B201A746F150004A632 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		271632B61AE5408D0060BBC9 /* signUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = signUpViewController.h; path = ../signUpViewController.h; sourceTree = "<group>"; };
 		271632B71AE5408D0060BBC9 /* signUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = signUpViewController.m; path = ../signUpViewController.m; sourceTree = "<group>"; };
+		271CBC9D1B883B9E00D3FEC9 /* CustomCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewLayout.h; sourceTree = "<group>"; };
+		271CBC9E1B883B9E00D3FEC9 /* CustomCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewLayout.m; sourceTree = "<group>"; };
 		271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		271DAFD11AB6AACB0007BFF8 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		2744255D1AD5F0BB00FF187E /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -305,7 +308,6 @@
 			isa = PBXGroup;
 			children = (
 				279E2AC61A71A77F0080542E /* Main.storyboard */,
-				27FC60741A7B40C6005AE24C /* View Controllers */,
 				27FC60731A7B40AE005AE24C /* Frameworks */,
 				279E2ABB1A71A77F0080542E /* GameFinder */,
 				279E2AD51A71A7800080542E /* GameFinderTests */,
@@ -326,6 +328,7 @@
 		279E2ABB1A71A77F0080542E /* GameFinder */ = {
 			isa = PBXGroup;
 			children = (
+				27FC60741A7B40C6005AE24C /* View Controllers */,
 				279E2AC01A71A77F0080542E /* AppDelegate.h */,
 				279E2AC11A71A77F0080542E /* AppDelegate.m */,
 				27D188551A9468EA00410B32 /* Classes */,
@@ -366,9 +369,9 @@
 			isa = PBXGroup;
 			children = (
 				27618D211B66ABF100ED4931 /* GameLocationTableViewCell.h */,
+				27618D221B66ABF100ED4931 /* GameLocationTableViewCell.m */,
 				278B82A01B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.h */,
 				278B82A11B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m */,
-				27618D221B66ABF100ED4931 /* GameLocationTableViewCell.m */,
 				270495031A9FEA33000D163E /* LocationManager.h */,
 				270495041A9FEA33000D163E /* LocationManager.m */,
 				27D188591A95C99900410B32 /* GamePointAnnotation.m */,
@@ -383,6 +386,8 @@
 				274B49E41B7357EF0037BF5A /* ScheduledGamesTableViewCell.m */,
 				278A64511B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.h */,
 				278A64521B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.m */,
+				271CBC9D1B883B9E00D3FEC9 /* CustomCollectionViewLayout.h */,
+				271CBC9E1B883B9E00D3FEC9 /* CustomCollectionViewLayout.m */,
 			);
 			name = Classes;
 			path = ..;
@@ -451,7 +456,6 @@
 				278A644F1B7FCACF002F4A26 /* SearchResultsTableViewController.m */,
 			);
 			name = "View Controllers";
-			path = GameFinder;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -610,6 +614,7 @@
 				27710DC61B7C7A960003E621 /* IconExplanaionViewController.m in Sources */,
 				271BBE611ACD2D6600BEC46C /* SVProgressHUD.m in Sources */,
 				27017AB41ADF2EF200A9DF5F /* UIImage+GIF.m in Sources */,
+				271CBC9F1B883B9E00D3FEC9 /* CustomCollectionViewLayout.m in Sources */,
 				274B49E51B7357EF0037BF5A /* ScheduledGamesTableViewCell.m in Sources */,
 				27017AB51ADF2EF200A9DF5F /* UIImage+MultiFormat.m in Sources */,
 				270495051A9FEA33000D163E /* LocationManager.m in Sources */,

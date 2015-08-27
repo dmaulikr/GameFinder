@@ -15,7 +15,7 @@
         self.locationManager = [[CLLocationManager alloc] init];
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         self.locationManager.delegate = self;
-        self.locationManager.distanceFilter = 200;
+        self.locationManager.distanceFilter = 500;
         
         
         [self.locationManager requestAlwaysAuthorization];
@@ -30,8 +30,9 @@
     if (status == kCLAuthorizationStatusAuthorizedAlways) {
         [self.locationManager startUpdatingLocation];
     }
-    
 }
+
+
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     

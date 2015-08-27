@@ -15,7 +15,7 @@
 
 @interface PlaceDetailViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate, UIActionSheetDelegate,UICollectionViewDataSource,UICollectionViewDelegate, UIApplicationDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-@property NSDictionary *placeObject;
+@property PFObject *placeObject;
 ;
 
 @property PFGeoPoint *locationCoordinate;

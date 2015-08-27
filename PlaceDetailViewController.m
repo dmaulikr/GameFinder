@@ -15,6 +15,8 @@
 #import "UserDetailViewController.h"
 #import "EditLocationViewController.h"
 #import "PlacePictureCustomCollectionViewCell.h"
+#import "UIImageView+WebCache.h"
+#import "CustomCollectionViewLayout.h"
 
 @interface PlaceDetailViewController ()
 
@@ -41,7 +43,7 @@
     self.pictureCollectionView.layer.borderWidth = 1.0f;
     self.playerCollectionView.layer.borderColor = [UIColor darkGrayColor].CGColor;
     self.playerCollectionView.layer.borderWidth = 1.0f;
-    
+   
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
 
 }
@@ -51,8 +53,18 @@
 
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self queryParse];
+    self.picturesArray = [self.placeObject objectForKey:@"pictureArray"];
+    if (self.picturesArray.count <1) {
+        self.pictureCollectionView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"collectionViewBG"]];
+    }
+    self.playersArray = [self.placeObject objectForKey:@"players"];
+    [self.pictureCollectionView reloadData];
+    [self.playerCollectionView reloadData];
+    
+
+    
 }
+
 
 #pragma mark
 #pragma CollectionView DataSources
@@ -66,15 +78,10 @@
         
         
         PlaceDetailCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-        cell.playerProfileImageView.image = [UIImage imageNamed:@"hooper"];
+        
         PFFile *file = player[@"profileImage"];
-        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
-            if (data) {
-                UIImage *image = [UIImage imageWithData:data];
-                cell.playerProfileImageView.image = image;
-                cell.playerUsernameLabel.textColor = [UIColor whiteColor];
-            }
-        }];
+        NSURL *url = [NSURL URLWithString:file.url];
+        [cell.playerProfileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"hooper"] options:SDWebImageRefreshCached];
         cell.layer.cornerRadius = 40;
         cell.playerProfileImageView.clipsToBounds = YES;
         cell.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
@@ -85,16 +92,15 @@
 
     }if (collectionView == self.pictureCollectionView){
         static NSString *CellIdentifier = @"PlacePicturesCollectionViewCell";
-         PFFile *file = self.picturesArray[indexPath.row];
         
+        PFFile *file = self.picturesArray[indexPath.row];
+        NSURL *url = [NSURL URLWithString:file.url];
+    
         PlacePictureCustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
-            if (!error) {
-                UIImage *image = [UIImage imageWithData:data];
-                cell.placePictureImageView.image = image;
-            }
-        }];
+        
+        [cell.placePictureImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"collectionViewBG"] options:SDWebImageDelayPlaceholder];
         cell.placePictureImageView.clipsToBounds = YES;
+        
         cell.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
         cell.layer.borderWidth = 2.0;
 
@@ -140,7 +146,7 @@
     
     
     if (collectionView == self.playerCollectionView) {
-        NSDictionary *object = [self.playersArray objectAtIndex:indexPath.row];
+        PFObject *object = [self.playersArray objectAtIndex:indexPath.row];
          //Send that object along to the segue
         [self performSegueWithIdentifier:@"ShowUserDetail" sender:object];
     }
@@ -167,6 +173,7 @@
         
     }];
 }
+
 
 -(void)isNear{
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -252,11 +259,12 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([[segue identifier] isEqualToString:@"ShowUserDetail"]) {
-        NSDictionary *user = (NSDictionary *)sender;
+        PFObject *user = (PFObject *)sender;
         NSString *username = user[@"username"];
         NSString *experience = user[@"experience"];
         NSString *oftenPlay = user[@"oftenPlay"];
         PFFile *file = user[@"profileImage"];
+        NSURL *url = [NSURL URLWithString:file.url];
         NSDate *date = user[@"birthDate"];
         NSDate* now = [NSDate date];
         NSDateComponents* ageComponents = [[NSCalendar currentCalendar]
@@ -269,6 +277,7 @@
         UserDetailViewController *dvc = [segue destinationViewController];
         
         //dvc.ageLabel.text = age;
+        [dvc.profileImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"hooper"] options:SDWebImageHighPriority];
         [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error){
             if (data) {
                 UIImage *image = [UIImage imageWithData:data];
@@ -286,7 +295,7 @@
         
         
     }else if ([[segue identifier]isEqualToString:@"EditLocation"]){
-        NSDictionary *place = (NSDictionary *)sender;
+        PFObject *place = (PFObject *)sender;
         NSString *name = place[@"name"];
         
         NSNumber *coveredBool = place[@"covered"];
@@ -308,25 +317,8 @@
     
 }
 
-#pragma mark -query parse for collection view
--(void)queryParse{
-    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-    [query whereKey:@"name" equalTo:self.navigationItem.title];
-    [query includeKey:@"pictureArray"];
-    [query includeKey:@"players"];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *results, NSError *error){
-        NSMutableArray *array = results[@"players"];
-        NSMutableArray *pictureArray = results[@"pictureArray"];
-        self.picturesArray = [[NSArray arrayWithArray:pictureArray]mutableCopy];
-        self.playersArray = [[NSArray arrayWithArray:array]mutableCopy];
-        [self.pictureCollectionView reloadData];
-        [self.playerCollectionView reloadData];
-        
-    }];
-    
-}
 
--(void)passObject:(NSDictionary *)object{
+-(void)passObject:(PFObject *)object{
     
     [self performSegueWithIdentifier:@"EditLocation" sender:object];
     

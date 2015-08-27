@@ -8,11 +8,13 @@
 
 #import "GameLocationTableViewController.h"
 #import <Parse/Parse.h>
+#import "UIImageView+WebCache.h"
 #import "GameLocationTableViewCell.h"
 #import "AppDelegate.h"
 #import "PlaceDetailViewController.h"
 #import "GamePointAnnotation.h"
 #import "SVProgressHUD.h"
+
 
 
 @interface GameLocationTableViewController ()
@@ -33,6 +35,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
+    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     self.searchResultsTableView = [[SearchResultsTableViewController alloc]init];
     UIView *headerView = [[UIView alloc]initWithFrame:self.tableView.tableHeaderView.frame];
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.searchResultsTableView];
@@ -152,10 +155,16 @@
     
     
     NSDictionary *dict = [self.gameLocationsArray objectAtIndex:indexPath.row];
-    
-    
+    PFFile *file = [dict[@"pictureArray"]objectAtIndex:0];
+    NSURL *url = [NSURL URLWithString:file.url];
+    cell.gameImageView.clipsToBounds = YES;
+    cell.gameImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    cell.gameImageView.layer.borderWidth = 2.0f;
+    cell.gameImageView.layer.cornerRadius = 2.0;
+    [cell.gameImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"court"]];
     cell.title.text = dict[@"name"];
     cell.subtitle.text = dict[@"address"];
+    
     cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"info"]];
     if (!cell.accessoryView) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -175,14 +184,23 @@
     [SVProgressHUD showWithStatus:@"Loading" maskType:SVProgressHUDMaskTypeClear];
     [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *currentLocation, NSError *error){
         PFQuery *query = [PFQuery queryWithClassName:@"Games"];
+        [query includeKey:@"players"];
         [query whereKey:@"location" nearGeoPoint:currentLocation withinMiles:50.0];
         [query findObjectsInBackgroundWithBlock:^(NSArray *games, NSError *error){
             if (!error) {
+                NSLog(@"queryParseForGameLocations");
                 for (int x=0; x < games.count; x++) {
                     
                     //Grab the object at index x
-                    NSDictionary *object = [games objectAtIndex:x];
-                    
+                    PFObject *object = [games objectAtIndex:x];
+                    if ([[object objectForKey:@"shouldEraseLocation"]isEqualToNumber:@(10)]) {
+                        PFObject *deleteObject = object;
+                        [deleteObject deleteInBackgroundWithBlock:^(BOOL delete, NSError *error){
+                            if (delete) {
+                                
+                            }
+                        }];
+                    }
                     //By subclassing MKAnnotationPoint I was able to add an index property
                     GamePointAnnotation *annotation = [[GamePointAnnotation alloc] init];
                     annotation.title = [object objectForKey:@"name"];
@@ -216,7 +234,7 @@
 #pragma mark - Navigation
 
 #pragma mark - segue methods
--(void)showPlaceDetail:(NSDictionary *)object {
+-(void)showPlaceDetail:(PFObject *)object {
     
     [self performSegueWithIdentifier:@"ShowPlaceDetail" sender:object];
 }
@@ -225,7 +243,7 @@
     
     if ([[segue identifier] isEqualToString:@"ShowPlaceDetail"]) {
         [self.searchResultsTableView.searchResults removeAllObjects];
-        NSDictionary *object = (NSDictionary *)sender;
+        PFObject *object = (PFObject *)sender;
         
         NSString *name = [object objectForKey:@"name"];
         PFGeoPoint *location = [object objectForKey:@"location"];
@@ -248,7 +266,7 @@
         pdc.publicString = publicString;
         pdc.coveredString = coveredString;
         pdc.outdoorString = outdoorString;
-       
+        
         
     }
 }
@@ -358,64 +376,40 @@
     if (games.count == 0) {
         self.addGamesButton.enabled = YES;
     }else{
-    NSDictionary *gameDict = [games objectAtIndex:0];
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
-    PFGeoPoint *gameGeoPoint = gameDict[@"location"];
-    CLLocation *gameLocation = [[CLLocation alloc]initWithLatitude:gameGeoPoint.latitude longitude:gameGeoPoint.longitude];
-    CLLocationDistance distance = [currentLocation distanceFromLocation:gameLocation];
-    if (distance > 200) {
-        self.addGamesButton.enabled = YES;
-    }
-    if (distance <= 200) {
-        PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-        [getGames whereKey:@"address" equalTo:gameDict[@"address"]];
-        [getGames  getFirstObjectInBackgroundWithBlock:^(PFObject *closestGame, NSError *error) {
-            if (closestGame) {
-                self.addGamesButton.enabled = NO;
-                [closestGame addUniqueObject:[PFUser currentUser] forKey:@"players"];
-                [closestGame saveInBackground];
-            }
-        }];
+        PFObject *gameObject = [games objectAtIndex:0];
         
-        
-    }else if (distance >200 && [gameDict[@"players"]containsObject:[PFUser currentUser]]){
-        
-        PFQuery *getGames = [PFQuery queryWithClassName:@"Games"];
-        [getGames whereKey:@"address" equalTo:gameDict[@"address"]];
-        [getGames  getFirstObjectInBackgroundWithBlock:^(PFObject *closestGame, NSError *error) {
-            if (closestGame) {
-                self.addGamesButton.enabled = YES;
-                [closestGame removeObject:[PFUser currentUser] forKey:@"players"];
-                [closestGame saveInBackground];
-            }
-        }];
-        
-        
-        
-    }
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+        PFGeoPoint *gameGeoPoint = gameObject[@"location"];
+        CLLocation *gameLocation = [[CLLocation alloc]initWithLatitude:gameGeoPoint.latitude longitude:gameGeoPoint.longitude];
+        CLLocationDistance distance = [currentLocation distanceFromLocation:gameLocation];
+        if (distance <= 200) {
+            [gameObject addUniqueObject:[PFUser currentUser] forKey:@"players"];
+            [gameObject saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+                NSLog(@"player added");
+            }];
+            
+        }if (distance >200 && [gameObject[@"players"]containsObject:[PFUser currentUser]]){
+            [gameObject removeObject:[PFUser currentUser] forKey:@"players"];
+            [gameObject saveInBackgroundWithBlock:^(BOOL success, NSError *error){
+                NSLog(@"player removed");
+            }];
+            
+        }else{
+            self.addGamesButton.enabled = YES;
+        }
     }
     
 }
 
 
 
--(void)removePlayer{
+-(void)removePlayer:(PFObject *)closestGame{
     
-    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-    [query whereKey:@"players" equalTo:[PFUser currentUser]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        
-        if (!error) {
-            PFObject *players = [objects lastObject];
-            
-            [players removeObject:[PFUser currentUser] forKey:@"players"];
-            [players saveInBackground];
-            
-        }
-        
-        
-    }];
+    [closestGame removeObject:[PFUser currentUser] forKey:@"players"];
+    [closestGame saveInBackground];
+    
+    
 }
 
 #pragma mark -location manage delegates

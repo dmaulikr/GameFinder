@@ -10,6 +10,7 @@
 #import <MapKit/MapKit.h>
 #import "SearchResultsTableViewController.h"
 
+
 @interface GameLocationTableViewController : UITableViewController <UIActionSheetDelegate, UISearchBarDelegate, UISearchDisplayDelegate, UISearchResultsUpdating, UISearchControllerDelegate>
 
 
