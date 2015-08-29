@@ -201,9 +201,6 @@
 - (IBAction)logOutButton:(id)sender {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Log Out" message:@"Are you sure you want to log out?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yes = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        GameLocationTableViewController *gltvc = [[GameLocationTableViewController alloc]init];
-        gltvc.mapView.showsUserLocation = NO;
-        
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         [appDelegate.locationManager.locationManager stopUpdatingLocation];
 

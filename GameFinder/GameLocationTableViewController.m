@@ -52,7 +52,7 @@
     [self.tableView.tableHeaderView addSubview:headerView];
     
     
-    [self queryParseForGameLocations];
+    
     
     [self profileImageButton];
     self.centerMapButton.alpha = 0.0f;
@@ -81,8 +81,11 @@
     [self.mapView addGestureRecognizer:hold];
     
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [self queryParseForGameLocations];
+}
 -(void)viewDidAppear:(BOOL)animated{
+    
     self.searchResultsTableView.tableView.hidden = YES;
     self.searchController.searchBar.placeholder = @"Find a location";
     if (self.searchControllerWasActive) {
@@ -212,13 +215,13 @@
                     annotation.index = x;
                     
                     [self.mapView addAnnotation:annotation];
-                    
+                    [self performSelectorOnMainThread:@selector(queryParseForPlayerLocation:) withObject:object waitUntilDone:YES];
                 }
                 
                 self.gameLocationsArray = [[NSArray arrayWithArray:games]mutableCopy];
                 
                 [SVProgressHUD dismiss];
-                [self performSelectorOnMainThread:@selector(queryParseForPlayerLocation:) withObject:games waitUntilDone:YES];
+                
                 [self.tableView reloadData];
                 
             }
@@ -372,45 +375,38 @@
 }
 
 //Check for location to prevent duplicate locations being added to db
--(void)queryParseForPlayerLocation:(NSArray *)games {
-    if (games.count == 0) {
+-(void)queryParseForPlayerLocation: (PFObject *)games{
+    if (games == nil) {
         self.addGamesButton.enabled = YES;
-    }else{
-        PFObject *gameObject = [games objectAtIndex:0];
-        
-        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-        CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
-        PFGeoPoint *gameGeoPoint = gameObject[@"location"];
-        CLLocation *gameLocation = [[CLLocation alloc]initWithLatitude:gameGeoPoint.latitude longitude:gameGeoPoint.longitude];
-        CLLocationDistance distance = [currentLocation distanceFromLocation:gameLocation];
-        if (distance <= 200) {
-            [gameObject addUniqueObject:[PFUser currentUser] forKey:@"players"];
-            [gameObject saveInBackgroundWithBlock:^(BOOL success, NSError *error){
-                NSLog(@"player added");
-            }];
-            
-        }if (distance >200 && [gameObject[@"players"]containsObject:[PFUser currentUser]]){
-            [gameObject removeObject:[PFUser currentUser] forKey:@"players"];
-            [gameObject saveInBackgroundWithBlock:^(BOOL success, NSError *error){
-                NSLog(@"player removed");
-            }];
-            
-        }else{
-            self.addGamesButton.enabled = YES;
-        }
+        return;
     }
-    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    PFGeoPoint *gameGeoPoint = games[@"location"];
+    CLLocation *gameLocation = [[CLLocation alloc]initWithLatitude:gameGeoPoint.latitude longitude:gameGeoPoint.longitude];
+    CLLocationDistance distance = [currentLocation distanceFromLocation:gameLocation];
+    if (distance >= 200 && [[games objectForKey:@"players"]containsObject:[PFUser currentUser]]) {
+        NSLog(@"player removed");
+        self.addGamesButton.enabled = YES;
+        [games removeObject:[PFUser currentUser] forKey:@"players"];
+        [games saveInBackgroundWithBlock:^(BOOL remove, NSError *error){
+            
+        }];
+        
+        
+    }else if (distance < 200){
+        [games addUniqueObject:[PFUser currentUser] forKey:@"players"];
+        [games saveInBackgroundWithBlock:^(BOOL added, NSError *error){
+            NSLog(@"player added");
+            self.addGamesButton.enabled = NO;
+        }];
+        
+        
+    }else{
+        return;
+    }
 }
 
-
-
--(void)removePlayer:(PFObject *)closestGame{
-    
-    [closestGame removeObject:[PFUser currentUser] forKey:@"players"];
-    [closestGame saveInBackground];
-    
-    
-}
 
 #pragma mark -location manage delegates
 -(void)updateLocation:(NSNotification *)notif{
@@ -431,7 +427,7 @@
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
     [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude), MKCoordinateSpanMake(0.08, 0.08))];
-    [self queryParseForGameLocations];
+    //[self queryParseForGameLocations];
     [self.tableView reloadData];
     
     

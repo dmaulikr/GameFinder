@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>2.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -28,7 +28,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
+	<string>3.2</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -61,7 +61,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Court finder uses your location to help you find games closest to you, and to let other hoopers find where you&apos;re playing. Don&apos;t worry, we won&apos;t use all of your batter, we only check location if you travel long distances.</string>
+	<string>Court finder uses your location to help you find games closest to you, and to let other hoopers find where you're playing. Don't worry, we won't use all of your batter, we only check location if you travel long distances.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
