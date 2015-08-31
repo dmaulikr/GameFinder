@@ -31,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self queryParseForGameLocations];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
@@ -82,7 +82,7 @@
     
 }
 -(void)viewWillAppear:(BOOL)animated{
-    [self queryParseForGameLocations];
+    
 }
 -(void)viewDidAppear:(BOOL)animated{
     
