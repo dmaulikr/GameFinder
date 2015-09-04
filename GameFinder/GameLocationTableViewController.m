@@ -172,11 +172,6 @@
     if (!cell.accessoryView) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    cell.title.font = [UIFont fontWithName:@"optima-bold" size:17.0];
-    cell.title.textColor = [UIColor darkGrayColor];
-    cell.subtitle.textColor = [UIColor lightGrayColor];
-    cell.subtitle.font = [UIFont fontWithName:@"american typewriter" size:10.0];
-    
     return cell;
 }
 

@@ -77,6 +77,8 @@
 		27FC60841A7B41DB005AE24C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60831A7B41DB005AE24C /* SystemConfiguration.framework */; };
 		27FC60861A7B41E7005AE24C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60851A7B41E7005AE24C /* libz.dylib */; };
 		27FC60881A7B41F3005AE24C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60871A7B41F3005AE24C /* libsqlite3.dylib */; };
+		27FC8B1B1B98B75A0021CE0D /* PicturesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC8B1A1B98B75A0021CE0D /* PicturesCollectionViewController.m */; };
+		27FC8B1E1B98B8480021CE0D /* PicturesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC8B1D1B98B8480021CE0D /* PicturesCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,6 +212,10 @@
 		27FC60831A7B41DB005AE24C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		27FC60851A7B41E7005AE24C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		27FC60871A7B41F3005AE24C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		27FC8B191B98B75A0021CE0D /* PicturesCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturesCollectionViewController.h; sourceTree = "<group>"; };
+		27FC8B1A1B98B75A0021CE0D /* PicturesCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturesCollectionViewController.m; sourceTree = "<group>"; };
+		27FC8B1C1B98B8480021CE0D /* PicturesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturesCollectionViewCell.h; sourceTree = "<group>"; };
+		27FC8B1D1B98B8480021CE0D /* PicturesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturesCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,6 +375,8 @@
 			isa = PBXGroup;
 			children = (
 				27618D211B66ABF100ED4931 /* GameLocationTableViewCell.h */,
+				27FC8B1C1B98B8480021CE0D /* PicturesCollectionViewCell.h */,
+				27FC8B1D1B98B8480021CE0D /* PicturesCollectionViewCell.m */,
 				27618D221B66ABF100ED4931 /* GameLocationTableViewCell.m */,
 				278B82A01B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.h */,
 				278B82A11B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m */,
@@ -454,6 +462,8 @@
 				27710DC51B7C7A960003E621 /* IconExplanaionViewController.m */,
 				278A644E1B7FCACF002F4A26 /* SearchResultsTableViewController.h */,
 				278A644F1B7FCACF002F4A26 /* SearchResultsTableViewController.m */,
+				27FC8B191B98B75A0021CE0D /* PicturesCollectionViewController.h */,
+				27FC8B1A1B98B75A0021CE0D /* PicturesCollectionViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -611,6 +621,7 @@
 				271BBE621ACD2D6900BEC46C /* SVIndefiniteAnimatedView.m in Sources */,
 				27017AAF1ADF2EF200A9DF5F /* SDWebImageDownloader.m in Sources */,
 				27017AAD1ADF2EF200A9DF5F /* SDWebImageCompat.m in Sources */,
+				27FC8B1B1B98B75A0021CE0D /* PicturesCollectionViewController.m in Sources */,
 				27710DC61B7C7A960003E621 /* IconExplanaionViewController.m in Sources */,
 				271BBE611ACD2D6600BEC46C /* SVProgressHUD.m in Sources */,
 				27017AB41ADF2EF200A9DF5F /* UIImage+GIF.m in Sources */,
@@ -627,6 +638,7 @@
 				27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,
 				27C0E3261B72923C00A6D084 /* PlaceDetailCollectionViewCell.m in Sources */,
+				27FC8B1E1B98B8480021CE0D /* PicturesCollectionViewCell.m in Sources */,
 				274B49E81B7371CC0037BF5A /* UserDetailViewController.m in Sources */,
 				27618D1D1B655FA800ED4931 /* AddLocationTableViewController.m in Sources */,
 			);

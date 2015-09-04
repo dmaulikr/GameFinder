@@ -17,6 +17,7 @@
 #import "PlacePictureCustomCollectionViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "CustomCollectionViewLayout.h"
+#import "PicturesCollectionViewController.h"
 
 @interface PlaceDetailViewController ()
 
@@ -150,7 +151,21 @@
          //Send that object along to the segue
         [self performSegueWithIdentifier:@"ShowUserDetail" sender:object];
     }
+    if (collectionView == self.pictureCollectionView) {
+        [self performSegueWithIdentifier:@"ShowPictures" sender:self.picturesArray];
+    }
 }
+
+#pragma mark <UICollectionViewDelegate>
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (collectionView == self.pictureCollectionView) {
+        return CGSizeMake(collectionView.frame.size.width-10, collectionView.frame.size.height-10);
+    }else{
+        return CGSizeMake(80, 80);
+    }
+}
+
 
 
 - (IBAction)shareLocation:(id)sender {
@@ -312,6 +327,11 @@
         editLocationViewController.lightBool = lightsBool;
         editLocationViewController.publicBool = publicBool;
         editLocationViewController.outdoorBool = outdoorBool;
+        
+    }else if ([[segue identifier]isEqualToString:@"ShowPictures"]){
+        NSMutableArray *picturesArray = (NSMutableArray *)sender;
+        PicturesCollectionViewController *dvc = [segue destinationViewController];
+        dvc.mutableArray = picturesArray;
         
     }
     
