@@ -55,6 +55,7 @@
 		278A64501B7FCACF002F4A26 /* SearchResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 278A644F1B7FCACF002F4A26 /* SearchResultsTableViewController.m */; };
 		278A64531B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 278A64521B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.m */; };
 		278B82A21B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 278B82A11B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m */; };
+		2796190A1B9F8467003544EC /* ShowPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279619091B9F8467003544EC /* ShowPictureViewController.m */; };
 		279E2ABF1A71A77F0080542E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2ABE1A71A77F0080542E /* main.m */; };
 		279E2AC21A71A77F0080542E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AC11A71A77F0080542E /* AppDelegate.m */; };
 		279E2AC81A71A77F0080542E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 279E2AC61A71A77F0080542E /* Main.storyboard */; };
@@ -77,8 +78,8 @@
 		27FC60841A7B41DB005AE24C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60831A7B41DB005AE24C /* SystemConfiguration.framework */; };
 		27FC60861A7B41E7005AE24C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60851A7B41E7005AE24C /* libz.dylib */; };
 		27FC60881A7B41F3005AE24C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60871A7B41F3005AE24C /* libsqlite3.dylib */; };
-		27FC8B1B1B98B75A0021CE0D /* PicturesCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC8B1A1B98B75A0021CE0D /* PicturesCollectionViewController.m */; };
 		27FC8B1E1B98B8480021CE0D /* PicturesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC8B1D1B98B8480021CE0D /* PicturesCollectionViewCell.m */; };
+		27FC8B211B9A39360021CE0D /* NumberOfPlayersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC8B201B9A39360021CE0D /* NumberOfPlayersView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +183,8 @@
 		278A64521B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationSearchResultsTableViewCell.m; sourceTree = "<group>"; };
 		278B82A01B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlacePictureCustomCollectionViewCell.h; sourceTree = "<group>"; };
 		278B82A11B82FB0500C7C546 /* PlacePictureCustomCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlacePictureCustomCollectionViewCell.m; sourceTree = "<group>"; };
+		279619081B9F8467003544EC /* ShowPictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPictureViewController.h; sourceTree = "<group>"; };
+		279619091B9F8467003544EC /* ShowPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowPictureViewController.m; sourceTree = "<group>"; };
 		279E2AB91A71A77F0080542E /* GameFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GameFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		279E2ABD1A71A77F0080542E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279E2ABE1A71A77F0080542E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -212,10 +215,10 @@
 		27FC60831A7B41DB005AE24C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		27FC60851A7B41E7005AE24C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		27FC60871A7B41F3005AE24C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		27FC8B191B98B75A0021CE0D /* PicturesCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturesCollectionViewController.h; sourceTree = "<group>"; };
-		27FC8B1A1B98B75A0021CE0D /* PicturesCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturesCollectionViewController.m; sourceTree = "<group>"; };
 		27FC8B1C1B98B8480021CE0D /* PicturesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturesCollectionViewCell.h; sourceTree = "<group>"; };
 		27FC8B1D1B98B8480021CE0D /* PicturesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturesCollectionViewCell.m; sourceTree = "<group>"; };
+		27FC8B1F1B9A39360021CE0D /* NumberOfPlayersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberOfPlayersView.h; sourceTree = "<group>"; };
+		27FC8B201B9A39360021CE0D /* NumberOfPlayersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberOfPlayersView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -396,6 +399,8 @@
 				278A64521B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.m */,
 				271CBC9D1B883B9E00D3FEC9 /* CustomCollectionViewLayout.h */,
 				271CBC9E1B883B9E00D3FEC9 /* CustomCollectionViewLayout.m */,
+				27FC8B1F1B9A39360021CE0D /* NumberOfPlayersView.h */,
+				27FC8B201B9A39360021CE0D /* NumberOfPlayersView.m */,
 			);
 			name = Classes;
 			path = ..;
@@ -462,8 +467,8 @@
 				27710DC51B7C7A960003E621 /* IconExplanaionViewController.m */,
 				278A644E1B7FCACF002F4A26 /* SearchResultsTableViewController.h */,
 				278A644F1B7FCACF002F4A26 /* SearchResultsTableViewController.m */,
-				27FC8B191B98B75A0021CE0D /* PicturesCollectionViewController.h */,
-				27FC8B1A1B98B75A0021CE0D /* PicturesCollectionViewController.m */,
+				279619081B9F8467003544EC /* ShowPictureViewController.h */,
+				279619091B9F8467003544EC /* ShowPictureViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -610,6 +615,7 @@
 				27017AB01ADF2EF200A9DF5F /* SDWebImageDownloaderOperation.m in Sources */,
 				278A64531B7FCB22002F4A26 /* LocationSearchResultsTableViewCell.m in Sources */,
 				27030C411AE8DD260005A1A0 /* LoadingViewController.m in Sources */,
+				2796190A1B9F8467003544EC /* ShowPictureViewController.m in Sources */,
 				27017AAC1ADF2EF200A9DF5F /* SDImageCache.m in Sources */,
 				2770EBE71B66EAAD00CE3F1D /* AddLocationViewController.m in Sources */,
 				275F1BC11AE7766800815B69 /* ProfileTableViewController.m in Sources */,
@@ -621,7 +627,6 @@
 				271BBE621ACD2D6900BEC46C /* SVIndefiniteAnimatedView.m in Sources */,
 				27017AAF1ADF2EF200A9DF5F /* SDWebImageDownloader.m in Sources */,
 				27017AAD1ADF2EF200A9DF5F /* SDWebImageCompat.m in Sources */,
-				27FC8B1B1B98B75A0021CE0D /* PicturesCollectionViewController.m in Sources */,
 				27710DC61B7C7A960003E621 /* IconExplanaionViewController.m in Sources */,
 				271BBE611ACD2D6600BEC46C /* SVProgressHUD.m in Sources */,
 				27017AB41ADF2EF200A9DF5F /* UIImage+GIF.m in Sources */,
@@ -639,6 +644,7 @@
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,
 				27C0E3261B72923C00A6D084 /* PlaceDetailCollectionViewCell.m in Sources */,
 				27FC8B1E1B98B8480021CE0D /* PicturesCollectionViewCell.m in Sources */,
+				27FC8B211B9A39360021CE0D /* NumberOfPlayersView.m in Sources */,
 				274B49E81B7371CC0037BF5A /* UserDetailViewController.m in Sources */,
 				27618D1D1B655FA800ED4931 /* AddLocationTableViewController.m in Sources */,
 			);

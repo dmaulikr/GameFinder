@@ -17,7 +17,7 @@
 #import "PlacePictureCustomCollectionViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "CustomCollectionViewLayout.h"
-#import "PicturesCollectionViewController.h"
+#import "ShowPictureViewController.h"
 
 @interface PlaceDetailViewController ()
 
@@ -36,34 +36,26 @@
     self.takePictureButton.layer.borderWidth = 1.0;
     self.takePictureButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.takePictureButton.clipsToBounds = YES;
-        //style court info view
-    self.courtInformationView.layer.borderWidth = 1.0f;
-    self.courtInformationView.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
-    //Style collection views
-    self.pictureCollectionView.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    self.pictureCollectionView.layer.borderWidth = 1.0f;
-    self.playerCollectionView.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    self.playerCollectionView.layer.borderWidth = 1.0f;
-   
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
-
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self checkForIconImages];
-}
-
-
--(void)viewDidAppear:(BOOL)animated{
     self.picturesArray = [self.placeObject objectForKey:@"pictureArray"];
+    
     if (self.picturesArray.count <1) {
         self.pictureCollectionView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"collectionViewBG"]];
     }
     self.playersArray = [self.placeObject objectForKey:@"players"];
+    
+    
     [self.pictureCollectionView reloadData];
     [self.playerCollectionView reloadData];
     
+}
 
-    
+
+-(void)viewDidAppear:(BOOL)animated{
 }
 
 
@@ -90,13 +82,13 @@
         
         cell.playerUsernameLabel.text = player[@"username"];
         return cell;
-
+        
     }if (collectionView == self.pictureCollectionView){
         static NSString *CellIdentifier = @"PlacePicturesCollectionViewCell";
         
         PFFile *file = self.picturesArray[indexPath.row];
         NSURL *url = [NSURL URLWithString:file.url];
-    
+        
         PlacePictureCustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
         
         [cell.placePictureImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"collectionViewBG"] options:SDWebImageDelayPlaceholder];
@@ -104,10 +96,11 @@
         
         cell.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
         cell.layer.borderWidth = 2.0;
-
+        
         return cell;
-        }
-
+        
+    }
+    
     return cell;
 }
 
@@ -130,10 +123,9 @@
         PlayersHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
         
         headerView.title.text = @"People playing here right now";
-        headerView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 50);
+        headerView.frame = CGRectMake(0, 0, self.playerCollectionView.bounds.size.width, 50);
         headerView.layer.borderColor = [UIColor darkGrayColor].CGColor;
         headerView.layer.borderWidth = 1.0f;
-       
         reusableview = headerView;
     }
     
@@ -148,11 +140,12 @@
     
     if (collectionView == self.playerCollectionView) {
         PFObject *object = [self.playersArray objectAtIndex:indexPath.row];
-         //Send that object along to the segue
+        //Send that object along to the segue
         [self performSegueWithIdentifier:@"ShowUserDetail" sender:object];
     }
     if (collectionView == self.pictureCollectionView) {
-        [self performSegueWithIdentifier:@"ShowPictures" sender:self.picturesArray];
+        PFFile *file = [self.picturesArray objectAtIndex:indexPath.row];
+        [self performSegueWithIdentifier:@"ShowPictures" sender:file];
     }
 }
 
@@ -247,13 +240,9 @@
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     NSData *imageData = UIImagePNGRepresentation(chosenImage);
     PFFile *imageFile = [PFFile fileWithData:imageData];
+    [self.placeObject addUniqueObject:imageFile forKey:@"pictureArray"];
+    [self.placeObject saveInBackground];
     
-    PFQuery *query = [PFQuery queryWithClassName:@"Games"];
-    [query whereKey:@"name" equalTo:self.navigationItem.title];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *object, NSError *error){
-        [object addUniqueObject:imageFile forKey:@"pictureArray"];
-        [object saveInBackground];
-    }];
     
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
@@ -320,18 +309,20 @@
         
         
         EditLocationViewController *editLocationViewController = [segue destinationViewController];
-       
+        
         editLocationViewController.nameString = name;
         editLocationViewController.originalName = name;
         editLocationViewController.coveredBool = coveredBool;
         editLocationViewController.lightBool = lightsBool;
         editLocationViewController.publicBool = publicBool;
         editLocationViewController.outdoorBool = outdoorBool;
+        editLocationViewController.placeObject = place;
         
     }else if ([[segue identifier]isEqualToString:@"ShowPictures"]){
-        NSMutableArray *picturesArray = (NSMutableArray *)sender;
-        PicturesCollectionViewController *dvc = [segue destinationViewController];
-        dvc.mutableArray = picturesArray;
+        PFFile *file = (PFFile *)sender;
+        
+        ShowPictureViewController *dvc = [segue destinationViewController];
+        dvc.pictureUrl = [NSURL URLWithString:file.url];
         
     }
     
@@ -373,7 +364,7 @@
     }else{
         self.lightImageView.image = [UIImage imageNamed:@"no-lights"];
     }
-
+    
 }
 
 @end

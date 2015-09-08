@@ -7,12 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "covered@2x.png"
+      "filename" : "small-close-button@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "covered.png"
+      "filename" : "small-close-button.png"
     }
   ],
   "info" : {

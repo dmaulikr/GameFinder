@@ -17,6 +17,7 @@
 
 
 
+
 @interface GameLocationTableViewController ()
 
 
@@ -25,13 +26,16 @@
 @property BOOL searchControllerWasActive;
 @property BOOL searchControllerSearchFieldWasFirstResponder;
 
+
 @end
 
 @implementation GameLocationTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     [self queryParseForGameLocations];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(initialLocation:) name:@"initialLocation" object:nil];
@@ -47,6 +51,8 @@
     self.searchController.searchResultsUpdater = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.definesPresentationContext = YES;
+    self.searchController.searchBar.searchBarStyle = UISearchBarStyleMinimal;
+    self.searchController.searchBar.tintColor = [UIColor blackColor];
     headerView = self.searchController.searchBar;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     [self.tableView.tableHeaderView addSubview:headerView];
@@ -63,7 +69,7 @@
     self.contractMapButton.clipsToBounds = YES;
     self.contractMapButton.hidden = YES;
     
-    self.mapView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.mapView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.mapView.layer.borderWidth = 2.0f;
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshView) name:@"addedLocation" object:nil];
@@ -127,16 +133,16 @@
 }
 
 #pragma mark - Table view delegates
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (tableView == self.tableView) {
         //Get the object at the same index in the array
-        NSDictionary *object = [self.gameLocationsArray objectAtIndex:indexPath.row];
+        PFObject *object = [self.gameLocationsArray objectAtIndex:indexPath.row];
         
         //Send that object along to the segue
         [self performSegueWithIdentifier:@"ShowPlaceDetail" sender:object];
+        
+        
     }else{
         
         NSMutableDictionary *object = [self.searchResultsTableView.searchResults objectAtIndex:indexPath.row];
@@ -155,22 +161,34 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GameLocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GameLocationCell"];
+    PFObject *object = [self.gameLocationsArray objectAtIndex:indexPath.row];
     
-    
-    NSDictionary *dict = [self.gameLocationsArray objectAtIndex:indexPath.row];
-    PFFile *file = [dict[@"pictureArray"]objectAtIndex:0];
+    PFFile *file = [object[@"pictureArray"]objectAtIndex:0];
     NSURL *url = [NSURL URLWithString:file.url];
     cell.gameImageView.clipsToBounds = YES;
-    cell.gameImageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
     cell.gameImageView.layer.borderWidth = 2.0f;
     cell.gameImageView.layer.cornerRadius = 2.0;
     [cell.gameImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"court"]];
-    cell.title.text = dict[@"name"];
-    cell.subtitle.text = dict[@"address"];
+    cell.title.text = object[@"name"];
+    cell.subtitle.text = object[@"address"];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    cell.accessoryView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"info"]];
-    if (!cell.accessoryView) {
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    NSArray *array = object[@"players"];
+    NSNumber *number = @(array.count);
+    NSString *string = [NSString stringWithFormat:@"%@", number];
+    cell.numberOfPlayersLabel.text = string;
+    cell.numberOfPlayersLabel.backgroundColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f];
+    cell.numberOfPlayersLabel.clipsToBounds = YES;
+    cell.numberOfPlayersLabel.layer.cornerRadius = cell.numberOfPlayersLabel.frame.size.width/2;
+    cell.numberOfPlayersLabel.layer.borderColor = [UIColor blackColor].CGColor;
+    cell.numberOfPlayersLabel.layer.borderWidth = 1.0f;
+    if (array.count >= 1) {
+        cell.gameImageView.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
+        cell.numberOfPlayersLabel.hidden = NO;
+    }else{
+        cell.gameImageView.layer.borderColor = [UIColor blackColor].CGColor;
+        cell.numberOfPlayersLabel.hidden = YES;
     }
     return cell;
 }
@@ -232,10 +250,6 @@
 #pragma mark - Navigation
 
 #pragma mark - segue methods
--(void)showPlaceDetail:(PFObject *)object {
-    
-    [self performSegueWithIdentifier:@"ShowPlaceDetail" sender:object];
-}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
@@ -270,7 +284,7 @@
 }
 
 #pragma mark- map annotation view
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id )annotation{
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation{
     
     static NSString *identifier = @"GameLocationCell";
     
@@ -301,9 +315,6 @@
             carImage.frame = CGRectMake(0, 0, leftButton.frame.size.width, leftButton.frame.size.height);
             [leftButton addSubview:carImage];
             pinView.leftCalloutAccessoryView = leftButton;
-            
-            
-            
         } else {
             pinView.annotation = annotation;
         }
@@ -450,7 +461,7 @@
 
 - (IBAction)handleContractMapButtonPressed:(id)sender {
     
-    self.upperView.frame = CGRectMake(0, 0, self.view.frame.size.width, 255);
+    self.upperView.frame = CGRectMake(0, 0, self.view.frame.size.width, 275);
     self.contractMapButton.hidden = YES;
     
 }

@@ -12,5 +12,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet UILabel *subtitle;
 @property (weak, nonatomic) IBOutlet UIImageView *gameImageView;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfPlayersLabel;
+
 
 @end

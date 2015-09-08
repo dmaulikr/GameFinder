@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface EditLocationViewController : UIViewController<UITextFieldDelegate>
 
-
+@property PFObject *placeObject;
 @property (weak, nonatomic) IBOutlet UITextField *placeNameTextField;
 @property (weak, nonatomic) IBOutlet UISwitch *outdoorSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *lightSwitch;
