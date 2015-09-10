@@ -161,6 +161,9 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude];
     GameLocationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"GameLocationCell"];
     PFObject *object = [self.gameLocationsArray objectAtIndex:indexPath.row];
     
@@ -171,7 +174,10 @@
     cell.gameImageView.layer.borderWidth = 2.0f;
     cell.gameImageView.layer.cornerRadius = 2.0;
     [cell.gameImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"court"]];
-    cell.title.text = object[@"name"];
+    PFGeoPoint *gameLocation = object[@"location"];
+    CLLocationDistance distance = [geoPoint distanceInMilesTo:gameLocation];
+    NSString *distanceTo = [NSString stringWithFormat:@"%.02g", distance];
+    cell.title.text = [NSString stringWithFormat:@"%@ | %@ mi away", object[@"name"], distanceTo];
     cell.subtitle.text = object[@"address"];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
