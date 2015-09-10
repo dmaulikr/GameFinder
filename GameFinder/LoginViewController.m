@@ -8,10 +8,6 @@
 
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
-#import <TwitterKit/TwitterKit.h>
-
 
 @interface LoginViewController ()
 
@@ -68,71 +64,6 @@
     [self.passwordTextField resignFirstResponder];
     
 }
-
-
-
-- (IBAction)facebookLogInButton:(id)sender {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Game Finder would like to access your facebook profile." message:@"Don't worry. We won't access any information without your permission." preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        
-    }];
-    UIAlertAction *login = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
-        
-       // NSArray *permissions = @[@"public_profile"];
-        [PFFacebookUtils logInInBackgroundWithReadPermissions:@[@"public_profile"] block:^(PFUser *user, NSError *error) {
-            if (user) {
-                [self performSegueWithIdentifier:@"LoginSuccessful" sender:self];
-            }
-            if (user.isNew){
-                if ([FBSDKAccessToken currentAccessToken]) {
-                    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil]
-                     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
-                         if (!error) {
-                             
-                             //NSLog(@"result: %@", result);
-                             
-                             NSString *email = result[@"email"];
-                             NSString *fbId = result[@"id"];
-                             NSRange range = [email rangeOfString:@"@"];
-                             NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", fbId]];
-                            
-                             
-                             NSString *facebookPic = [pictureURL absoluteString];
-                             
-                             NSString *username = [email substringToIndex:range.location];
-                             
-                             if (email.length > 1 && fbId.length > 1 && facebookPic.length >1 && username.length >1){
-                                 [user setObject:username forKey:@"username"];
-                                 [user setObject:fbId forKey:@"facebookId"];
-                                 [user setObject:facebookPic forKey:@"facebookImageUrl"];
-                                 
-                                 [user setObject:email forKey:@"email"];
-                                 [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
-                                     if (succeeded) {
-                                         UIViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"settingsStoryboard"];
-                                         [self presentViewController:vc animated:YES completion:nil];
-                                     }
-                                 }];
-                                 
-                                 
-                                 
-                             }
-                         }
-                     }];
-                }
-            }
-        }];
-
-    }];
-    [alert addAction:login];
-    [alert addAction:cancel];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-    
-    
-}
-
 
 
 #pragma mark Login User
