@@ -64,6 +64,7 @@
 		279E2AD91A71A7800080542E /* GameFinderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E2AD81A71A7800080542E /* GameFinderTests.m */; };
 		27C0E3261B72923C00A6D084 /* PlaceDetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C0E3251B72923C00A6D084 /* PlaceDetailCollectionViewCell.m */; };
 		27C0E3291B729C3400A6D084 /* PlayersHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C0E3281B729C3400A6D084 /* PlayersHeaderCollectionReusableView.m */; };
+		27C578851BA0BF5B00164095 /* PlaceDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C578841BA0BF5B00164095 /* PlaceDetailTableViewController.m */; };
 		27D1885A1A95C99900410B32 /* GamePointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D188591A95C99900410B32 /* GamePointAnnotation.m */; };
 		27E395101AE18EA8000E82FA /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27E3950E1AE18EA8000E82FA /* Crashlytics.framework */; };
 		27E395111AE18EA8000E82FA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27E3950F1AE18EA8000E82FA /* Fabric.framework */; };
@@ -200,6 +201,8 @@
 		27C0E3251B72923C00A6D084 /* PlaceDetailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailCollectionViewCell.m; sourceTree = "<group>"; };
 		27C0E3271B729C3400A6D084 /* PlayersHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayersHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		27C0E3281B729C3400A6D084 /* PlayersHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersHeaderCollectionReusableView.m; sourceTree = "<group>"; };
+		27C578831BA0BF5B00164095 /* PlaceDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailTableViewController.h; sourceTree = "<group>"; };
+		27C578841BA0BF5B00164095 /* PlaceDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailTableViewController.m; sourceTree = "<group>"; };
 		27D188581A95C98D00410B32 /* GamePointAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GamePointAnnotation.h; path = GameFinder/GamePointAnnotation.h; sourceTree = "<group>"; };
 		27D188591A95C99900410B32 /* GamePointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePointAnnotation.m; path = GameFinder/GamePointAnnotation.m; sourceTree = "<group>"; };
 		27E3950E1AE18EA8000E82FA /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -469,6 +472,8 @@
 				278A644F1B7FCACF002F4A26 /* SearchResultsTableViewController.m */,
 				279619081B9F8467003544EC /* ShowPictureViewController.h */,
 				279619091B9F8467003544EC /* ShowPictureViewController.m */,
+				27C578831BA0BF5B00164095 /* PlaceDetailTableViewController.h */,
+				27C578841BA0BF5B00164095 /* PlaceDetailTableViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -642,6 +647,7 @@
 				27017AB11ADF2EF200A9DF5F /* SDWebImageManager.m in Sources */,
 				27048D101A8F615D004E84B5 /* CustomTableViewCell.m in Sources */,
 				279E2ABF1A71A77F0080542E /* main.m in Sources */,
+				27C578851BA0BF5B00164095 /* PlaceDetailTableViewController.m in Sources */,
 				27C0E3261B72923C00A6D084 /* PlaceDetailCollectionViewCell.m in Sources */,
 				27FC8B1E1B98B8480021CE0D /* PicturesCollectionViewCell.m in Sources */,
 				27FC8B211B9A39360021CE0D /* NumberOfPlayersView.m in Sources */,

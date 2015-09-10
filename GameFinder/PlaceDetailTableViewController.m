@@ -1,12 +1,12 @@
 //
-//  PlaceDetailViewController.m
+//  PlaceDetailTableViewController.m
 //  GameFinder
 //
-//  Created by Nick Reeder on 2/12/15.
+//  Created by Nick Reeder on 9/9/15.
 //  Copyright (c) 2015 Nick Reeder. All rights reserved.
 //
 
-#import "PlaceDetailViewController.h"
+#import "PlaceDetailTableViewController.h"
 #import "Parse/Parse.h"
 #import "AppDelegate.h"
 #import "PlayersHeaderCollectionReusableView.h"
@@ -18,25 +18,39 @@
 #import "UIImageView+WebCache.h"
 #import "CustomCollectionViewLayout.h"
 #import "ShowPictureViewController.h"
+#import "PlaceDetailCollectionViewCell.h"
 
-@interface PlaceDetailViewController ()
-
+@interface PlaceDetailTableViewController ()
 
 @end
 
-@implementation PlaceDetailViewController
+@implementation PlaceDetailTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self isNear];
+    
+    //Style view
     self.navigationItem.title = self.titleString;
     self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout=UIRectEdgeNone;
+    self.extendedLayoutIncludesOpaqueBars=NO;
+    self.automaticallyAdjustsScrollViewInsets=NO;
+    
+    //Style buttons
+    self.navigationButton.clipsToBounds = YES;
+    self.navigationButton.layer.cornerRadius = self.navigationButton.frame.size.width/2;
+    self.navigationButton.layer.borderWidth = 1.0f;
+    self.navigationButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.takePictureButton.layer.cornerRadius = 4.0;
     self.takePictureButton.layer.borderWidth = 1.0;
     self.takePictureButton.layer.borderColor = [UIColor blackColor].CGColor;
     self.takePictureButton.clipsToBounds = YES;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateLocation:) name:@"updatedLocation" object:nil];
+    
+    //Style colleciton view
+    self.playerCollectionView.layer.borderColor = [UIColor blackColor].CGColor;
+    self.playerCollectionView.layer.borderWidth = 1.0f;
     
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -45,6 +59,7 @@
     
     if (self.picturesArray.count <1) {
         self.pictureCollectionView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"collectionViewBG"]];
+        self.pictureCollectionView.showsHorizontalScrollIndicator = NO;
     }
     self.playersArray = [self.placeObject objectForKey:@"players"];
     
@@ -94,7 +109,7 @@
         [cell.placePictureImageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"collectionViewBG"] options:SDWebImageDelayPlaceholder];
         cell.placePictureImageView.clipsToBounds = YES;
         
-        cell.layer.borderColor = [UIColor colorWithRed:0.18f green:0.81f blue:0.41f alpha:1.0f].CGColor;
+        cell.layer.borderColor = [UIColor blackColor].CGColor;
         cell.layer.borderWidth = 2.0;
         
         return cell;
@@ -387,6 +402,21 @@
         self.lightImageView.image = [UIImage imageNamed:@"no-lights"];
     }
     
+}
+
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    // Return the number of rows in the section.
+    return 1;
 }
 
 @end

@@ -11,9 +11,10 @@
 #import "UIImageView+WebCache.h"
 #import "GameLocationTableViewCell.h"
 #import "AppDelegate.h"
-#import "PlaceDetailViewController.h"
+#import "PlaceDetailTableViewController.h"
 #import "GamePointAnnotation.h"
 #import "SVProgressHUD.h"
+
 
 
 
@@ -260,7 +261,7 @@
         NSString *name = [object objectForKey:@"name"];
         PFGeoPoint *location = [object objectForKey:@"location"];
         
-        PlaceDetailViewController *pdc = [segue destinationViewController];
+        PlaceDetailTableViewController *pdc = [segue destinationViewController];
         NSNumber *lightString = object[@"lights"];
         NSNumber *publicString = object[@"openToPublic"];
         NSNumber *coveredString = object[@"covered"];
