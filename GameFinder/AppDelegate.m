@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 
 @interface AppDelegate ()
@@ -19,7 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
  
-    
+    [GMSServices provideAPIKey:@"AIzaSyCztQb26KkhKbuLQIk48Byyo6u8aTuUlIg"];
     
     self.locationManager = [[LocationManager alloc]init];
     

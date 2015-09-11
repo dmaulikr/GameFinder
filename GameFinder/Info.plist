@@ -61,7 +61,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Court finder uses your location to help you find games closest to you, and to let other hoopers find where you're playing. Don't worry, we won't use all of your batter, we only check location if you travel long distances.</string>
+	<string>Court finder uses your location to help you find games closest to you, and to let other hoopers find where you&apos;re playing. Don&apos;t worry, we won&apos;t use all of your batter, we only check location if you travel long distances.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
@@ -83,5 +83,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

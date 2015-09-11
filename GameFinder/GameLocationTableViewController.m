@@ -380,7 +380,7 @@
 //Check for location to prevent duplicate locations being added to db
 -(void)queryParseForPlayerLocation: (PFObject *)games{
     if (games == nil) {
-        self.addGamesButton.enabled = YES;
+        
         return;
     }
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
@@ -390,7 +390,7 @@
     CLLocationDistance distance = [currentLocation distanceFromLocation:gameLocation];
     if (distance >= 200 && [[games objectForKey:@"players"]containsObject:[PFUser currentUser]]) {
         NSLog(@"player removed");
-        self.addGamesButton.enabled = YES;
+        
         [games removeObject:[PFUser currentUser] forKey:@"players"];
         [games saveInBackgroundWithBlock:^(BOOL remove, NSError *error){
             
@@ -401,7 +401,7 @@
         [games addUniqueObject:[PFUser currentUser] forKey:@"players"];
         [games saveInBackgroundWithBlock:^(BOOL added, NSError *error){
             NSLog(@"player added");
-            self.addGamesButton.enabled = NO;
+           
         }];
         
         
@@ -498,7 +498,17 @@
 
 
 - (IBAction)handleAddGameButtonPressed:(id)sender {
-    [self performSegueWithIdentifier:@"AddLocation" sender:nil];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you at the location you are going to add?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *currentLocation = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self performSegueWithIdentifier:@"AddLocation" sender:nil];
+    }];
+    UIAlertAction *differentLocation = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self performSegueWithIdentifier:@"SearchPlacesNotNearUser" sender:nil];
+    }];
+    [alert addAction:currentLocation];
+    [alert addAction:differentLocation];
+     [self presentViewController:alert animated:YES completion:nil];
+    
 }
 
 @end

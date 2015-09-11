@@ -360,7 +360,7 @@
                         <segue destination="JOH-Ef-ZXc" kind="presentation" identifier="SettingsClicked" id="CcN-z2-7g5"/>
                         <segue destination="k2Q-38-uoG" kind="presentation" identifier="AddLocation" id="xT0-9e-sxH"/>
                         <segue destination="6CY-wj-sBt" kind="show" identifier="ShowPlaceDetail" id="E7L-ka-nU4"/>
-                        <segue destination="jyh-aR-uvV" kind="presentation" identifier="SearchForPlace" id="bjD-1M-xJ0"/>
+                        <segue destination="HO2-Si-C6C" kind="show" identifier="SearchPlacesNotNearUser" id="y3M-zj-q0V"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EFf-9T-9Bh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -824,6 +824,7 @@
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="backgroundView" destination="z4W-y4-xNx" id="cts-38-fU7"/>
                         <outlet property="coveredSwitch" destination="JfT-oE-Gzy" id="m3H-Jz-JLK"/>
@@ -1187,31 +1188,6 @@
             </objects>
             <point key="canvasLocation" x="457" y="-1022"/>
         </scene>
-        <!--Search For Place View Controller-->
-        <scene sceneID="bMQ-Dj-Hgf">
-            <objects>
-                <viewController id="jyh-aR-uvV" customClass="SearchForPlaceViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Zfg-HQ-MEV"/>
-                        <viewControllerLayoutGuide type="bottom" id="yuv-PO-c59"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="g5b-Gn-1zC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a1G-rS-Mj7">
-                                <rect key="frame" x="0.0" y="40" width="600" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
-                        </subviews>
-                        <color key="backgroundColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <nil key="simulatedStatusBarMetrics"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ex9-Kk-gXU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="457" y="-332"/>
-        </scene>
         <!--Profile Table View Controller-->
         <scene sceneID="3GE-9v-Y5y">
             <objects>
@@ -1500,6 +1476,74 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dCw-ga-MHn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-229" y="-332"/>
+        </scene>
+        <!--Place Search Table View Controller-->
+        <scene sceneID="sY5-0X-tCC">
+            <objects>
+                <tableViewController id="HO2-Si-C6C" customClass="PlaceSearchTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="C88-wn-xgt">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="ZpQ-DY-we5">
+                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="FvZ-7P-lpj">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="HO2-Si-C6C" id="i02-gn-MCB"/>
+                                    </connections>
+                                </searchBar>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="FvZ-7P-lpj" secondAttribute="trailing" id="GTt-bd-eqa"/>
+                                <constraint firstItem="FvZ-7P-lpj" firstAttribute="leading" secondItem="ZpQ-DY-we5" secondAttribute="leading" id="UQq-e1-pf7"/>
+                                <constraint firstItem="FvZ-7P-lpj" firstAttribute="top" secondItem="ZpQ-DY-we5" secondAttribute="top" id="yup-DK-vHC"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PlacesCell" textLabel="fKC-7s-WWd" detailTextLabel="KTj-bJ-UFe" style="IBUITableViewCellStyleSubtitle" id="JPI-1Z-sUW">
+                                <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JPI-1Z-sUW" id="7ts-xX-Xgy">
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fKC-7s-WWd">
+                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KTj-bJ-UFe">
+                                            <rect key="frame" x="15" y="25" width="41" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="HO2-Si-C6C" id="fOj-VZ-ElI"/>
+                            <outlet property="delegate" destination="HO2-Si-C6C" id="bdC-v0-atP"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="searchBar" destination="FvZ-7P-lpj" id="aj3-hI-1EP"/>
+                        <segue destination="k2Q-38-uoG" kind="show" identifier="AddSearchedLocation" id="SHX-5w-ChQ"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T2J-7H-pA5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="457" y="-332"/>
         </scene>
         <!--Show Picture View Controller-->
         <scene sceneID="kYy-5Y-iUw">
@@ -1836,7 +1880,8 @@
         <image name="x-black" width="37" height="37"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="E7L-ka-nU4"/>
         <segue reference="Gl6-Zy-Jz1"/>
+        <segue reference="E7L-ka-nU4"/>
+        <segue reference="SHX-5w-ChQ"/>
     </inferredMetricsTieBreakers>
 </document>

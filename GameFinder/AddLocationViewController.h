@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Parse/Parse.h>
 
 @interface AddLocationViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -22,6 +23,15 @@
 @property (weak, nonatomic) IBOutlet UISwitch *publicSwitch;
 
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
+
+@property CLLocation *placeLocation;
+
+@property (strong, nonatomic) PFGeoPoint *placeGeoPoint;
+@property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSString *address;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) NSString *state;
+@property (strong, nonatomic) NSString *zip;
 
 @property (weak, nonatomic) IBOutlet UIButton *takePictureButton;
 @property (weak, nonatomic) IBOutlet UIImageView *pictureImageView;

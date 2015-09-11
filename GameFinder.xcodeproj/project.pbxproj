@@ -36,11 +36,9 @@
 		271BBE621ACD2D6900BEC46C /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27048D161A9223A6004E84B5 /* SVIndefiniteAnimatedView.m */; };
 		271CBC9F1B883B9E00D3FEC9 /* CustomCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 271CBC9E1B883B9E00D3FEC9 /* CustomCollectionViewLayout.m */; };
 		271DAFD31AB6AAD90007BFF8 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */; };
-		27435CA81BA242830005712B /* SearchForPlaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27435CA71BA242830005712B /* SearchForPlaceViewController.m */; settings = {ASSET_TAGS = (); }; };
 		27435CAA1BA246C10005712B /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 27435CA91BA246C10005712B /* Podfile */; settings = {ASSET_TAGS = (); }; };
 		2744255E1AD5F0BB00FF187E /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2744255D1AD5F0BB00FF187E /* Bolts.framework */; };
 		274425601AD5F0C500FF187E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2744255F1AD5F0C500FF187E /* Parse.framework */; };
-		274425621AD605F900FF187E /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274425611AD605F800FF187E /* ParseFacebookUtilsV4.framework */; };
 		274B49E51B7357EF0037BF5A /* ScheduledGamesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 274B49E41B7357EF0037BF5A /* ScheduledGamesTableViewCell.m */; };
 		274B49E81B7371CC0037BF5A /* UserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 274B49E71B7371CC0037BF5A /* UserDetailViewController.m */; };
 		275F1BC11AE7766800815B69 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F1BC01AE7766800815B69 /* ProfileTableViewController.m */; };
@@ -64,6 +62,11 @@
 		27C0E3261B72923C00A6D084 /* PlaceDetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C0E3251B72923C00A6D084 /* PlaceDetailCollectionViewCell.m */; };
 		27C0E3291B729C3400A6D084 /* PlayersHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C0E3281B729C3400A6D084 /* PlayersHeaderCollectionReusableView.m */; };
 		27C578851BA0BF5B00164095 /* PlaceDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C578841BA0BF5B00164095 /* PlaceDetailTableViewController.m */; };
+		27CE3BFE1BA275300096FE07 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27CE3BFD1BA275300096FE07 /* Accounts.framework */; };
+		27CE3C001BA275570096FE07 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27CE3BFF1BA275570096FE07 /* Twitter.framework */; };
+		27CE3C021BA275860096FE07 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27CE3C011BA275860096FE07 /* Social.framework */; };
+		27CE3C051BA292AC0096FE07 /* PlaceSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE3C041BA292AC0096FE07 /* PlaceSearchTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		27CE3C061BA2B7B10096FE07 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275BAFD91A9736F800697533 /* AddressBookUI.framework */; };
 		27D1885A1A95C99900410B32 /* GamePointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D188591A95C99900410B32 /* GamePointAnnotation.m */; };
 		27FC60761A7B418A005AE24C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60751A7B418A005AE24C /* AudioToolbox.framework */; };
 		27FC60781A7B4192005AE24C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FC60771A7B4192005AE24C /* CFNetwork.framework */; };
@@ -145,12 +148,9 @@
 		271CBC9E1B883B9E00D3FEC9 /* CustomCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewLayout.m; sourceTree = "<group>"; };
 		271DAFCF1AB6A7B00007BFF8 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		271DAFD11AB6AACB0007BFF8 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
-		27435CA61BA242830005712B /* SearchForPlaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchForPlaceViewController.h; sourceTree = "<group>"; };
-		27435CA71BA242830005712B /* SearchForPlaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchForPlaceViewController.m; sourceTree = "<group>"; };
 		27435CA91BA246C10005712B /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		2744255D1AD5F0BB00FF187E /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		2744255F1AD5F0C500FF187E /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
-		274425611AD605F800FF187E /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		274B49E31B7357EF0037BF5A /* ScheduledGamesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduledGamesTableViewCell.h; sourceTree = "<group>"; };
 		274B49E41B7357EF0037BF5A /* ScheduledGamesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduledGamesTableViewCell.m; sourceTree = "<group>"; };
 		274B49E61B7371CC0037BF5A /* UserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDetailViewController.h; path = ../UserDetailViewController.h; sourceTree = "<group>"; };
@@ -198,6 +198,11 @@
 		27C0E3281B729C3400A6D084 /* PlayersHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayersHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		27C578831BA0BF5B00164095 /* PlaceDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceDetailTableViewController.h; sourceTree = "<group>"; };
 		27C578841BA0BF5B00164095 /* PlaceDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceDetailTableViewController.m; sourceTree = "<group>"; };
+		27CE3BFD1BA275300096FE07 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		27CE3BFF1BA275570096FE07 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		27CE3C011BA275860096FE07 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		27CE3C031BA292AC0096FE07 /* PlaceSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceSearchTableViewController.h; sourceTree = "<group>"; };
+		27CE3C041BA292AC0096FE07 /* PlaceSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceSearchTableViewController.m; sourceTree = "<group>"; };
 		27D188581A95C98D00410B32 /* GamePointAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GamePointAnnotation.h; path = GameFinder/GamePointAnnotation.h; sourceTree = "<group>"; };
 		27D188591A95C99900410B32 /* GamePointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GamePointAnnotation.m; path = GameFinder/GamePointAnnotation.m; sourceTree = "<group>"; };
 		27FC60751A7B418A005AE24C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -223,6 +228,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27CE3C061BA2B7B10096FE07 /* AddressBookUI.framework in Frameworks */,
+				27CE3C021BA275860096FE07 /* Social.framework in Frameworks */,
+				27CE3C001BA275570096FE07 /* Twitter.framework in Frameworks */,
+				27CE3BFE1BA275300096FE07 /* Accounts.framework in Frameworks */,
 				27017ABB1ADF451800A9DF5F /* ImageIO.framework in Frameworks */,
 				271DAFD31AB6AAD90007BFF8 /* libstdc++.6.dylib in Frameworks */,
 				27FC60881A7B41F3005AE24C /* libsqlite3.dylib in Frameworks */,
@@ -238,7 +247,6 @@
 				27FC60761A7B418A005AE24C /* AudioToolbox.framework in Frameworks */,
 				270C5B211A746F150004A632 /* CoreLocation.framework in Frameworks */,
 				270C5B1F1A746F0A0004A632 /* MapKit.framework in Frameworks */,
-				274425621AD605F900FF187E /* ParseFacebookUtilsV4.framework in Frameworks */,
 				B9AFDE34A3AEC958F9E4B8B8 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,10 +317,9 @@
 		279E2AB01A71A77E0080542E = {
 			isa = PBXGroup;
 			children = (
-				279E2AC61A71A77F0080542E /* Main.storyboard */,
-				27435CA91BA246C10005712B /* Podfile */,
-				27FC60731A7B40AE005AE24C /* Frameworks */,
 				279E2ABB1A71A77F0080542E /* GameFinder */,
+				279E2AD61A71A7800080542E /* Supporting Files */,
+				27435CA91BA246C10005712B /* Podfile */,
 				279E2AD51A71A7800080542E /* GameFinderTests */,
 				279E2ABA1A71A77F0080542E /* Products */,
 				27027DF81AAF8D3F002AE723 /* swish.mp3 */,
@@ -332,9 +339,11 @@
 		279E2ABB1A71A77F0080542E /* GameFinder */ = {
 			isa = PBXGroup;
 			children = (
-				27FC60741A7B40C6005AE24C /* View Controllers */,
+				279E2AC61A71A77F0080542E /* Main.storyboard */,
 				279E2AC01A71A77F0080542E /* AppDelegate.h */,
 				279E2AC11A71A77F0080542E /* AppDelegate.m */,
+				27FC60741A7B40C6005AE24C /* View Controllers */,
+				27FC60731A7B40AE005AE24C /* Frameworks */,
 				27D188551A9468EA00410B32 /* Classes */,
 				279E2ABC1A71A77F0080542E /* Supporting Files */,
 			);
@@ -356,7 +365,6 @@
 			isa = PBXGroup;
 			children = (
 				279E2AD81A71A7800080542E /* GameFinderTests.m */,
-				279E2AD61A71A7800080542E /* Supporting Files */,
 			);
 			path = GameFinderTests;
 			sourceTree = "<group>";
@@ -367,6 +375,7 @@
 				279E2AD71A71A7800080542E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			path = GameFinderTests;
 			sourceTree = "<group>";
 		};
 		27D188551A9468EA00410B32 /* Classes */ = {
@@ -404,9 +413,11 @@
 		27FC60731A7B40AE005AE24C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				27CE3C011BA275860096FE07 /* Social.framework */,
+				27CE3BFF1BA275570096FE07 /* Twitter.framework */,
+				27CE3BFD1BA275300096FE07 /* Accounts.framework */,
 				27017ABA1ADF451800A9DF5F /* ImageIO.framework */,
 				27017A881ADF2EF200A9DF5F /* SDWebImage */,
-				274425611AD605F800FF187E /* ParseFacebookUtilsV4.framework */,
 				2744255F1AD5F0C500FF187E /* Parse.framework */,
 				2744255D1AD5F0BB00FF187E /* Bolts.framework */,
 				27048D141A9223A6004E84B5 /* SVProgressHUD */,
@@ -428,6 +439,7 @@
 				FC9FF513C7E449178AEF3521 /* libPods.a */,
 			);
 			name = Frameworks;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		27FC60741A7B40C6005AE24C /* View Controllers */ = {
@@ -459,8 +471,8 @@
 				279619091B9F8467003544EC /* ShowPictureViewController.m */,
 				27C578831BA0BF5B00164095 /* PlaceDetailTableViewController.h */,
 				27C578841BA0BF5B00164095 /* PlaceDetailTableViewController.m */,
-				27435CA61BA242830005712B /* SearchForPlaceViewController.h */,
-				27435CA71BA242830005712B /* SearchForPlaceViewController.m */,
+				27CE3C031BA292AC0096FE07 /* PlaceSearchTableViewController.h */,
+				27CE3C041BA292AC0096FE07 /* PlaceSearchTableViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -657,7 +669,6 @@
 				27017AAE1ADF2EF200A9DF5F /* SDWebImageDecoder.m in Sources */,
 				27017AB71ADF2EF200A9DF5F /* UIImageView+HighlightedWebCache.m in Sources */,
 				271BBE621ACD2D6900BEC46C /* SVIndefiniteAnimatedView.m in Sources */,
-				27435CA81BA242830005712B /* SearchForPlaceViewController.m in Sources */,
 				27017AAF1ADF2EF200A9DF5F /* SDWebImageDownloader.m in Sources */,
 				27017AAD1ADF2EF200A9DF5F /* SDWebImageCompat.m in Sources */,
 				27710DC61B7C7A960003E621 /* IconExplanaionViewController.m in Sources */,
@@ -678,6 +689,7 @@
 				27C578851BA0BF5B00164095 /* PlaceDetailTableViewController.m in Sources */,
 				27C0E3261B72923C00A6D084 /* PlaceDetailCollectionViewCell.m in Sources */,
 				27FC8B1E1B98B8480021CE0D /* PicturesCollectionViewCell.m in Sources */,
+				27CE3C051BA292AC0096FE07 /* PlaceSearchTableViewController.m in Sources */,
 				27FC8B211B9A39360021CE0D /* NumberOfPlayersView.m in Sources */,
 				274B49E81B7371CC0037BF5A /* UserDetailViewController.m in Sources */,
 				27618D1D1B655FA800ED4931 /* AddLocationTableViewController.m in Sources */,
@@ -709,7 +721,6 @@
 				279E2AC71A71A77F0080542E /* Base */,
 			);
 			name = Main.storyboard;
-			path = GameFinder;
 			sourceTree = "<group>";
 		};
 		279E2ACB1A71A77F0080542E /* LaunchScreen.xib */ = {

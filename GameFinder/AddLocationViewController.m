@@ -27,6 +27,12 @@
     //Style save buttton
     self.saveButton.layer.cornerRadius = 4.0f;
     self.saveButton.hidden = YES;
+    
+    //Assign cllocation to geopoint
+    self.placeGeoPoint = [PFGeoPoint geoPointWithLatitude:self.placeLocation.coordinate.latitude longitude:self.placeLocation.coordinate.longitude];
+    self.locationNameTextField.text = self.name;
+    
+    
 
 }
 
@@ -93,17 +99,13 @@
 #pragma mark Post location to Parse
 -(void)postLocationToParse{
     PFObject *location = [PFObject objectWithClassName:@"Games"];
-    [PFGeoPoint geoPointForCurrentLocationInBackground:^(PFGeoPoint *geoPoint, NSError *error){
-        CLLocation *currentLocation = [[CLLocation alloc]initWithLatitude:geoPoint.latitude longitude:geoPoint.longitude];
-        CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
-        [geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-            CLPlacemark *place = [placemarks lastObject];
-            location[@"name"] = self.locationNameTextField.text;
-            location[@"location"] = geoPoint;
-            location[@"address"] = place.name;
-            location[@"city"] = place.locality;
-            location[@"state"] = place.administrativeArea;
-            location[@"zip"] = place.postalCode;
+    
+    location[@"name"] = self.locationNameTextField.text;
+    location[@"address"] = self.address;
+    location[@"location"] = self.placeGeoPoint;
+    location[@"city"] = self.city;
+    location[@"state"] = self.state;
+    location[@"zip"] = self.zip;
             if (self.outdoorSwitch.on) {
                 location[@"outdoor"] = @YES;
             }else{
@@ -175,9 +177,11 @@
                 [alert addAction:okay];
                 [self presentViewController:alert animated:YES completion:nil];
             }
-        }];
-        
-    }];
+    
+//CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+//[geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+   // CLPlacemark *place = [placemarks lastObject];
+//}];
   
 }
 
