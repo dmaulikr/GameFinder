@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *centerMapButton;
 @property NSMutableArray *gameLocationsArray;
 
+@property (nonatomic) BOOL isNear;
 
 
 //Seach bar

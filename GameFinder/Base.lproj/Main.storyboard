@@ -841,7 +841,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FQY-zN-qK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-893" y="-1022"/>
+            <point key="canvasLocation" x="-1034" y="-971"/>
         </scene>
         <!--Edit Location View Controller-->
         <scene sceneID="lc7-cB-NRg">
@@ -1484,7 +1484,6 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="C88-wn-xgt">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.52941176470588236" green="0.52941176470588236" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="ZpQ-DY-we5">
                             <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1516,14 +1515,14 @@
                                             <rect key="frame" x="15" y="5" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KTj-bJ-UFe">
                                             <rect key="frame" x="15" y="25" width="41" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.29803922772407532" green="0.29803922772407532" blue="0.29803922772407532" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -1538,12 +1537,12 @@
                     </tableView>
                     <connections>
                         <outlet property="searchBar" destination="FvZ-7P-lpj" id="aj3-hI-1EP"/>
-                        <segue destination="k2Q-38-uoG" kind="show" identifier="AddSearchedLocation" id="SHX-5w-ChQ"/>
+                        <segue destination="k2Q-38-uoG" kind="presentation" identifier="AddSearchedLocation" id="SHX-5w-ChQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T2J-7H-pA5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="457" y="-332"/>
+            <point key="canvasLocation" x="452" y="-332"/>
         </scene>
         <!--Show Picture View Controller-->
         <scene sceneID="kYy-5Y-iUw">
@@ -1880,8 +1879,8 @@
         <image name="x-black" width="37" height="37"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gl6-Zy-Jz1"/>
         <segue reference="E7L-ka-nU4"/>
+        <segue reference="Gl6-Zy-Jz1"/>
         <segue reference="SHX-5w-ChQ"/>
     </inferredMetricsTieBreakers>
 </document>

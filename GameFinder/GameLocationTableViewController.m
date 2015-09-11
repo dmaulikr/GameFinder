@@ -14,6 +14,7 @@
 #import "PlaceDetailTableViewController.h"
 #import "GamePointAnnotation.h"
 #import "SVProgressHUD.h"
+#import "AddLocationViewController.h"
 
 
 
@@ -34,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.tableView.backgroundColor = [UIColor whiteColor];
     [self queryParseForGameLocations];
     
@@ -249,10 +251,42 @@
         
         
     }];
-    
-    
-    
+
 }
+//Check for location to prevent duplicate locations being added to db
+-(void)queryParseForPlayerLocation: (PFObject *)games{
+    if (games == nil) {
+         self.isNear = NO;
+        return;
+    }
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+    PFGeoPoint *gameGeoPoint = games[@"location"];
+    CLLocation *gameLocation = [[CLLocation alloc]initWithLatitude:gameGeoPoint.latitude longitude:gameGeoPoint.longitude];
+    CLLocationDistance distance = [currentLocation distanceFromLocation:gameLocation];
+    if (distance >= 200 && [[games objectForKey:@"players"]containsObject:[PFUser currentUser]]) {
+        NSLog(@"player removed");
+        
+        [games removeObject:[PFUser currentUser] forKey:@"players"];
+        [games saveInBackgroundWithBlock:^(BOOL remove, NSError *error){
+            
+        }];
+        self.isNear = NO;
+        
+    }else if (distance < 200){
+        [games addUniqueObject:[PFUser currentUser] forKey:@"players"];
+        [games saveInBackgroundWithBlock:^(BOOL added, NSError *error){
+            NSLog(@"player added");
+            
+        }];
+        self.isNear = YES;
+        
+    }else{
+        return;
+    }
+}
+
+
 
 #pragma mark - Navigation
 
@@ -285,6 +319,25 @@
         pdc.publicString = publicString;
         pdc.coveredString = coveredString;
         pdc.outdoorString = outdoorString;
+        
+        
+    } else if ([[segue identifier]isEqualToString:@"AddLocation"]){
+        AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
+        
+        AddLocationViewController *dvc = segue.destinationViewController;
+        dvc.placeLocation = currentLocation;
+        CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
+        [geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+            CLPlacemark *place = [placemarks lastObject];
+            dvc.address = place.name;
+            dvc.city = place.locality;
+            dvc.state = place.administrativeArea;
+            dvc.zip = place.postalCode;
+            
+        }];
+        
+
         
         
     }
@@ -377,39 +430,6 @@
     [self performSegueWithIdentifier:@"SettingsClicked" sender:nil];
 }
 
-//Check for location to prevent duplicate locations being added to db
--(void)queryParseForPlayerLocation: (PFObject *)games{
-    if (games == nil) {
-        
-        return;
-    }
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    CLLocation *currentLocation = appDelegate.locationManager.currentLocation;
-    PFGeoPoint *gameGeoPoint = games[@"location"];
-    CLLocation *gameLocation = [[CLLocation alloc]initWithLatitude:gameGeoPoint.latitude longitude:gameGeoPoint.longitude];
-    CLLocationDistance distance = [currentLocation distanceFromLocation:gameLocation];
-    if (distance >= 200 && [[games objectForKey:@"players"]containsObject:[PFUser currentUser]]) {
-        NSLog(@"player removed");
-        
-        [games removeObject:[PFUser currentUser] forKey:@"players"];
-        [games saveInBackgroundWithBlock:^(BOOL remove, NSError *error){
-            
-        }];
-        
-        
-    }else if (distance < 200){
-        [games addUniqueObject:[PFUser currentUser] forKey:@"players"];
-        [games saveInBackgroundWithBlock:^(BOOL added, NSError *error){
-            NSLog(@"player added");
-           
-        }];
-        
-        
-    }else{
-        return;
-    }
-}
-
 
 #pragma mark -location manage delegates
 -(void)updateLocation:(NSNotification *)notif{
@@ -498,16 +518,21 @@
 
 
 - (IBAction)handleAddGameButtonPressed:(id)sender {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Are you at the location you are going to add?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *currentLocation = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Add Location" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *currentLocation = [UIAlertAction actionWithTitle:@"I'm here now" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self performSegueWithIdentifier:@"AddLocation" sender:nil];
     }];
-    UIAlertAction *differentLocation = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *differentLocation = [UIAlertAction actionWithTitle:@"Search" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self performSegueWithIdentifier:@"SearchPlacesNotNearUser" sender:nil];
     }];
-    [alert addAction:currentLocation];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    if (self.isNear == NO) {
+        [alert addAction:currentLocation];
+    }
+    
     [alert addAction:differentLocation];
-     [self presentViewController:alert animated:YES completion:nil];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
     
 }
 

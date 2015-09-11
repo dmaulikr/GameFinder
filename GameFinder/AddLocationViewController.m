@@ -26,14 +26,14 @@
     self.thumbsUpButton.alpha = 0;
     //Style save buttton
     self.saveButton.layer.cornerRadius = 4.0f;
-    self.saveButton.hidden = YES;
+    
     
     //Assign cllocation to geopoint
     self.placeGeoPoint = [PFGeoPoint geoPointWithLatitude:self.placeLocation.coordinate.latitude longitude:self.placeLocation.coordinate.longitude];
     self.locationNameTextField.text = self.name;
     
     
-
+    
 }
 
 -(BOOL)prefersStatusBarHidden{
@@ -56,13 +56,10 @@
         self.thumbsDownButton.alpha = 1;
         self.takePictureButton.alpha = 0;
     }
+  
+}
 
-    
-
-    
-    }
-    
-   #pragma mark UITextField delegates
+#pragma mark UITextField delegates
 -(void)textFieldDidBeginEditing:(UITextField *)textField{
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard)];
     tap.numberOfTapsRequired = 1;
@@ -70,7 +67,7 @@
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    self.saveButton.hidden = NO;
+    
     self.didPressSave = NO;
     return YES;
 }
@@ -89,7 +86,7 @@
     if (!self.didPressSave) {
         [self showAlertViewController];
     }else{
-    [self closeViewController];
+        [self closeViewController];
     }
 }
 - (IBAction)handleSaveButtonPressed:(id)sender {
@@ -106,83 +103,79 @@
     location[@"city"] = self.city;
     location[@"state"] = self.state;
     location[@"zip"] = self.zip;
-            if (self.outdoorSwitch.on) {
-                location[@"outdoor"] = @YES;
-            }else{
-                location[@"outdoor"] = @NO;
-            }
-            if (self.lightSwitch.on) {
-                location[@"lights"] = @YES;
-            }else{
-                location[@"lights"] = @NO;
-            }
-            if (self.coveredSwitch.on) {
-                location[@"covered"] = @YES;
-            }else{
-                location[@"covered"] = @NO;
-            }
-            if (self.publicSwitch.on) {
-                location[@"openToPublic"] = @YES;
-            }else{
-                location[@"openToPublic"] = @NO;
-            }
-            
-            
-            NSData *imageData = UIImagePNGRepresentation(self.pictureImageView.image);
-            PFFile *imageFile = [PFFile fileWithData:imageData];
-            if (self.locationNameTextField.text.length >= 1) {
-                if (self.didTakePicture == YES) {
-                    [location addUniqueObject:imageFile forKey:@"pictureArray"];
-                }
-                
-                
-                
-            [location saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                [SVProgressHUD showWithStatus:@"Saving location..."];
-                if (error) {  // Failed to save, show an alert view with the error message
-                    
-                    
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to save location" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    
-                    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                       
-                        
-                    }];
-                    
-                    
-                    [alert addAction:cancel];
-                    [self presentViewController:alert animated:YES completion:nil];
-                    
-                    
-                    return;
-                }
-                if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
-                    
-                    [SVProgressHUD showSuccessWithStatus:@"Saved!"];
-                    self.didPressSave = YES;
-                    [self closeViewController];
-                    [[NSNotificationCenter defaultCenter]postNotificationName:@"addedLocation" object:nil];
-                   
-                    
-                } else {
-                    NSLog(@"Failed to save.");
-                }
-                
-                
-            }];
-            }else{
-                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please enter a valid name" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *okay = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:nil];
-                [alert addAction:okay];
-                [self presentViewController:alert animated:YES completion:nil];
-            }
+    if (self.outdoorSwitch.on) {
+        location[@"outdoor"] = @YES;
+    }else{
+        location[@"outdoor"] = @NO;
+    }
+    if (self.lightSwitch.on) {
+        location[@"lights"] = @YES;
+    }else{
+        location[@"lights"] = @NO;
+    }
+    if (self.coveredSwitch.on) {
+        location[@"covered"] = @YES;
+    }else{
+        location[@"covered"] = @NO;
+    }
+    if (self.publicSwitch.on) {
+        location[@"openToPublic"] = @YES;
+    }else{
+        location[@"openToPublic"] = @NO;
+    }
     
-//CLGeocoder *geoCoder = [[CLGeocoder alloc] init];
-//[geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
-   // CLPlacemark *place = [placemarks lastObject];
-//}];
-  
+    
+    NSData *imageData = UIImagePNGRepresentation(self.pictureImageView.image);
+    PFFile *imageFile = [PFFile fileWithData:imageData];
+    if (self.locationNameTextField.text.length >= 1) {
+        if (self.didTakePicture == YES) {
+            [location addUniqueObject:imageFile forKey:@"pictureArray"];
+        }
+        
+        
+        
+        [location saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [SVProgressHUD showWithStatus:@"Saving location..."];
+            if (error) {  // Failed to save, show an alert view with the error message
+                
+                
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Unable to save location" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+                
+                
+                UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                    
+                    
+                }];
+                
+                
+                [alert addAction:cancel];
+                [self presentViewController:alert animated:YES completion:nil];
+                
+                
+                return;
+            }
+            if (succeeded) {  // Successfully saved, post a notification to tell other view controllers
+                
+                [SVProgressHUD showSuccessWithStatus:@"Saved!"];
+                self.didPressSave = YES;
+                [self closeViewController];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"addedLocation" object:nil];
+                
+                
+            } else {
+                NSLog(@"Failed to save.");
+            }
+            
+            
+        }];
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Please enter a valid name" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okay = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:okay];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+    
 }
 
 #pragma mark Handle close/save and dismissal of View
@@ -201,17 +194,17 @@
 }
 
 -(void)closeViewController{
-        [self hideKeyboard];
+    [self hideKeyboard];
     [UIView animateWithDuration:0.5f animations:^{
         self.view.superview.bounds = CGRectMake(0, self.view.superview.frame.origin.y-800, self.view.frame.size.width, self.view.frame.size.height);
     } completion:^(BOOL finished) {
         [self dismissViewControllerAnimated:NO completion:nil];
     }];
-
+    
 }
 
 - (IBAction)handleTakePictureButtonPressed:(id)sender {
-   
+    
     [self openCamera];
 }
 #pragma mark -camera methods
@@ -236,7 +229,7 @@
         
         [self presentViewController:noCamera animated:YES completion:nil];
     }
-
+    
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
@@ -248,20 +241,20 @@
         self.thumbsDownButton.alpha = 1.0;
     }];
     
-    self.saveButton.hidden = NO;
+    
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-        [picker dismissViewControllerAnimated:YES completion:NULL];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
     
 }
 #pragma mark - picture button methods
 - (IBAction)handlThumbsUpButtonPressed:(id)sender {
     self.didTakePicture = YES;
     self.thumbsUpButton.alpha = 0;
-    self.saveButton.hidden = NO;
+    
 }
 
 - (IBAction)handleThumbsDownButtonPressed:(id)sender {
@@ -300,9 +293,9 @@
 }
 - (IBAction)publicSwitch:(id)sender {
     if ([sender isOn]) {
-         self.courtIsOpenToPublic = YES;
+        self.courtIsOpenToPublic = YES;
     }
-   
+    
 }
 
 

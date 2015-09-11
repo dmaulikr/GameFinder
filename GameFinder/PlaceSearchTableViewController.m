@@ -27,8 +27,12 @@ static NSString *kCellIdentifier = @"PlacesCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.navigationItem.backBarButtonItem.title = @"";
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     self.locationManager = [[CLLocationManager alloc] init];
+    
+    self.searchBar.placeholder = @"Find your court";
+    self.searchBar.tintColor = [UIColor blackColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -232,7 +236,7 @@ static NSString *kCellIdentifier = @"PlacesCell";
     dvc.city = mapItemDict[@"City"];
     dvc.state = mapItemDict[@"State"];
     dvc.zip = mapItemDict[@"ZIP"];
-    
+    dvc.takePictureButton.hidden = YES;
 }
 
 @end
